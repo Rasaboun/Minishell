@@ -57,6 +57,16 @@ void rawmode()
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
 
+
+void clear(int c)
+{
+    while (c > 0)
+    {
+        write(STDOUT_FILENO,"\b \b",4);
+        c--;
+    }
+}
+
 char *ft_regroup(char *s)
 {
     char *line;
@@ -64,12 +74,34 @@ char *ft_regroup(char *s)
     line = ft_calloc(1, sizeof(char));
     char c;
     c = '\0';
+    char seq[3];
+    //Prompt
     write(STDOUT_FILENO, "\x1b[32m()\x1b[30m==[\x1b[36m:::::::> MINISHELL \x1b[35m✗ \x1b[37m : ", 57);
     while (1)
     {
         if (read(STDIN_FILENO, &c, 1) == 1)
         {
-            write(STDIN_FILENO,&c,1);
+            if ((isalnum(c) || c == '\n' || c == ' ' )&& c != 'b')
+                write(STDIN_FILENO,&c,1);
+                
+            if (c == 'b')
+            {
+                clear(4);
+            }
+            //Check arrow
+            if (c == '\x1b')
+            {
+                read(STDIN_FILENO, &seq[0], 1);
+                read(STDIN_FILENO, &seq[1], 1);
+                if (seq[0] == '[')
+                    if(seq[1] == 'B')
+                    {
+                       // printf("ok");
+                        printf("k");
+                      
+                        }
+
+            }
             line = ft_charjoin(line, c);
         }
         if (c == '\n')
