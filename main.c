@@ -5,7 +5,66 @@
 #include <stdlib.h>
 #include "Libft/libft.h"
 
+typedef	struct	s_charlist
+{
+	char            c;
+	struct s_charlist	*next;
+}				t_charlist;
+
+typedef	struct	s_cmdarlist
+{
+	struct s_charlist	*lststr;
+	struct s_cmdarlist	*next; 
+    struct s_cmdarlist	*previous;
+}				t_cmdarlist;
+
+t_charlist	*ft_charlstlast(t_charlist *lst)
+{
+	t_charlist	*lst2;
+
+	lst2 = lst;
+	if (!lst)
+		return ((void *)0);
+	while (lst2->next)
+		lst2 = lst2->next;
+	return (lst2);
+}
+
+void	ft_charlstadd_back(t_charlist **alst, t_charlist *new)
+{
+	t_charlist	*lst2;
+
+	if (*alst == NULL)
+		*alst = new;
+	else
+	{
+		lst2 = ft_charlstlast(*alst);
+		lst2->next = new;
+		new->next = NULL;
+	}
+}
+
+t_charlist	*ft_charlstnew(char content)
+{
+	t_charlist *s;
+
+	if (!(s = malloc(sizeof(t_charlist))))
+		return (NULL);
+	s->c = content;
+	s->next = NULL;
+	return (s);
+}
+
 struct termios origin;
+
+void    printlst(t_charlist *cmd)
+{
+    while (cmd != NULL)
+    {
+        write(STDOUT_FILENO,&cmd->c,1);
+        cmd = cmd->next;
+    }
+}
 
 static int ft_while(char *s3, const char *s1, int i)
 {
@@ -67,14 +126,15 @@ void clear(int c)
     }
 }
 
-char *ft_regroup(char *s)
+void ft_regroup(char *s, t_charlist **cmd)
 {
-    char *line;
-    line = NULL;
-    line = ft_calloc(1, sizeof(char));
     char c;
     c = '\0';
     char seq[3];
+    int i;
+    char *tmp;
+    i = 0;
+    t_charlist *cmmd;
     //Prompt
     write(STDOUT_FILENO, "\x1b[32m()\x1b[30m==[\x1b[36m:::::::> MINISHELL \x1b[35m✗ \x1b[37m : ", 57);
     while (1)
@@ -82,13 +142,17 @@ char *ft_regroup(char *s)
         if (read(STDIN_FILENO, &c, 1) == 1)
         {
             if ((isalnum(c) || c == '\n' || c == ' ' )&& c != 'b')
-                write(STDIN_FILENO,&c,1);
-                
-            if (c == 'b')
             {
-                clear(4);
+                i++;
+                write(STDIN_FILENO,&c,1);
             }
-            //Check arrow
+                
+            if (c == 127 && i != 0)
+            {
+                clear(1);
+                i--;
+            }
+            //Check DOWN arrow
             if (c == '\x1b')
             {
                 read(STDIN_FILENO, &seq[0], 1);
@@ -96,13 +160,12 @@ char *ft_regroup(char *s)
                 if (seq[0] == '[')
                     if(seq[1] == 'B')
                     {
-                       // printf("ok");
-                        printf("k");
-                      
-                        }
+                        write(STDOUT_FILENO,"SALUT",6);                    
+                    }
 
             }
-            line = ft_charjoin(line, c);
+            cmmd = ft_charlstnew(c);
+            ft_charlstadd_back(cmd,cmmd);
         }
         if (c == '\n')
             break;
@@ -115,7 +178,6 @@ char *ft_regroup(char *s)
         }
         s = &c;
     }
-    return (line);
 }
 
 int main()
@@ -125,10 +187,15 @@ int main()
     c = '\0';
     char *line;
     line = NULL;
+    t_charlist  *command;
+    command = NULL;
+
     while (1)
     {
-        line = ft_regroup(&c);
-        printf(" \x1b[37m %s", line);
+        ft_regroup(&c,&command);
+        printlst(command);
+        //PRINTF
+
         if (c == 'q')
         {
             free(line);
