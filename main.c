@@ -5,22 +5,47 @@
 #include <stdlib.h>
 #include "Libft/libft.h"
 
-typedef	struct	s_charlist
+typedef struct s_charlist
 {
-	char            c;
-	struct s_charlist	*next;
-}				t_charlist;
+	long c;
+	struct s_charlist *next;
+	struct s_charlist *previous;
+} t_charlist;
 
-typedef	struct	s_cmdarlist
+typedef struct s_cmdarlist
 {
-	struct s_charlist	*lststr;
-	struct s_cmdarlist	*next; 
-    struct s_cmdarlist	*previous;
-}				t_cmdarlist;
+	struct s_charlist *lststr;
+	struct s_cmdarlist *next;
+	struct s_cmdarlist *previous;
+} t_cmdarlist;
 
-t_charlist	*ft_charlstlast(t_charlist *lst)
+t_charlist *ft_charlstnew(long content)
 {
-	t_charlist	*lst2;
+	t_charlist *s;
+
+	if (!(s = malloc(sizeof(t_charlist))))
+		return (NULL);
+	s->c = content;
+	s->next = NULL;
+	s->previous = NULL;
+	return (s);
+}
+
+t_cmdarlist *ft_cmdlstnew(t_charlist *content)
+{
+	t_cmdarlist *s;
+
+	if (!(s = malloc(sizeof(t_cmdarlist))))
+		return (NULL);
+	s->lststr = content;
+	s->next = NULL;
+	s->previous = NULL;
+	return (s);
+}
+
+t_charlist *ft_charlstlast(t_charlist *lst)
+{
+	t_charlist *lst2;
 
 	lst2 = lst;
 	if (!lst)
@@ -30,9 +55,52 @@ t_charlist	*ft_charlstlast(t_charlist *lst)
 	return (lst2);
 }
 
-void	ft_charlstadd_back(t_charlist **alst, t_charlist *new)
+t_cmdarlist *ft_cmdlstlast(t_cmdarlist *lst)
 {
-	t_charlist	*lst2;
+	t_cmdarlist *lst2;
+
+	lst2 = lst;
+	if (!lst)
+		return ((void *)0);
+	while (lst2->next)
+		lst2 = lst2->next;
+	return (lst2);
+}
+
+void ft_charlstclear(t_charlist *alst)
+{
+	t_charlist *tmp;
+	t_charlist *next;
+	if (alst->next != NULL)
+	{
+		next = alst->next;
+		if (alst->previous != NULL)
+		{
+			alst->previous->next = alst->next;
+			alst->next->previous = alst->previous;
+			free(alst);
+			alst = next;
+		}
+		else
+		{
+			tmp = alst;
+			alst = alst->next;
+			alst->previous = NULL;
+			free(tmp);
+			tmp = NULL;
+		}
+	}
+	else if (alst->previous != NULL)
+	{
+		next = alst->previous;
+		alst->previous->next = NULL;
+		free(alst);
+		alst = next;
+	}
+}
+void ft_charlstadd_back(t_charlist **alst, t_charlist *new)
+{
+	t_charlist *lst2;
 
 	if (*alst == NULL)
 		*alst = new;
@@ -41,171 +109,230 @@ void	ft_charlstadd_back(t_charlist **alst, t_charlist *new)
 		lst2 = ft_charlstlast(*alst);
 		lst2->next = new;
 		new->next = NULL;
+		new->previous = lst2;
 	}
 }
 
-t_charlist	*ft_charlstnew(char content)
+void ft_cmdlstadd_back(t_cmdarlist **alst, t_cmdarlist *new)
 {
-	t_charlist *s;
+	t_cmdarlist *lst2;
 
-	if (!(s = malloc(sizeof(t_charlist))))
-		return (NULL);
-	s->c = content;
-	s->next = NULL;
-	return (s);
+	if (*alst == NULL)
+		*alst = new;
+	else
+	{
+		lst2 = ft_cmdlstlast(*alst);
+		lst2->next = new;
+		new->next = NULL;
+		new->previous = lst2;
+	}
 }
 
 struct termios origin;
 
-void    printlst(t_charlist *cmd)
+void printlst(t_charlist *cmd)
 {
-    while (cmd != NULL)
-    {
-        write(STDOUT_FILENO,&cmd->c,1);
-        cmd = cmd->next;
-    }
-}
-
-static int ft_while(char *s3, const char *s1, int i)
-{
-    int p;
-    int y;
-
-    p = 0;
-    y = 0;
-    while (p < i)
-    {
-        s3[p] = s1[y];
-        p++;
-        y++;
-    }
-    return (p);
-}
-
-char *ft_charjoin(char *s1, char s2)
-{
-    int p;
-    char *s3;
-    int y;
-    int i;
-
-    if (!s1 || !s2)
-        return (NULL);
-    y = 0;
-    p = 0;
-    i = (int)ft_strlen(s1);
-    if (!(s3 = (char *)malloc(sizeof(char) * (i + 1 + 1))))
-        return (0);
-    p = ft_while(s3, s1, i);
-    y = 0;
-    s3[p] = s2;
-    p++;
-    s3[p] = '\0';
-    free(s1);
-    return (s3);
+	while (cmd != NULL)
+	{
+		write(STDOUT_FILENO, &cmd->c, 1);
+		cmd = cmd->next;
+	}
 }
 
 void rawmode()
 {
 
-    struct termios raw;
-    tcgetattr(STDIN_FILENO, &origin);
+	struct termios raw;
+	tcgetattr(STDIN_FILENO, &origin);
 
-    raw = origin;
-    raw.c_lflag &= ~(ECHO | ICANON | ISIG);
-    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+	raw = origin;
+	raw.c_lflag &= ~(ECHO | ICANON | ISIG);
+	raw.c_cc[VMIN] = 1;
+	raw.c_cc[VTIME] = 0;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
 
-
-void clear(int c)
+void clear(int c, t_charlist *lst)
 {
-    while (c > 0)
-    {
-        write(STDOUT_FILENO,"\b \b",4);
-        c--;
-    }
+	while (c > 0)
+	{
+		if (lst != NULL)
+		{
+			ft_charlstclear(lst);
+			lst = lst->previous;
+		}
+		write(STDOUT_FILENO, "\b \b", 4);
+		c--;
+	}
 }
 
-void ft_regroup(char *s, t_charlist **cmd)
+void clearcharlst(t_charlist **lst, int c)
 {
-    char c;
-    c = '\0';
-    char seq[3];
-    int i;
-    char *tmp;
-    i = 0;
-    t_charlist *cmmd;
-    //Prompt
-    write(STDOUT_FILENO, "\x1b[32m()\x1b[30m==[\x1b[36m:::::::> MINISHELL \x1b[35m✗ \x1b[37m : ", 57);
-    while (1)
-    {
-        if (read(STDIN_FILENO, &c, 1) == 1)
-        {
-            if ((isalnum(c) || c == '\n' || c == ' ' )&& c != 'b')
-            {
-                i++;
-                write(STDIN_FILENO,&c,1);
-            }
-                
-            if (c == 127 && i != 0)
-            {
-                clear(1);
-                i--;
-            }
-            //Check DOWN arrow
-            if (c == '\x1b')
-            {
-                read(STDIN_FILENO, &seq[0], 1);
-                read(STDIN_FILENO, &seq[1], 1);
-                if (seq[0] == '[')
-                    if(seq[1] == 'B')
-                    {
-                        write(STDOUT_FILENO,"SALUT",6);                    
-                    }
+	t_charlist *next;
 
-            }
-            cmmd = ft_charlstnew(c);
-            ft_charlstadd_back(cmd,cmmd);
-        }
-        if (c == '\n')
-            break;
-        if (c == 'q')
-            exit(EXIT_FAILURE);
-        if (c == 'v')
-        {
-            write(STDOUT_FILENO, "\x1b[2J", 4);
-            write(STDOUT_FILENO, "\x1b[H", 3);
-        }
-        s = &c;
-    }
+	next = NULL;
+
+	while (c > 0)
+	{
+		write(STDOUT_FILENO, "\b \b", 4);
+		c--;
+	}
+	while (*lst)
+	{
+		next = (*lst)->next;
+		free(*lst);
+		*lst = next;
+	}
+	lst = NULL;
+}
+
+void ft_regroup(long *s, t_cmdarlist **cmdhist)
+{
+	long c;
+	t_charlist *charlst;
+	t_charlist *tmp;
+	t_cmdarlist *cmd;
+	t_cmdarlist *history;
+	t_cmdarlist *historyF;
+	t_charlist *history_tmp;
+	int y;
+	int start;
+	charlst = NULL;
+	tmp = NULL;
+	cmd = NULL;
+	history = NULL;
+	history_tmp = NULL;
+	c = 0;
+	start = 0;
+	history = ft_cmdlstlast(*cmdhist);
+	y = 0;
+
+	//Prompt
+	write(STDOUT_FILENO, "\x1b[32m()\x1b[30m==[\x1b[36m:::::::> MINISHELL \x1b[35m✗ \x1b[37m : ", 57);
+
+	while (1)
+	{
+		if (read(STDIN_FILENO, &c, sizeof(c)) > 0)
+		{
+			//Check if printable && count Y char print && add char to CHARLST
+			if (ft_isprint(c) == 1 && c != '\n')
+			{
+				y++;
+				write(STDIN_FILENO, &c, sizeof(c));
+				tmp = ft_charlstnew(c);
+				ft_charlstadd_back(&charlst, tmp);
+			}
+
+			//Check UP arrow
+			if (c == 4283163)
+			{
+				if (history != NULL)
+				{
+					if (history->previous != NULL && start != 0)
+						history = history->previous;
+					//if (history != historyF)
+						start = 1;
+					clearcharlst(&charlst,y);
+					history_tmp = history->lststr;
+					y = 0;
+					while (history_tmp != NULL)
+					{
+						y++;
+						write(STDOUT_FILENO, &history_tmp->c, sizeof(history_tmp->c));
+						tmp = ft_charlstnew(history_tmp->c);
+						ft_charlstadd_back(&charlst, tmp);
+						history_tmp = history_tmp->next;
+					}
+				}
+			}
+
+			// DOWN ARROW
+			if (c == 4348699)
+			{
+				if (history != NULL)
+				{
+					if (history->next != NULL)
+						history = history->next;
+					clearcharlst(&charlst,y);
+					history_tmp = history->lststr;
+					y = 0;
+					while (history_tmp != NULL)
+					{
+						y++;
+						write(STDOUT_FILENO, &history_tmp->c, sizeof(history_tmp->c));
+						tmp = ft_charlstnew(history_tmp->c);
+						ft_charlstadd_back(&charlst, tmp);
+						history_tmp = history_tmp->next;
+					}
+				}
+			}
+
+			if (c == 127 && y > 0)
+			{
+				tmp = ft_charlstlast(charlst);
+				clear(1, tmp);
+				y--;
+			}
+		}
+		if (c == '\n')
+		{
+			cmd = ft_cmdlstnew(charlst);
+			if (cmd != NULL)
+				ft_cmdlstadd_back(cmdhist, cmd);
+			break;
+		}
+		if (c == 'q')
+			exit(EXIT_FAILURE);
+		if (c == 'v')
+		{
+			write(STDOUT_FILENO, "\x1b[2J", 4);
+			write(STDOUT_FILENO, "\x1b[H", 3);
+		}
+		s = &c;
+		c = 0;
+	}
 }
 
 int main()
 {
-    rawmode();
-    char c;
-    c = '\0';
-    char *line;
-    line = NULL;
-    t_charlist  *command;
-    command = NULL;
+	rawmode();
+	long c;
+	c = '\0';
+	char *line;
+	line = NULL;
+	t_charlist *command;
+	t_cmdarlist *commande;
+	t_cmdarlist *tmp;
+	commande = NULL;
 
-    while (1)
-    {
-        ft_regroup(&c,&command);
-        printlst(command);
-        //PRINTF
+	while (1)
+	{
+		ft_regroup(&c, &commande);
+		tmp = ft_cmdlstlast(commande);
+		if (tmp)
+		{
+			write(STDOUT_FILENO, "\n", 2);
 
-        if (c == 'q')
-        {
-            free(line);
-            exit(EXIT_FAILURE);
-        }
-        if (c == 'v')
-        {
-            write(STDOUT_FILENO, "\x1b[2J", 4);
-            write(STDOUT_FILENO, "\x1b[H", 3);
-        }
-    }
-    return 0;
+			printlst(tmp->lststr);
+			write(STDOUT_FILENO, "\n", 2);
+		}
+		else
+		{
+			write(STDOUT_FILENO,"ERROR",7);
+		}
+		
+		//PRINTF
+
+		if (c == 'q')
+		{
+			free(line);
+			exit(EXIT_FAILURE);
+		}
+		if (c == 'v')
+		{
+			write(STDOUT_FILENO, "\x1b[2J", 4);
+			write(STDOUT_FILENO, "\x1b[H", 3);
+		}
+	}
+	return 0;
 }
