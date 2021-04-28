@@ -388,12 +388,10 @@ void ft_regroup(long *s, t_cmdarlist **cmdhist, char *tc, char *backs, int lim, 
 				if (lin == li)
 					{
 					tputs(tgoto(tc, o + 29, lin), 1, ft_putchar);
-					tputs(tgoto(backs, o + 29, lin), 1, ft_putchar);
 					}
 					else
 					{
-					tputs(tgoto(tc, (o-55)%(lim), lin), 1, ft_putchar);
-					tputs(tgoto(backs,(o-55)%(lim), lin), 1, ft_putchar);
+					tputs(tgoto(tc, (o-55)%(colm), lin), 1, ft_putchar);
 					}
 			}
 			/*
@@ -483,8 +481,8 @@ void ft_regroup(long *s, t_cmdarlist **cmdhist, char *tc, char *backs, int lim, 
 					}
 					else
 					{
-					tputs(tgoto(tc, (o-55)%(lim), lin), 1, ft_putchar);
-					tputs(tgoto(backs,(o-55)%(lim), lin), 1, ft_putchar);
+					tputs(tgoto(tc, (o-55)%(colm), lin), 1, ft_putchar);
+					tputs(tgoto(backs,(o-55)%(colm), lin), 1, ft_putchar);
 					}
 					
 					
@@ -553,8 +551,7 @@ int main()
 
 	int column_count = tgetnum("co");
 	int line_count = tgetnum("li");
-	/*
-	char *cl_cap = tgetstr("cl", NULL);
+	/*char *cl_cap = tgetstr("cl", NULL);
 	tputs (cl_cap, 1, ft_putchar);*/
 	char *tc_pos = tgetstr("cm", NULL);
 	char *tc_back = tgetstr("ce", NULL);
