@@ -61,18 +61,6 @@ t_charlist *ft_charlstlast(t_charlist *lst)
 	return (lst2);
 }
 
-t_charlist *ft_charlstfirst(t_charlist *lst)
-{
-	t_charlist *lst2;
-
-	lst2 = lst;
-	if (!lst)
-		return ((void *)0);
-	while (lst2->previous)
-		lst2 = lst2->previous;
-	return (lst2);
-}
-
 t_cmdarlist *ft_cmdlstlast(t_cmdarlist *lst)
 {
 	t_cmdarlist *lst2;
@@ -195,32 +183,6 @@ int ft_putchar(int tc)
 
 struct termios origin;
 
-
-t_cmdlist *ft_cmdstrnew(t_charlist *cmd,int i)
-{
-	t_cmdlist *cmdstr;
-	int n;
-
-	n  = 0;
-	cmdstr = malloc(sizeof(t_cmdlist));
-	cmdstr->str = malloc((sizeof(char) * i) + 1);
-	while(cmd != NULL && n < i)
-	{
-		cmdstr->str[n] = cmd->c;
-		cmd = cmd->next;
-		n++;
-	}
-	cmdstr->str[i] = '\0';
-	return (cmdstr);
-}
-
-void skipwhitespace(t_charlist *cmd)
-{
-	while(cmd != NULL && ((cmd->c >= 9 && cmd->c <= 13) || (cmd->c == 32)))
-		cmd = cmd->next;
-}
-
-
 char *cmdtochar(t_charlist *cmd)
 {
 	t_charlist *cmmd;
@@ -232,7 +194,7 @@ char *cmdtochar(t_charlist *cmd)
 	i = 0;
 	i = ft_charlstlen(cmd);
 	cmdstr = malloc(sizeof(t_cmdlist));
-	cmdstr->str = malloc((sizeof(char) * i)+1);
+	cmdstr->str = malloc((sizeof(char) * i) + 1);
 	while (cmd != NULL && cmd->c != '\0')
 	{
 		cmdstr->str[n] = cmd->c;
@@ -241,16 +203,6 @@ char *cmdtochar(t_charlist *cmd)
 	}
 	cmdstr->str[i] = '\0';
 	return (cmdstr->str);
-}
-
-int ft_passint(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i] <= '9' && str[i] >= '0')
-		i++;
-	return (i);
 }
 
 void cursor_pos(int *line, int *col)
@@ -267,7 +219,7 @@ void cursor_pos(int *line, int *col)
 	buf[rett] = '\0';
 	while (buf[i] != '\0')
 	{
-		while(!ft_isdigit(buf[i]) && buf[i] != '\0')
+		while (!ft_isdigit(buf[i]) && buf[i] != '\0')
 			i++;
 		if (buf[i] <= '9' && buf[i] >= '0' && start == 0)
 		{
@@ -286,7 +238,6 @@ void cursor_pos(int *line, int *col)
 
 void rawmode()
 {
-
 	struct termios raw;
 	tcgetattr(STDIN_FILENO, &origin);
 
@@ -333,37 +284,33 @@ void clearcharlst(t_charlist **lst, int c)
 
 void ft_regroup(long *s, t_cmdarlist **cmdhist, char *tc, char *backs, int lim, int colm)
 {
-	long c;
 	t_charlist *charlst;
 	t_charlist *tmp;
 	t_charlist *last;
 	t_cmdarlist *cmd;
 	t_cmdarlist *history;
-	t_cmdarlist *historyF;
 	t_charlist *history_tmp;
+	long c;
 	int y;
-	int start;
 	int li;
 	int col;
 	int lin;
 	int cole;
+	int o;
+
 	charlst = NULL;
 	tmp = NULL;
 	cmd = NULL;
 	history = NULL;
 	history_tmp = NULL;
 	c = 0;
-	start = 0;
 	history = ft_cmdlstlast(*cmdhist);
 	y = 0;
-	last = ft_charlstnew('\0');
-	charlst = last;
-	int o;
+	charlst = ft_charlstnew('\0');
 	o = 0;
-	cursor_pos(&li,&col);
-	li = li-1;
+	cursor_pos(&li, &col);
+	li = li - 1;
 	lin = li;
-
 
 	//Prompt
 	write(STDOUT_FILENO, "\x1b[32m()\x1b[30m==[\x1b[36m:::::::> MINISHELL \x1b[35m✗ \x1b[37m : ", 57);
@@ -380,19 +327,18 @@ void ft_regroup(long *s, t_cmdarlist **cmdhist, char *tc, char *backs, int lim, 
 				tmp = ft_charlstnew(c);
 				ft_charlstadd_back2(&charlst, tmp);
 				o++;
-				if (o%(colm) == (colm-29))
+				if (o % (colm) == (colm - 29))
 				{
 					lin++;
-		
 				}
 				if (lin == li)
-					{
+				{
 					tputs(tgoto(tc, o + 29, lin), 1, ft_putchar);
-					}
-					else
-					{
-					tputs(tgoto(tc, (o-55)%(colm), lin), 1, ft_putchar);
-					}
+				}
+				else
+				{
+					tputs(tgoto(tc, (o - 55) % (colm), lin), 1, ft_putchar);
+				}
 			}
 			/*
 			//Check UP arrow
@@ -417,29 +363,7 @@ void ft_regroup(long *s, t_cmdarlist **cmdhist, char *tc, char *backs, int lim, 
 					}
 				}
 			}
-
 			
-			//gauche
-			if (c == 4479771)
-			{
-				
-				if (o > 0)
-				{
-					o--;
-					tputs(tgoto(tc, o+29, 1), 1, ft_putchar);
-				}
-			}
-			//droite
-			if (c == 4414235)
-			{
-				if (o < y)
-				{
-				o++;
-				tputs(tgoto(tc, o+29, 1), 1, ft_putchar);
-				}
-			}
-			
-
 			// DOWN ARROW
 			if (c == 4348699)
 			{
@@ -461,31 +385,26 @@ void ft_regroup(long *s, t_cmdarlist **cmdhist, char *tc, char *backs, int lim, 
 					}
 				}
 			}*/
+
 			if (c == 127 && y > 0)
 			{
-				//cursor_pos(&li,&col);
 				if (o > 0)
 				{
-
-				
-					if (o%(colm) == (colm-29))
+					if (o % (colm) == (colm - 29))
 					{
 						lin--;
 					}
-					
 					o--;
 					if (lin == li)
 					{
-					tputs(tgoto(tc, o + 29, lin), 1, ft_putchar);
-					tputs(tgoto(backs, o + 29, lin), 1, ft_putchar);
+						tputs(tgoto(tc, o + 29, lin), 1, ft_putchar);
+						tputs(tgoto(backs, o + 29, lin), 1, ft_putchar);
 					}
 					else
 					{
-					tputs(tgoto(tc, (o-55)%(colm), lin), 1, ft_putchar);
-					tputs(tgoto(backs,(o-55)%(colm), lin), 1, ft_putchar);
+						tputs(tgoto(tc, (o - 55) % (colm), lin), 1, ft_putchar);
+						tputs(tgoto(backs, (o - 55) % (colm), lin), 1, ft_putchar);
 					}
-					
-					
 				}
 				tmp = ft_charlstlast(charlst);
 				if (tmp->previous != NULL)
@@ -518,17 +437,15 @@ void ft_regroup(long *s, t_cmdarlist **cmdhist, char *tc, char *backs, int lim, 
 int main()
 {
 	rawmode();
-	long c;
-	c = '\0';
-	char *line;
+	long		c;
+	char		*line;
 	line = NULL;
-	t_charlist *command;
-	t_cmdarlist *commande;
-	t_cmdarlist *tmp;
-	char *str;
+	t_cmdarlist	*commande;
+	t_cmdarlist	*tmp;
+	char		*str;
 	commande = NULL;
-	int ret;
-	char *term_type = getenv("TERM");
+	int			ret;
+	char		*term_type = getenv("TERM");
 
 	if (term_type == NULL)
 	{
@@ -549,13 +466,14 @@ int main()
 		return -1;
 	}
 
+	c = '\0';
 	int column_count = tgetnum("co");
 	int line_count = tgetnum("li");
 	/*char *cl_cap = tgetstr("cl", NULL);
 	tputs (cl_cap, 1, ft_putchar);*/
 	char *tc_pos = tgetstr("cm", NULL);
 	char *tc_back = tgetstr("ce", NULL);
-	
+
 	while (1)
 	{
 		ft_regroup(&c, &commande, tc_pos, tc_back, line_count, column_count);
@@ -569,10 +487,9 @@ int main()
 				{
 					//C'est Ici que l'on recup la commande en char*
 					str = cmdtochar(tmp->lststr);
-					printf("%s",str);
+					printf("%s", str);
 					fflush(NULL);
 				}
-					
 				write(STDOUT_FILENO, "\n", 2);
 			}
 			else
