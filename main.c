@@ -1,29 +1,69 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <string.h>
-#include <term.h>
-#include <curses.h>
-#include<signal.h>
 
-void sig_handler(int signum){
+#include"minishell.h"
 
-  //Return type of the handler function should be void
-  write(1,"CONTROL C",10);
+
+void sig_handler(int signum)
+{
+  exit(0);
+}
+
+void	ft_cutcmd(t_cmd **cmd, char *line)
+{
+	int	i;
+	char *l;
+	int n;
+	t_cmd *tmp;
+	char **split;
+	int y;
+
+	y = 0;
+	split = NULL;
+	n = 0;
+	l = NULL;
+	i = 0;
+
+	while (line[i] != '\0')
+	{
+		if (line[i] == '|' || line[i] == ';')
+		{
+			l = ft_substr(line,n,i-n);
+			split = ft_split(l,' ');
+			tmp = ft_tcmdnew(split);
+			ft_tcmdadd_back(cmd,tmp);
+			n = i;
+		}
+		i++;
+
+	}
+
+
+
+
 }
 
 
 int main()
 {
+	char *cmd;
+	t_cmd *ccmd;
 
+	ccmd = NULL;
+	cmd = NULL;
 	while(1)
 	{
 		signal(SIGINT,sig_handler);
-		printf("%s\n",readline("\x1b[36m❯ \x1b[35m(Minishell)\x1b[37m "));
+		cmd = readline("\x1b[36m❯ \x1b[35m(Minishell)\x1b[37m ");
+		if (cmd != NULL)
+		{
+			ft_cutcmd(&ccmd,cmd);
+			break;
+		}
 		
 	}
-
+	while(ccmd != NULL)
+	{
+		printf("%s",ccmd->args[0]);
+		ccmd = ccmd->next;
+	}
 
 }
