@@ -6,13 +6,13 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/08/19 16:03:34 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/08/20 18:10:46 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
+# define PIPED 1
 #include <stdio.h>
 #include <unistd.h>
 #include <stdio.h>

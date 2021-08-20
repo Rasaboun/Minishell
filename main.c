@@ -29,16 +29,21 @@ void	ft_cutcmd(t_cmd **cmd, char *line)
 			l = ft_substr(line,n,i-n);
 			split = ft_split(l,' ');
 			tmp = ft_tcmdnew(split);
+			tmp->type = PIPED;
 			ft_tcmdadd_back(cmd,tmp);
+			i++;
 			n = i;
 		}
-		i++;
-
+		else
+			i++;
 	}
-
-
-
-
+		l = ft_substr(line,n,i-n);
+		split = ft_split(l,' ');
+		tmp = ft_tcmdnew(split);
+		ft_tcmdadd_back(cmd,tmp);
+		tmp = ft_tcmdlast(*cmd);
+		if (tmp->previous != NULL && tmp->previous->type == PIPED)
+			tmp->type = PIPED;
 }
 
 
@@ -63,6 +68,8 @@ int main()
 	while(ccmd != NULL)
 	{
 		printf("%s",ccmd->args[0]);
+		if (ccmd->type == PIPED)
+			printf(" TYPE PIPED\n");
 		ccmd = ccmd->next;
 	}
 
