@@ -14,9 +14,7 @@ void	ft_cutcmd(t_cmd **cmd, char *line)
 	int n;
 	t_cmd *tmp;
 	char **split;
-	int y;
 
-	y = 0;
 	split = NULL;
 	n = 0;
 	l = NULL;
@@ -28,8 +26,12 @@ void	ft_cutcmd(t_cmd **cmd, char *line)
 		{
 			l = ft_substr(line,n,i-n);
 			split = ft_split(l,' ');
+			free(l);
 			tmp = ft_tcmdnew(split);
-			tmp->type = PIPED;
+			if (line[i] == '|')
+				tmp->type = PIPED;
+			if (line[i] == ';')
+				tmp->type = BREAK;
 			ft_tcmdadd_back(cmd,tmp);
 			i++;
 			n = i;
@@ -39,11 +41,10 @@ void	ft_cutcmd(t_cmd **cmd, char *line)
 	}
 		l = ft_substr(line,n,i-n);
 		split = ft_split(l,' ');
+		free(l);
 		tmp = ft_tcmdnew(split);
+		tmp->type = END;
 		ft_tcmdadd_back(cmd,tmp);
-		tmp = ft_tcmdlast(*cmd);
-		if (tmp->previous != NULL && tmp->previous->type == PIPED)
-			tmp->type = PIPED;
 }
 
 
@@ -65,11 +66,15 @@ int main()
 		}
 		
 	}
-	while(ccmd != NULL)
+	while(ccmd != NULL) // AFFICHE CHAQUE COMMANDE AVEC SON TYPE
 	{
 		printf("%s",ccmd->args[0]);
 		if (ccmd->type == PIPED)
 			printf(" TYPE PIPED\n");
+		if (ccmd->type == BREAK)
+			printf(" TYPE BREAK\n");
+		if (ccmd->type == END)
+			printf(" TYPE END\n");
 		ccmd = ccmd->next;
 	}
 
