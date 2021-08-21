@@ -52,7 +52,8 @@ int main()
 {
 	char *cmd;
 	t_cmd *ccmd;
-
+	int test;
+	
 	ccmd = NULL;
 	cmd = NULL;
 	while(1)
