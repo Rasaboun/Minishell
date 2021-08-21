@@ -1,5 +1,5 @@
 
-#include"includes/minishell.h"
+#include"minishell.h"
 
 
 void sig_handler(int signum)
@@ -52,8 +52,7 @@ int main()
 {
 	char *cmd;
 	t_cmd *ccmd;
-	int test;
-	
+
 	ccmd = NULL;
 	cmd = NULL;
 	while(1)
