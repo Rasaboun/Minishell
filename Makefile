@@ -1,6 +1,6 @@
 NAME		=	minishell
 
-LIBFT_DIR	=	./libft/
+LIBFT_DIR	=	./Libft/
 LIBFT		=	$(LIBFT_DIR)/libft.a
 
 SRCS		=	./srcs/parsing/main.c \
