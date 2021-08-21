@@ -1,29 +1,53 @@
-NAME = minishell
+NAME		=	minishell
 
-CC = gcc
+LIBFT_DIR	=	./libft/
+LIBFT		=	$(LIBFT_DIR)/libft.a
 
-CCFLAGS = -Wall -Wextra -Werror
+SRCS		=	./srcs/parsing/main.c \
+					./srcs/parsing/ft_tcmdsize.c \
+					./srcs/parsing/ft_tcmdnew.c \
+					./srcs/parsing/ft_tcmdlast.c \
+					./srcs/parsing/ft_tcmdadd_back.c 
 
-INCLUDE = -lreadline
+OBJS		=	$(SRCS:.c=.o)
 
-SRC = main.c ft_tcmdsize.c ft_tcmdnew.c ft_tcmdlast.c ft_tcmdadd_back.c 
+INCLUDES	=	./includes
+
+CC			=	gcc -g3 -fsanitize=address
+
+HEAD		=	-I./$(INCLUDES) -I./$(LIBFT_DIR)
+
+CCFLAGS 	=	-Wall -Wextra -Werror -lreadline
+
+LFLAGS		=	-lreadline -L ./$(LIBFT_DIR) -lft	
 
 all: $(NAME)
 
-OBJ=$(SRC:.c=.o)
-
-$(NAME): $(OBJ)
-	gcc -o $(NAME) $(OBJ) Libft/libft.a $(INCLUDE)
+$(NAME)	:	$(OBJS) $(LIBFT)
+	@echo "\n"
+	@echo "\033[0;32mCompiling minishell..."
+	@$(CC) $(OBJS) $(HEAD) $(CFLAGS) $(LFLAGS) -o $@
+	@echo "\n\033[0mDone !"
 
 %.o: %.c
-	$(CC) -o $@ -c $< $(CFLAGS)
+	@printf "\033[0;33mGenerating minishell objects... %-33.33s\r" $@
+	@$(CC) $(CFLAGS) $(HEAD) -c $< -o $@
+
+$(LIBFT):
+	@make -C $(LIBFT_DIR)
 
 clean:
-	rm -f $(OBJ)
+	@echo "\nDeleting objects..."
+	@make clean -C $(LIBFT_DIR)
+	@rm -f $(OBJS)
+	@echo "\033[0m"
 
 fclean: clean
-	rm -f $(NAME)
+	@echo "\nDeleting executable..."
+	@make fclean -C $(LIBFT_DIR)
+	@rm -f $(NAME)
+	@echo "\033[0m"
 
 re: fclean all
 
-.PHONY: clean fclean all
+.PHONY: clean fclean all re

@@ -37,16 +37,23 @@ bonus: $(OBJ_BONUS) $(OBJ)
 	ranlib $(NAME)
 
 $(NAME): $(OBJ)
-	ar cr $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@echo "\n"
+	@echo "\033[0;32mCompiling libft..."
+	@ar cr $(NAME) $(OBJ)
+	@ranlib $(NAME)
+	@echo "\n\033[0mDone !"
+
+
 %.o: %.c
-	$(CC) -o $@ -c $< $(CFLAGS)
+	@printf "\033[0;33mGenerating libft objects... %-33.33s\r" $@
+	@$(CC) -o $@ -c $< $(CFLAGS)
+
 
 clean:
-	rm -f $(OBJ) $(OBJ_BONUS)
+	@rm -f $(OBJ) $(OBJ_BONUS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
