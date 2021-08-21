@@ -55,6 +55,7 @@ int main()
 
 	ccmd = NULL;
 	cmd = NULL;
+	//
 	while(1)
 	{
 		signal(SIGINT,sig_handler);
@@ -62,6 +63,7 @@ int main()
 		if (cmd != NULL)
 		{
 			ft_cutcmd(&ccmd,cmd);
+			//
 			break;
 		}
 		
