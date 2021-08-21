@@ -1,12 +1,12 @@
 
-#include"minishell.h"
+#include"includes/minishell.h"
 
 
 void sig_handler(int signum)
 {
   exit(0);
 }
-
+//
 void	ft_cutcmd(t_cmd **cmd, char *line)
 {
 	int	i;
