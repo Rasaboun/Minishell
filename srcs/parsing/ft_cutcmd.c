@@ -17,6 +17,12 @@ void	ft_cutcmd(t_cmd **cmd, char *line)
 	{
 		if (line[i] == '|' || line[i] == ';')
 		{
+			if (line[i+1] == '|' || line[i+1] == ';')
+			{
+				write(2,"Error argument",15);
+				//free
+				exit(0);
+			}
 			l = ft_substr(line,n,i-n);
 			split = ft_split(l,' ');
 			free(l);
