@@ -15,6 +15,7 @@ void	ft_cutcmd(t_cmd **cmd, char *line)
 
 	while (line[i] != '\0')
 	{
+		
 		if (line[i] == '|' || line[i] == ';')
 		{
 			if (line[i+1] == '|' || line[i+1] == ';')
