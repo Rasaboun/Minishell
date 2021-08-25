@@ -8,7 +8,13 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/parsing/ft_tcmdnew.c \
 					./srcs/parsing/ft_tcmdlast.c \
 					./srcs/parsing/ft_tcmdadd_back.c \
-					./srcs/parsing/ft_cutcmd.c
+					./srcs/parsing/ft_cutcmd.c \
+					./srcs/execution/exec_builtins.c \
+					./srcs/execution/exec_commands.c \
+					./srcs/builtins/echo.c \
+					./srcs/utils/env_init.c \
+					./srcs/utils/env_utils.c \
+					./srcs/utils/utils.c
 					
 
 OBJS		=	$(SRCS:.c=.o)

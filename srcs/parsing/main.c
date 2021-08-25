@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/08/25 18:49:51 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/08/25 22:04:07 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int main(int ac, char **av, char **envp)
 			ft_cutcmd(&ccmd,cmd);
 			exec_cmds(ccmd, env);
 			//
-			break;
+			//break;
 		}
 		
-	}
+	}/*
 	while(ccmd != NULL) // AFFICHE CHAQUE COMMANDE AVEC SON TYPE
 	{
 		printf("%s",ccmd->args[0]);
@@ -53,6 +53,6 @@ int main(int ac, char **av, char **envp)
 		if (ccmd->type == END)
 			printf(" TYPE END\n");
 		ccmd = ccmd->next;
-	}
+	}*/
 
 }

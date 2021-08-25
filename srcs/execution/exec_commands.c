@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_init.c                                         :+:      :+:    :+:   */
+/*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 18:44:58 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/08/25 21:50:09 by dkoriaki         ###   ########.fr       */
+/*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
+/*   Updated: 2021/08/25 22:01:06 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*ft_init_env(char **envp)
+int	exec_cmds(t_cmd *ccmd, t_env *envp)
 {
-	int		i;
-	t_env	*env;
+	int	ret;
 
-	i = 0;
-	env = NULL;
-	while (envp[i] != NULL)
+	ret = SUCCESS;
+	while(ccmd)
 	{
-		env = lst_add_back(env, envp[i]);
-		i++;
+		//if (check_builtins(ccmd->args[0])
+		ret = exec_builtins(ccmd, envp);
+		ccmd = ccmd->next;
 	}
-	return (env);
+
+	return (ret);
 }

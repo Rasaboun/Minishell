@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_commands.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/08/25 18:50:13 by dkoriaki         ###   ########.fr       */
+/*   Created: 2021/08/25 21:56:24 by dkoriaki          #+#    #+#             */
+/*   Updated: 2021/08/25 21:57:27 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_cmds(t_cmd *ccmd, t_env *envp)
+void	ft_putstr(char *str)
 {
-	int	ret;
+	int		i;
 
-	ret = SUCCESS;
-	while(ccmd)
+	i = 0;
+	while (str[i])
 	{
-		//if (check_builtins(ccmd->args[0])
-		ret = exec_builtins(ccmd, envp);
-		ccmd = ccmd->next;
+		write(STDOUT_FILENO, &str[i], 1);
+		i++;
 	}
-
-	return (ret);
 }

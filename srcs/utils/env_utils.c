@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:47:10 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/08/25 18:48:17 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/08/25 21:50:56 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void    print_lst(t_env *env)
     }
     printf("\n");
 }
-
+/*
 void	ft_env(t_env *env)
 {
 	while (env)
@@ -64,4 +64,4 @@ void	ft_env(t_env *env)
 		env = env->next;
 	}
 	write(1, "\n", 1);
-}
+}*/

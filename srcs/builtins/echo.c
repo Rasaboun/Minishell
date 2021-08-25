@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:19:07 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/08/25 18:09:26 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/08/25 22:11:10 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,29 @@
 
 int	ft_echo(t_cmd *ccmd)
 {
-	int		i;
 	int		new_line;
-	char	str;
+	int		i;
 
-	i = 0;
 	new_line = 0;
-	str = ccmd->args[0];
-	if (ccmd->args[2])
+	i = 1;
+	if (ccmd->args[1] && ft_strcmp(ccmd->args[1], "-n") == 0)
+		new_line = 1;
+	while (ccmd->args[i])	
 	{
-		if (ft_strcmp(ccmd->args[1];, "-n") == 0)
-			new_line = 1;	
-	}
-	while (str[i])
-	{
-		write(STDOUT_FILENO, &str[i], 1);
+		if (i > 1)
+			write(STDOUT_FILENO, " ", 1);
+		ft_putstr(ccmd->args[i]);
 		i++;
 	}
 	if (new_line)
-		return ;
+		return (1);
 	write(STDOUT_FILENO, "\n", 1);
+	return (1);
 }
+ // Je ne sais pas pq mais quand je fais plsrs fois echo qlq chose, ca affiche
+ // ce que j'ai deja écris
+ //essaie de faire "echo ca" et a la suite "echo va"
+ // t'aura :
+ // ca
+ // ca           <- lui il est de trop
+ // va
