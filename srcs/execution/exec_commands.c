@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/08/25 22:01:06 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/08/31 00:49:15 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@ int	exec_cmds(t_cmd *ccmd, t_env *envp)
 {
 	int	ret;
 
+	t_cmd *cmd;
+
+	cmd = ccmd;
 	ret = SUCCESS;
-	while(ccmd)
+	while(cmd)
 	{
 		//if (check_builtins(ccmd->args[0])
-		ret = exec_builtins(ccmd, envp);
-		ccmd = ccmd->next;
+		ret = exec_builtins(cmd, envp);
+		cmd = cmd->next;
 	}
 
 	return (ret);

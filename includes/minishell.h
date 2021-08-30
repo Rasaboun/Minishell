@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/08/25 21:57:34 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/08/31 00:15:49 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		exec_builtins(t_cmd *ccmd, t_env *env);
 
 //---------- Utils ----------//
 
-int		ft_strcmp(char *s1, char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 void    print_lst(t_env *env);
 void	ft_env(t_env *env);
 t_env	*ft_init_env(char **envp);
