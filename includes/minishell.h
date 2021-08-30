@@ -6,7 +6,11 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/08/31 00:15:49 by rasaboun         ###   ########.fr       */
+=======
+/*   Updated: 2021/08/22 15:50:31 by rasaboun         ###   ########.fr       */
+>>>>>>> fd01c27b869c93ed437746de327bc955a6ff4957
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +75,6 @@ t_cmd	*ft_tcmdlast(t_cmd *lst);
 int		ft_tcmdsize(t_cmd *lst);
 t_cmd	*ft_tcmdnew(char **args);
 void	ft_cutcmd(t_cmd **cmd, char *line);
-
 
 
 #endif
