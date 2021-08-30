@@ -16,7 +16,6 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/utils/env_utils.c \
 					./srcs/utils/utils.c
 					
-
 OBJS		=	$(SRCS:.c=.o)
 
 INCLUDES	=	./includes
