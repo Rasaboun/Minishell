@@ -1,18 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
+/*   Updated: 2021/08/25 22:04:07 by dkoriaki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+<<<<<<< HEAD
 #include "minishell.h"
+=======
+
+# include "minishell.h"
+>>>>>>> origin/master
 
 void sig_handler(int signum)
 {
   exit(0);
 }
 
-int main()
+int main(int ac, char **av, char **envp)
 {
+	(void)ac;
+	(void)av;
 	char *cmd;
 	t_cmd *ccmd;
+	t_env *env;
 
 	ccmd = NULL;
 	cmd = NULL;
+	env = ft_init_env(envp);
+	//
 	while(1)
 	{
 		signal(SIGINT,sig_handler);
@@ -20,10 +41,12 @@ int main()
 		if (cmd != NULL)
 		{
 			ft_cutcmd(&ccmd,cmd);
-			break;
+			exec_cmds(ccmd, env);
+			//
+			//break;
 		}
 		
-	}
+	}/*
 	while(ccmd != NULL) // AFFICHE CHAQUE COMMANDE AVEC SON TYPE
 	{
 		printf("%s",ccmd->args[0]);
@@ -34,6 +57,6 @@ int main()
 		if (ccmd->type == END)
 			printf(" TYPE END\n");
 		ccmd = ccmd->next;
-	}
+	}*/
 
 }
