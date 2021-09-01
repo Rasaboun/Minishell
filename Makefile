@@ -16,12 +16,11 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/utils/env_utils.c \
 					./srcs/utils/utils.c
 					
-
 OBJS		=	$(SRCS:.c=.o)
 
 INCLUDES	=	./includes
 
-CC			=	gcc -g3 -fsanitize=address
+CC			=	gcc -g3 
 
 HEAD		=	-I./$(INCLUDES) -I./$(LIBFT_DIR)
 

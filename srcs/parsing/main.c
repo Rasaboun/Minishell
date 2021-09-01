@@ -3,27 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/08/25 22:04:07 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/08/31 01:27:11 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 
-# include "minishell.h"
+
+t_cmd *ccmd;
+
+
+
+void	ft_freecmd(t_cmd *cmd)
+{
+	int i;
+	t_cmd *tmp;
+
+	i = 0;
+	while (cmd)
+	{
+		i = 0;
+		while (cmd->args && cmd->args[i])
+		{
+			free(cmd->args[i]);
+			i++;
+		}
+		free(cmd->args);
+		tmp = cmd;
+		
+		cmd = cmd->next;
+		free(tmp);
+	}
+}
+
+
 
 void sig_handler(int signum)
 {
+  ft_freecmd(ccmd);
   exit(0);
 }
+
 
 int main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
 	char *cmd;
-	t_cmd *ccmd;
 	t_env *env;
 
 	ccmd = NULL;
@@ -36,8 +65,11 @@ int main(int ac, char **av, char **envp)
 		cmd = readline("\x1b[36m❯ \x1b[35m(Minishell)\x1b[37m ");
 		if (cmd != NULL)
 		{
+			add_history(cmd);
 			ft_cutcmd(&ccmd,cmd);
 			exec_cmds(ccmd, env);
+			ft_freecmd(ccmd);
+			ccmd = NULL;
 			//
 			//break;
 		}
