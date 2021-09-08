@@ -43,11 +43,11 @@ void	ft_cutcmd(t_cmd **cmd, char *line)
 
 	while (line[i] != '\0')
 	{
-		if (line[i] == '"')
+		if (line[i] == '\'')// 39 = '
 		{
 			q++;
 			i++;
-		while(line[i] != '"' && line[i] != '\0')
+		while(line[i] != '\'' && line[i] != '\0')
 			i++;
 		if (line[i] == '\0')
 		{
