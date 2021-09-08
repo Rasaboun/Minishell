@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/08/31 01:05:12 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/09/01 11:34:38 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <limits.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <string.h>
@@ -49,6 +53,8 @@ typedef struct	s_env {
 //------- Builtins -------//
 
 int		ft_echo(t_cmd *ccmd);
+int		ft_pwd(void);
+
 
 //---------- Execution ----------//
 
@@ -63,6 +69,8 @@ void	ft_env(t_env *env);
 t_env	*ft_init_env(char **envp);
 t_env 	*lst_add_back(t_env *env, char *str);
 void	ft_putstr(char *str);
+void	ft_write_error(char *str);
+
 
 
 

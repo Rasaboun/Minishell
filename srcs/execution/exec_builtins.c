@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 17:38:30 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/08/31 00:21:06 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/09/01 11:40:44 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int		exec_builtins(t_cmd *ccmd, t_env *env)
 		return (ft_echo(ccmd));
 	}
 		
-	/*if (ft_strcmp(ccmd->args[0], "cd") == 0)
-		return (1);
+	if (ft_strcmp(ccmd->args[0], "cd") == 0)
+		return (ft_cd(ccmd, env));
 	if (ft_strcmp(ccmd->args[0], "pwd") == 0)
-		return (1);
-	if (ft_strcmp(ccmd->args[0], "export") == 0)
+		return (ft_pwd());
+	/*if (ft_strcmp(ccmd->args[0], "export") == 0)
 		return (1);
 	if (ft_strcmp(ccmd->args[0], "unset") == 0)
 		return (1);

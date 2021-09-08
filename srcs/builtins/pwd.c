@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 21:56:24 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/01 11:33:40 by dkoriaki         ###   ########.fr       */
+/*   Created: 2021/09/01 10:50:24 by dkoriaki          #+#    #+#             */
+/*   Updated: 2021/09/01 11:03:56 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_write_error(char *str)
+int	ft_pwd(void)
 {
-	int		i;
-
-	i = 0;
-	while (str[i])
+	char	path[PATH_MAX];
+	
+	if (getcwd(path, sizeof(path)))
 	{
-		write(STDERR_FILENO, &str[i], 1);
-		i++;
+		write(STDOUT_FILENO, &path, ft_strlen(path));
+		write(STDOUT_FILENO, "\n", 1);
+		return (SUCCESS);
 	}
-}
-
-void	ft_putstr(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		write(STDOUT_FILENO, &str[i], 1);
-		i++;
-	}
+	return (FAILURE);
 }
