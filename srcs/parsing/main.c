@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/08/31 01:27:11 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/09/08 00:42:22 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,21 @@ void sig_handler(int signum)
   exit(0);
 }
 
+void	printcmd()
+{
+	while(ccmd != NULL) // AFFICHE CHAQUE COMMANDE AVEC SON TYPE
+	{
+		printf("%s",ccmd->args[0]);
+		if (ccmd->type == PIPED)
+			printf(" TYPE PIPED\n");
+		if (ccmd->type == BREAK)
+			printf(" TYPE BREAK\n");
+		if (ccmd->type == END)
+			printf(" TYPE END\n");
+		ccmd = ccmd->next;
+	}
+}
+
 
 int main(int ac, char **av, char **envp)
 {
@@ -68,23 +83,15 @@ int main(int ac, char **av, char **envp)
 			add_history(cmd);
 			ft_cutcmd(&ccmd,cmd);
 			exec_cmds(ccmd, env);
+			printcmd();
+			free(cmd);
 			ft_freecmd(ccmd);
 			ccmd = NULL;
 			//
 			//break;
 		}
 		
-	}/*
-	while(ccmd != NULL) // AFFICHE CHAQUE COMMANDE AVEC SON TYPE
-	{
-		printf("%s",ccmd->args[0]);
-		if (ccmd->type == PIPED)
-			printf(" TYPE PIPED\n");
-		if (ccmd->type == BREAK)
-			printf(" TYPE BREAK\n");
-		if (ccmd->type == END)
-			printf(" TYPE END\n");
-		ccmd = ccmd->next;
-	}*/
+	}
+
 
 }
