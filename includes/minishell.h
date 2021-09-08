@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/09/01 11:34:38 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/08 17:57:39 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@
 # define SUCCESS 0
 # define FAILURE 1
 
+typedef struct	s_minishell
+{
+	int		exit;
+	int		ret;
+	int		stdout;
+	int		stdin;
+}				t_minishell;
+
 typedef	struct	s_cmd
 {
 	char **args;
@@ -54,7 +62,7 @@ typedef struct	s_env {
 
 int		ft_echo(t_cmd *ccmd);
 int		ft_pwd(void);
-
+int		ft_exit(t_cmd *ccmd);
 
 //---------- Execution ----------//
 
@@ -70,6 +78,7 @@ t_env	*ft_init_env(char **envp);
 t_env 	*lst_add_back(t_env *env, char *str);
 void	ft_putstr(char *str);
 void	ft_write_error(char *str);
+int		ft_isnum(char *str);
 
 
 

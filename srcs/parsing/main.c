@@ -6,16 +6,11 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/01 11:34:05 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/08 18:09:31 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-t_cmd *ccmd;
-
-
 
 void	ft_freecmd(t_cmd *cmd)
 {
@@ -47,16 +42,27 @@ void sig_handler(int signum)
   exit(0);
 }
 
+void	ft_init_minishell(t_minishell *minishell)
+{
+	minishell->exit = 0;
+	minishell->ret = 0;
+	minishell->stdout = dup(STDOUT_FILENO);
+	minishell->stdin = dup(STDIN_FILENO);
+}
+
 int main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	char *cmd;
-	t_env *env;
+	char			*cmd;
+	t_env			*env;
+	t_minishell		*minishell;
 
 	ccmd = NULL;
 	cmd = NULL;
 	env = ft_init_env(envp);
+	ft_init_minishell(minishell);
+
 	//
 	while(1)
 	{
@@ -69,8 +75,8 @@ int main(int ac, char **av, char **envp)
 			exec_cmds(ccmd, env);
 			ft_freecmd(ccmd);
 			ccmd = NULL;
-			//
-			//break;
+			if (mini->exit == 1)
+				break;
 		}
 		
 	}/*
