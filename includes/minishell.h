@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/09/10 15:36:57 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/10 18:04:48 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,26 +63,30 @@ typedef	struct	s_cmd
 
 int		ft_echo(t_cmd *ccmd);
 int		ft_pwd(void);
-int		ft_exit(t_cmd *ccmd);
+int		ft_exit(t_cmd *ccmd, t_minishell *minishell);
+int		ft_cd(t_cmd *ccmd, t_env *env);
+int		ft_env(t_env *env);
 
 //---------- Execution ----------//
 
-int		exec_cmds(t_cmd *ccmd, t_env *envp);
-int		exec_builtins(t_cmd *ccmd, t_env *env);
+int		exec_cmds(t_cmd *ccmd, t_minishell *minishell);
+int		exec_builtins(t_cmd *ccmd, t_minishell *minishell);
 
 //---------- Utils ----------//
 
 int		ft_strcmp(const char *s1, const char *s2);
 void    print_lst(t_env *env);
-void	ft_env(t_env *env);
 t_env	*ft_init_env(char **envp);
 t_env 	*lst_add_back(t_env *env, char *str);
 void	ft_putstr(char *str);
 void	ft_write_error(char *str);
 int		ft_isnum(char *str);
+int		ft_charchr(char *str, char c);
 
-
-
+t_env	*ft_find_env(char *str, t_env *env);
+char	*ft_change_env(char *str, char *value);
+char	*ft_strjoin_env(char *s1, char *s2);
+int		ft_save_pwd(t_env *env);
 
 void	ft_tcmdadd_back(t_cmd **alst, t_cmd *new);
 t_cmd	*ft_tcmdlast(t_cmd *lst);

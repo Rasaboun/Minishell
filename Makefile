@@ -12,6 +12,8 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/execution/exec_builtins.c \
 					./srcs/execution/exec_commands.c \
 					./srcs/builtins/echo.c \
+					./srcs/builtins/env.c \
+					./srcs/builtins/cd.c \
 					./srcs/builtins/pwd.c \
 					./srcs/builtins/exit.c \
 					./srcs/utils/env_init.c \

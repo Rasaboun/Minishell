@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 11:10:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/01 11:55:52 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/10 18:04:07 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ int		ft_cd(t_cmd *ccmd, t_env *env)
 	char	*directory;
 
 	directory = ccmd->args[1];
-	//ft_save_oldpwd(env);
+	ft_save_oldpwd(env);
 	if (!directory)
 		return (go_to_home(env));
 	else if (chdir(directory) == 0)
 	{
-		//ft_save_pwd(env);
+		ft_save_pwd(env);
 		return(SUCCESS);
 	}
 	else

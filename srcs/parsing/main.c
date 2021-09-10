@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/10 15:33:04 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/10 16:32:57 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ void sig_handler(int signum)
   exit(0);
 }
 
-void	ft_init_minishell(t_minishell *minishell)
+void	ft_init_minishell(t_minishell *minishell, char **envp)
 {
+	minishell->env = ft_init_env(envp);
 	minishell->exit = 0;
 	minishell->ret = 0;
 	minishell->stdout = dup(STDOUT_FILENO);
@@ -55,16 +56,16 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	char			*cmd;
-	t_env			*env;
-	t_minishell		*minishell;
+	//t_env			*env;
+	t_minishell		minishell;
 
 	ccmd = NULL;
 	cmd = NULL;
-	env = ft_init_env(envp);
-	//ft_init_minishell(minishell);
+	//env = ft_init_env(envp);
+	ft_init_minishell(&minishell, envp);
 
 	//
-	while(1)
+	while(minishell.exit == 0)
 	{
 		signal(SIGINT,sig_handler);
 		cmd = readline("\x1b[36m❯ \x1b[35m(Minishell)\x1b[37m ");
@@ -72,7 +73,7 @@ int main(int ac, char **av, char **envp)
 		{
 			add_history(cmd);
 			ft_cutcmd(&ccmd,cmd);
-			exec_cmds(ccmd, env);
+			minishell.ret = exec_cmds(ccmd, &minishell);
 			//printcmd();
 			free(cmd);
 			ft_freecmd(ccmd);
@@ -82,6 +83,5 @@ int main(int ac, char **av, char **envp)
 		}
 		
 	}
-
-
+	return (minishell.ret);
 }

@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 21:56:24 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/08 17:43:36 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/10 17:23:42 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,24 @@ int	ft_isnum(char *str)
 	{
 		while (str[i])
 		{
-			if (str[i] <= '0' || str[i] >= '9')
+			if (str[i] < '0' || str[i] > '9')
 				return (0);
 			i++;
 		}
 	}
 	return (1);
+}
+
+int	ft_charchr(char *str, char c)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (SUCCESS);
+		i++;
+	}
+	return (FAILURE);
 }
