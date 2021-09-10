@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/08 18:09:31 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/10 15:18:50 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int main(int ac, char **av, char **envp)
 			exec_cmds(ccmd, env);
 			ft_freecmd(ccmd);
 			ccmd = NULL;
-			if (mini->exit == 1)
-				break;
+			//if (mini->exit == 1)
+				//break;
 		}
 		
 	}/*

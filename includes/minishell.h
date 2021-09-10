@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/09/08 17:57:39 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/10 15:05:56 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,14 @@
 # define SUCCESS 0
 # define FAILURE 1
 
+typedef struct	s_env {
+	char			*str;
+	struct s_env	*next;
+}				t_env;
+
 typedef struct	s_minishell
 {
+	t_env	*env;
 	int		exit;
 	int		ret;
 	int		stdout;
@@ -52,11 +58,6 @@ typedef	struct	s_cmd
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
 }				t_cmd;
-
-typedef struct	s_env {
-	char			*str;
-	struct s_env	*next;
-}				t_env;
 
 //------- Builtins -------//
 
