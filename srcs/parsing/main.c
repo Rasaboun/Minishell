@@ -6,11 +6,13 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/10 15:18:50 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/10 15:33:04 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_cmd *ccmd;
 
 void	ft_freecmd(t_cmd *cmd)
 {
@@ -33,8 +35,6 @@ void	ft_freecmd(t_cmd *cmd)
 		free(tmp);
 	}
 }
-
-
 
 void sig_handler(int signum)
 {
@@ -61,7 +61,7 @@ int main(int ac, char **av, char **envp)
 	ccmd = NULL;
 	cmd = NULL;
 	env = ft_init_env(envp);
-	ft_init_minishell(minishell);
+	//ft_init_minishell(minishell);
 
 	//
 	while(1)
@@ -73,23 +73,15 @@ int main(int ac, char **av, char **envp)
 			add_history(cmd);
 			ft_cutcmd(&ccmd,cmd);
 			exec_cmds(ccmd, env);
+			//printcmd();
+			free(cmd);
 			ft_freecmd(ccmd);
 			ccmd = NULL;
 			//if (mini->exit == 1)
 				//break;
 		}
 		
-	}/*
-	while(ccmd != NULL) // AFFICHE CHAQUE COMMANDE AVEC SON TYPE
-	{
-		printf("%s",ccmd->args[0]);
-		if (ccmd->type == PIPED)
-			printf(" TYPE PIPED\n");
-		if (ccmd->type == BREAK)
-			printf(" TYPE BREAK\n");
-		if (ccmd->type == END)
-			printf(" TYPE END\n");
-		ccmd = ccmd->next;
-	}*/
+	}
+
 
 }
