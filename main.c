@@ -161,6 +161,7 @@ int main(int ac, char **av)
     if (ac > 1)
         line = ft_strtok(av[1], "|;");
 
-		printf("%d\n",line[7][0]);
-    		
+	if (line)
+		for (int i = 0;line[i];i++)
+    		printf("%s\n",line[i]);
 }
