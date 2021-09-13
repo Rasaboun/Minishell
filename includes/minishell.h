@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/08/31 01:05:12 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/09/13 02:28:29 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@ typedef struct	s_env {
 	char			*str;
 	struct s_env	*next;
 }				t_env;
+
+typedef	struct	s_tok{
+	int		i;
+	int		min;
+	char	**str;
+	int		num;
+}				t_tok;
+
 
 //------- Builtins -------//
 
