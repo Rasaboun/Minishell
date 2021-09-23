@@ -82,7 +82,8 @@ int main(int ac, char **av, char **envp)
 		{
 			add_history(cmd);
 			ft_cutcmd(&ccmd,cmd);
-			exec_cmds(ccmd, env);
+			exit(0);
+			//exec_cmds(ccmd, env);
 			printcmd();
 			free(cmd);
 			ft_freecmd(ccmd);

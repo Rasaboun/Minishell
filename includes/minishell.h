@@ -73,7 +73,7 @@ t_env 	*lst_add_back(t_env *env, char *str);
 void	ft_putstr(char *str);
 
 
-
+char	**ft_strtok(const char *line, char	*strset);
 void	ft_tcmdadd_back(t_cmd **alst, t_cmd *new);
 t_cmd	*ft_tcmdlast(t_cmd *lst);
 int		ft_tcmdsize(t_cmd *lst);
