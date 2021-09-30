@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/09/10 18:04:48 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/18 11:27:55 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,16 @@ typedef struct	s_env {
 	struct s_env	*next;
 }				t_env;
 
+typedef struct	s_exp {
+	int		len_var;
+	int		len_value;
+	int		equal;
+	char	*var;
+	char	*value;
+}				t_exp;
+
+
+
 typedef struct	s_minishell
 {
 	t_env	*env;
@@ -66,6 +76,7 @@ int		ft_pwd(void);
 int		ft_exit(t_cmd *ccmd, t_minishell *minishell);
 int		ft_cd(t_cmd *ccmd, t_env *env);
 int		ft_env(t_env *env);
+int		ft_export(t_cmd *cmd, t_env *env);
 
 //---------- Execution ----------//
 
@@ -84,9 +95,12 @@ int		ft_isnum(char *str);
 int		ft_charchr(char *str, char c);
 
 t_env	*ft_find_env(char *str, t_env *env);
-char	*ft_change_env(char *str, char *value);
+char	*ft_change_env(t_env *env, char *str, char *value);
 char	*ft_strjoin_env(char *s1, char *s2);
 int		ft_save_pwd(t_env *env);
+char	*ft_env_value(char *str, t_env *env);
+int		ft_array_len(char **array);
+int		ft_env_len(t_env *env);
 
 void	ft_tcmdadd_back(t_cmd **alst, t_cmd *new);
 t_cmd	*ft_tcmdlast(t_cmd *lst);
@@ -94,5 +108,8 @@ int		ft_tcmdsize(t_cmd *lst);
 t_cmd	*ft_tcmdnew(char **args);
 void	ft_cutcmd(t_cmd **cmd, char *line);
 
+//---------- FREE ----------//
+
+void	ft_free_array(char **array);
 
 #endif
