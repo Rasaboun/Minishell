@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/09/18 11:27:55 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/30 17:19:26 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int		ft_exit(t_cmd *ccmd, t_minishell *minishell);
 int		ft_cd(t_cmd *ccmd, t_env *env);
 int		ft_env(t_env *env);
 int		ft_export(t_cmd *cmd, t_env *env);
+int		ft_unset(t_cmd *ccmd, t_env *env);
 
 //---------- Execution ----------//
 

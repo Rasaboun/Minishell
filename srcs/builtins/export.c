@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:38:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/30 16:16:24 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/30 17:16:17 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ int		ft_export(t_cmd *ccmd, t_env *env)
 		{
 			exp = ft_export_split(ccmd->args[i]);
 			ft_exec_export(ccmd->args[i] ,&exp, env);
-			printf("var = %s | value = %s", exp.var, exp.value);
+			//printf("var = %s | value = %s", exp.var, exp.value);
 			if (exp.var)
 				free(exp.var);
 			if (exp.value)
