@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 11:10:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/01 15:32:11 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/01 15:35:30 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,11 @@ int	ft_save_oldpwd(t_env *env)
 	cur = ft_find_env("OLDPWD", env);
 	if (cur == NULL)
 		return (FAILURE);
+	if (cur->new == 1)
+		tmp = cur->str;
 	cur->str = ft_change_env(cur, "OLDPWD", oldpath);
+	if (cur->new == 1)
+		free(tmp);
 	return (SUCCESS);
 }
 
