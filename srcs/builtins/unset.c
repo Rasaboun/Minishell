@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:54:51 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/30 17:21:38 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/01 14:23:57 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	ft_exec_unset(char *str, t_env *env)
 	if (ft_strncmp(str, env->str, env_variable_len(env->str)) == 0)
 	{
 		env = env->next;
+		free(cur->str);
 		free(cur);
 	}
 	while (cur)
@@ -64,6 +65,7 @@ void	ft_exec_unset(char *str, t_env *env)
 		if (ft_strncmp(str, cur->str, env_variable_len(cur->str)) == 0)
 		{
 			prec->next = cur->next;
+			free(cur->str);
 			free(cur);
 			return;
 		}
