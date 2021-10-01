@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/01 13:32:21 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/01 13:38:28 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void sig_handler(int signum)
 void	ft_increment_shlvl(t_env *env)
 {
 	t_env	*cur;
+	char	*tmp;
 	char	*env_value;
 	int		value;
 
@@ -71,7 +72,9 @@ void	ft_increment_shlvl(t_env *env)
 		value = ft_atoi(env_value);
 		cur->str = NULL;
 		free(cur->str);
-		cur->str = ft_change_env(cur, "SHLVL", ft_itoa(value + 1));
+		tmp = ft_itoa(value + 1);
+		cur->str = ft_change_env(cur, "SHLVL", tmp);
+		free(tmp);
 	}
 }
 
