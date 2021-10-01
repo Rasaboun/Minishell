@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/01 13:38:28 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/01 13:44:57 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_clean_all(t_minishell *minishell)
 	env = minishell->env;
 	while (env)
 	{
-		free(env->str);
+		//free(env->str);
 		tmp = env;
 		env = env->next;
 		free(tmp);
@@ -75,6 +75,7 @@ void	ft_increment_shlvl(t_env *env)
 		tmp = ft_itoa(value + 1);
 		cur->str = ft_change_env(cur, "SHLVL", tmp);
 		free(tmp);
+		free(env_value);
 	}
 }
 
