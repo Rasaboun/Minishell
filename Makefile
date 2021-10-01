@@ -15,7 +15,8 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/utils/env_init.c \
 					./srcs/utils/env_utils.c \
 					./srcs/utils/utils.c \
-					./srcs/parsing/strtok.c
+					./srcs/parsing/strtok.c \
+					./srcs/parsing/utils.c
 					
 OBJS		=	$(SRCS:.c=.o)
 

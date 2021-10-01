@@ -6,14 +6,14 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/08 00:42:22 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/01 16:02:24 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-t_cmd *ccmd;
+
 
 
 
@@ -43,22 +43,21 @@ void	ft_freecmd(t_cmd *cmd)
 
 void sig_handler(int signum)
 {
-  ft_freecmd(ccmd);
   exit(0);
 }
 
 void	printcmd()
 {
-	while(ccmd != NULL) // AFFICHE CHAQUE COMMANDE AVEC SON TYPE
+	while(g_ccmd != NULL) // AFFICHE CHAQUE COMMANDE AVEC SON TYPE
 	{
-		printf("%s",ccmd->args[0]);
-		if (ccmd->type == PIPED)
+		printf("%s",g_ccmd->args[0]);
+		if (g_ccmd->type == PIPED)
 			printf(" TYPE PIPED\n");
-		if (ccmd->type == BREAK)
+		if (g_ccmd->type == BREAK)
 			printf(" TYPE BREAK\n");
-		if (ccmd->type == END)
+		if (g_ccmd->type == END)
 			printf(" TYPE END\n");
-		ccmd = ccmd->next;
+		g_ccmd = g_ccmd->next;
 	}
 }
 
@@ -69,8 +68,8 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	char *cmd;
 	t_env *env;
-
-	ccmd = NULL;
+	t_cmd *tmp;
+	g_ccmd = NULL;
 	cmd = NULL;
 	env = ft_init_env(envp);
 	//
@@ -80,14 +79,16 @@ int main(int ac, char **av, char **envp)
 		cmd = readline("\x1b[36m❯ \x1b[35m(Minishell)\x1b[37m ");
 		if (cmd != NULL)
 		{
-			add_history(cmd);
-			ft_cutcmd(&ccmd,cmd);
+			ft_cutcmd(&g_ccmd,cmd);
+			/*while (g_ccmd)
+			{
+				for (int y = 0; g_ccmd->args[y];y++)
+					printf("|%s|",g_ccmd->args[y]);
+				g_ccmd = g_ccmd->next;
+			}*/
+			
 			exit(0);
 			//exec_cmds(ccmd, env);
-			free(cmd);
-			ft_freecmd(ccmd);
-			ccmd = NULL;
-			//
 			//break;
 		}
 		

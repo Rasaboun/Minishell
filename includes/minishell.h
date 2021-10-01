@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/09/13 02:28:29 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/01 21:23:12 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define SUCCESS 0
 # define FAILURE 1
 
+
+
 typedef	struct	s_cmd
 {
 	char **args;
@@ -54,6 +56,14 @@ typedef	struct	s_tok{
 }				t_tok;
 
 
+typedef	struct	s_redir
+{
+	char *str;
+	struct s_redir	*next;
+	struct s_redir	*previous;
+}				t_redir;
+
+t_cmd	*g_ccmd;
 //------- Builtins -------//
 
 int		ft_echo(t_cmd *ccmd);
@@ -73,6 +83,11 @@ t_env 	*lst_add_back(t_env *env, char *str);
 void	ft_putstr(char *str);
 
 
+void    ft_delquotes(char **line);
+t_redir	*ft_redirlast(t_redir *lst);
+void	ft_rediradd_back(t_redir **alst, t_redir *rnew);
+t_redir	*ft_redirnew(char *st);
+char **rediredit(char **tabs);
 char	**ft_strtok(const char *line, char	*strset);
 void	ft_tcmdadd_back(t_cmd **alst, t_cmd *new);
 t_cmd	*ft_tcmdlast(t_cmd *lst);

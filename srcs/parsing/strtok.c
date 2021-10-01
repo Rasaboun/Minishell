@@ -2,7 +2,7 @@
 
 int		ft_is(int c)
 {
-	if (c)
+	if (c != '\'' && c != '\"')
 		return (1);
 	return (0);
 }
@@ -46,10 +46,9 @@ static	int	ft_countt(const char *line, char *strset)
 			i++;
 			while (line[i] && line[i] != '\'')
 				i++;
-			if (line[i])
+			if (line[i] && line[i] == '\'')
 			{
 				i++;
-				
 				num++;
 			}
 			else
@@ -68,7 +67,7 @@ static	int	ft_countt(const char *line, char *strset)
 				i++;
 			while (line[i] && line[i] != '\'')
 				i++;
-			if (line[i])
+			if (line[i] && line[i] == '\'')
 			{
 				i++;
 				while(line[i] && ft_is(line[i]))
@@ -101,7 +100,7 @@ static	int	ft_countt(const char *line, char *strset)
 			}
 			if (!line[i])
 			{
-				write(1, "error",5);
+				write(1, "error strset",13);
 				exit(0);
 			}
 			if (n > 1)
@@ -129,9 +128,10 @@ static void	ft_freee(int n, char **s)
 
 void	init_strok(const char *line, char *strset, t_tok *t)
 {
+	int i;
+
+	i = 0;
 	t->num = ft_countt(line, strset);
-	printf("count : %d",t->num);
-	exit(0);
 	if (t->num < 1)
 	{
 		perror("Error size");
@@ -139,6 +139,11 @@ void	init_strok(const char *line, char *strset, t_tok *t)
 	}
 		
 	t->str = malloc(sizeof(char *) * (t->num + 1));
+	while (i < t->num + 1)
+	{
+		t->str[i] = NULL;
+		i++;
+	}
 	if (t->str == NULL)
 	{
 		perror("Error Malloc");

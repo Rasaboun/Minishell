@@ -1,5 +1,53 @@
 #include "minishell.h"
 
+
+
+static int	ft_whil(char *s3, const char *s1, int i)
+{
+	int		p;
+	int		y;
+
+	p = 0;
+	y = 0;
+	while (p < i)
+	{
+		s3[p] = s1[y];
+		p++;
+		y++;
+	}
+	return (p);
+}
+
+char		*ft_strfjoin(char const *s1, char *s2)
+{
+	int		p;
+	char	*s3;
+	int		y;
+	int		i;
+
+	if (!s2)
+		return (NULL);
+    if (!s1)
+        return (s2);
+	y = 0;
+	p = 0;
+	i = (int)ft_strlen(s1);
+	if (!(s3 = (char *)malloc(sizeof(char) * (i + ft_strlen(s2) + 1))))
+		return (0);
+	p = ft_whil(s3, s1, i);
+	y = 0;
+	while (p <= (int)(i + ft_strlen(s2) - 1))
+	{
+		s3[p] = s2[y];
+		p++;
+		y++;
+	}
+	s3[p] = '\0';
+	return (s3);
+}
+
+
+
 t_redir	*ft_redirlast(t_redir *lst)
 {
 	t_redir	*lst2;
@@ -54,6 +102,8 @@ char **rediredit(char **tabs)
     final = NULL;
     i = 0;
     lst = NULL;
+    tmp = NULL;
+    lnew = NULL;
     while (tabs[i])
     {
        lnew = ft_redirnew(tabs[i]);
@@ -113,4 +163,35 @@ char **rediredit(char **tabs)
         i++;
     }
     return (final);
+}
+
+
+void    ft_delquotes(char **line)
+{
+    char **sp;
+    char *final;
+    int i;
+    int n;
+
+    n = 0;
+    sp = NULL;
+    final = NULL;
+    i = 0;
+
+    while (line[i])
+    {
+        if (ft_strchr(line[i],'\''))
+        {
+            sp = ft_split(line[i],'\'');
+            
+            n = 0;
+            while (sp[n])
+            {
+                final = ft_strfjoin(final, sp[n]);
+                n++;
+            }
+            line[i] = final;
+        }
+        i++;
+    }
 }

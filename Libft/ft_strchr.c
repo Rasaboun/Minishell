@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:35:05 by rasaboun          #+#    #+#             */
-/*   Updated: 2019/11/12 18:35:56 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/01 14:52:31 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strchr(const char *s, int c)
 	int		i;
 
 	i = 0;
+	if (c == '\0')
+		return (NULL);
 	while (s[i] != c)
 	{
 		if (s[i] == '\0')
