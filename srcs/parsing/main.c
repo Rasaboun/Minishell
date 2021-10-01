@@ -6,13 +6,28 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/14 14:22:02 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/01 13:32:21 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_cmd *ccmd;
+
+void	ft_clean_all(t_minishell *minishell)
+{
+	t_env	*env;
+	t_env	*tmp;
+
+	env = minishell->env;
+	while (env)
+	{
+		free(env->str);
+		tmp = env;
+		env = env->next;
+		free(tmp);
+	}
+}
 
 void	ft_freecmd(t_cmd *cmd)
 {
@@ -30,7 +45,6 @@ void	ft_freecmd(t_cmd *cmd)
 		}
 		free(cmd->args);
 		tmp = cmd;
-		
 		cmd = cmd->next;
 		free(tmp);
 	}
@@ -96,7 +110,7 @@ int main(int ac, char **av, char **envp)
 		}
 		
 	}
-
+	ft_clean_all(&minishell);
 	//Faut tout free
 	return (minishell.ret);
 }

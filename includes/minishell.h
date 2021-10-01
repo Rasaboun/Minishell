@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/09/30 17:19:26 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/01 13:29:07 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ typedef struct	s_exp {
 	char	*var;
 	char	*value;
 }				t_exp;
-
-
 
 typedef struct	s_minishell
 {
