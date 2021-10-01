@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/01 13:44:57 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/01 14:09:48 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	ft_clean_all(t_minishell *minishell)
 	env = minishell->env;
 	while (env)
 	{
-		//free(env->str);
+		if (env->new == 1)
+			free(env->str);
 		tmp = env;
 		env = env->next;
 		free(tmp);

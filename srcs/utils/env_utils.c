@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:47:10 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/30 00:02:24 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/01 14:09:27 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,13 @@ t_env	*create_cell(char *str)
 	return (env);
 }
 
-t_env  *lst_add_back(t_env *env, char *str)
+t_env  *lst_add_back(t_env *env, char *str, int new_var)
 {
 	t_env	*new;
 	t_env	*cur;
 
 	new = create_cell(str);
+	new->new = new_var;
 	cur = env;
 	if (is_empty_list(env))
 		return (new);

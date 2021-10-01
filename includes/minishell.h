@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/01 13:29:07 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/01 14:09:07 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 
 typedef struct	s_env {
 	char			*str;
+	int				new;
 	struct s_env	*next;
 }				t_env;
 
@@ -87,7 +88,7 @@ int		exec_builtins(t_cmd *ccmd, t_minishell *minishell);
 int		ft_strcmp(const char *s1, const char *s2);
 void    print_lst(t_env *env);
 t_env	*ft_init_env(char **envp);
-t_env 	*lst_add_back(t_env *env, char *str);
+t_env 	*lst_add_back(t_env *env, char *str, int new);
 void	ft_putstr(char *str);
 void	ft_write_error(char *str);
 int		ft_isnum(char *str);

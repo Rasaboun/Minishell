@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:38:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/30 17:16:17 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/01 14:07:08 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,10 +217,10 @@ void	ft_exec_export(char *str, t_exp *exp, t_env *env)
 	else if (exp->value || exp->equal == 1)
 	{
 		tmp = ft_strjoin_env(exp->var, exp->value);
-		env = lst_add_back(env, tmp);
+		env = lst_add_back(env, tmp, 1);
 	}
 	else // cas : "export str"
-		env = lst_add_back(env, ft_strdup(exp->var));
+		env = lst_add_back(env, ft_strdup(exp->var), 1);
 	return;
 }
 
