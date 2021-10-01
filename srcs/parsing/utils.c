@@ -63,9 +63,9 @@ char **rediredit(char **tabs)
     tmp = lst;
     while (lst->next)
     {
-        if (strcmp(lst->str,"-") == 0)
+        if (strcmp(lst->str,">") == 0)
         {
-            if (lst && lst->previous && strcmp(lst->previous->str,"-"))
+            if (lst && lst->previous && strcmp(lst->previous->str,">"))
             {
                 if (lst->next)
                 {
@@ -96,15 +96,21 @@ char **rediredit(char **tabs)
     {
         lst = lst->previous;
     }
-    while(lst)
+    tmp = lst;
+    i = 0;
+    while(tmp->next)
     {
-        printf("c = %s\n",lst->str);
-        lst = lst->next;
+        i++;
+        tmp = tmp->next;
     }
-    exit(0);
-}
-
-int main(int ac, char **av)
-{
-    rediredit(av);
+    
+    final = (char**)malloc(sizeof(char *) * (i));
+    i = 0;
+    while (lst->next)
+    {
+        final[i] = lst->str;
+        lst = lst->next;
+        i++;
+    }
+    return (final);
 }

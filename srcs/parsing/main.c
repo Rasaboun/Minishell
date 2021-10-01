@@ -84,7 +84,6 @@ int main(int ac, char **av, char **envp)
 			ft_cutcmd(&ccmd,cmd);
 			exit(0);
 			//exec_cmds(ccmd, env);
-			printcmd();
 			free(cmd);
 			ft_freecmd(ccmd);
 			ccmd = NULL;

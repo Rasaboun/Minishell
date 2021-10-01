@@ -1,5 +1,13 @@
 #include "minishell.h"
 
+int		ft_is(int c)
+{
+	if (c)
+		return (1);
+	return (0);
+}
+
+
 static char	*ft_substrs(const char *s, int min, int max)
 {
 	int		i;
@@ -23,7 +31,9 @@ static	int	ft_countt(const char *line, char *strset)
 	int i;
 	int num;
 	int min;
+	int n;
 
+	n = 0;
 	min = 0;
 	num = 0;
 	i = 0;
@@ -49,9 +59,9 @@ static	int	ft_countt(const char *line, char *strset)
 			}
 		}
 
-		if (ft_isalnum(line[i]) && !ft_strchr(strset,line[i]))//ALPHANUM
+		if (ft_is(line[i]) && !ft_strchr(strset,line[i]))//ALPHANUM
 		{
-			while (line[i] && ft_isalnum(line[i]) && !ft_strchr(strset,line[i]))
+			while (line[i] && ft_is(line[i]) && !ft_strchr(strset,line[i]))
 				i++;
 			if (line[i] == '\'')
 			{
@@ -61,7 +71,7 @@ static	int	ft_countt(const char *line, char *strset)
 			if (line[i])
 			{
 				i++;
-				while(line[i] && ft_isalnum(line[i]))
+				while(line[i] && ft_is(line[i]))
 					i++;
 				
 				num++;
@@ -83,8 +93,24 @@ static	int	ft_countt(const char *line, char *strset)
 		
 		if (ft_strchr(strset,line[i]))//STRSET
 		{
-			while (line[i] && ft_strchr(strset,line[i]))
+			while (line[i] && (ft_strchr(strset,line[i]) || line[i] == ' '))
+			{
+				if (ft_strchr(strset,line[i]))
+					n++;
 				i++;
+			}
+			if (!line[i])
+			{
+				write(1, "error",5);
+				exit(0);
+			}
+			if (n > 1)
+			{
+				write(1, "DOUBLE BREAK",12);
+				exit(0);
+			}
+			else
+				n = 0;
 			
 			num++;
 		}
@@ -104,6 +130,8 @@ static void	ft_freee(int n, char **s)
 void	init_strok(const char *line, char *strset, t_tok *t)
 {
 	t->num = ft_countt(line, strset);
+	printf("count : %d",t->num);
+	exit(0);
 	if (t->num < 1)
 	{
 		perror("Error size");
@@ -134,7 +162,7 @@ void	while_quotes(const char *line, char *strset, t_tok *t, char c, int w)
 			if (line[t->i])
 			{
 				t->i++;
-				while(line[t->i] && ft_isalnum(line[t->i]))
+				while(line[t->i] && ft_is(line[t->i]))
 					t->i++;
 				t->str[t->num] = ft_substrs(line, t->min, t->i);
 				if (!t->str[t->num])
@@ -165,10 +193,10 @@ char	**ft_strtok(const char *line, char	*strset)
 			
 		//QUOTES
 		while_quotes(line, strset, &t, '\'', 0);
-		if (ft_isalnum(line[t.i]) && !ft_strchr(strset,line[t.i]))//ALPHANUM
+		if (ft_is(line[t.i]) && !ft_strchr(strset,line[t.i]))//ALPHANUM
 		{
 			t.min = t.i;
-			while (line[t.i] && ft_isalnum(line[t.i]) && !ft_strchr(strset,line[t.i]))
+			while (line[t.i] && ft_is(line[t.i]) && !ft_strchr(strset,line[t.i]))
 				t.i++;
 			if (line[t.i] == '\'')
 			{
