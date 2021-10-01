@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 11:10:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/01 15:47:55 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/01 15:48:41 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	ft_save_pwd(t_env *env)
 	t_env	*cur;
 
 	getcwd(path, sizeof(path));
+	tmp = NULL;
 	cur = ft_find_env("PWD", env);
 	if (cur == NULL)
 		return (FAILURE);
@@ -67,7 +68,7 @@ int	ft_save_oldpwd(t_env *env)
 	t_env	*cur;
 
 	getcwd(oldpath, sizeof(oldpath));
-	
+	tmp = NULL;
 	cur = ft_find_env("OLDPWD", env);
 	if (cur == NULL)
 		return (FAILURE);
