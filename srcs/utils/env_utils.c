@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:47:10 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/01 14:09:27 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/01 14:18:42 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ char	*ft_change_env(t_env *env, char *str, char *value)
 	env->str = NULL;
 	free(env->str);
 	out = ft_strjoin_env(str, value);
+	env->new = 1;
 	return(out);
 }
 
