@@ -6,11 +6,37 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 21:56:24 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/10 17:23:42 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/09/14 14:18:54 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		ft_array_len(char **array)
+{
+	int		i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
+}
+
+void	ft_free_array(char **array)
+{
+	int		i;
+
+	i = 0;
+	if (array)
+	{	
+		while(array[i])
+		{
+			free (array[i]);
+			i++;
+		}
+		free(array);
+	}
+}
 
 void	ft_write_error(char *str)
 {

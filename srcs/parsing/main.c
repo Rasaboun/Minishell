@@ -6,13 +6,29 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/02 14:31:07 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/02 14:32:34 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_cmd *ccmd;
+
+void	ft_clean_all(t_minishell *minishell)
+{
+	t_env	*env;
+	t_env	*tmp;
+
+	env = minishell->env;
+	while (env)
+	{
+		if (env->new == 1)
+			free(env->str);
+		tmp = env;
+		env = env->next;
+		free(tmp);
+	}
+}
 
 void	ft_freecmd(t_cmd *cmd)
 {
@@ -30,7 +46,6 @@ void	ft_freecmd(t_cmd *cmd)
 		}
 		free(cmd->args);
 		tmp = cmd;
-		
 		cmd = cmd->next;
 		free(tmp);
 	}
@@ -42,9 +57,33 @@ void sig_handler(int signum)
   exit(0);
 }
 
+void	ft_increment_shlvl(t_env *env)
+{
+	t_env	*cur;
+	char	*tmp;
+	char	*env_value;
+	int		value;
+
+	cur = ft_find_env("SHLVL", env);
+	env_value = ft_env_value("SHLVL" ,env);
+	if (!ft_isnum(env_value))
+		cur->str = ft_change_env(cur, "SHLVL", "1");
+	else
+	{
+		value = ft_atoi(env_value);
+		cur->str = NULL;
+		free(cur->str);
+		tmp = ft_itoa(value + 1);
+		cur->str = ft_change_env(cur, "SHLVL", tmp);
+		free(tmp);
+		free(env_value);
+	}
+}
+
 void	ft_init_minishell(t_minishell *minishell, char **envp)
 {
 	minishell->env = ft_init_env(envp);
+	ft_increment_shlvl(minishell->env);
 	minishell->exit = 0;
 	minishell->ret = 0;
 	minishell->stdout = dup(STDOUT_FILENO);
@@ -56,15 +95,11 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	char			*cmd;
-	//t_env			*env;
 	t_minishell		minishell;
 
 	ccmd = NULL;
 	cmd = NULL;
-	//env = ft_init_env(envp);
 	ft_init_minishell(&minishell, envp);
-
-	//
 	while(minishell.exit == 0)
 	{
 		signal(SIGINT,sig_handler);
@@ -74,14 +109,13 @@ int main(int ac, char **av, char **envp)
 			add_history(cmd);
 			ft_cutcmd(&ccmd,cmd);
 			minishell.ret = exec_cmds(ccmd, &minishell);
-			//printcmd();
 			free(cmd);
 			ft_freecmd(ccmd);
 			ccmd = NULL;
-			//if (mini->exit == 1)
-				//break;
 		}
 		
 	}
+	ft_clean_all(&minishell);
+	//Faut tout free
 	return (minishell.ret);
 }
