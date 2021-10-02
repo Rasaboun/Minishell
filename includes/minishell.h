@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/02 14:32:37 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/02 14:35:49 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,6 @@ typedef	struct	s_cmd
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
 }				t_cmd;
-
-typedef struct	s_env {
-	char			*str;
-	struct s_env	*next;
-}				t_env;
 
 typedef	struct	s_tok{
 	int		i;

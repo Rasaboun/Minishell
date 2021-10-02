@@ -37,12 +37,10 @@ void	ft_cutcmd(t_cmd **cmd, char *line)
 	ft_delquotes(str);
 	while (str[i])
 	{
-		printf("|%s|\n",str[i]);
 		newcut = ft_redirnew(str[i]);
 		ft_rediradd_back(&cutcm, newcut);
 		i++;
 	}
-	exit(0);
 	while (cutcm)
 	{
 		if (cutcm->next && ft_strcmp(cutcm->next->str, "|") == 0)

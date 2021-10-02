@@ -149,7 +149,6 @@ void	init_strok(const char *line, char *strset, t_tok *t)
 		perror("Error Malloc");
 		exit(EXIT_FAILURE);
 	}
-	t->str[ft_countt(line, strset)] = NULL;
 	t->i = 0;
 	t->min = 0;
 	t->num = 0;
@@ -195,17 +194,15 @@ char	**ft_strtok(const char *line, char	*strset)
 	{
 		while(line[t.i] && line[t.i] == ' ')
 			t.i++;
-			
 		//QUOTES
 		while_quotes(line, strset, &t, '\'', 0);
-		if (ft_is(line[t.i]) && !ft_strchr(strset,line[t.i]))//ALPHANUM
+		if (line[t.i] && ft_is(line[t.i]) && !ft_strchr(strset,line[t.i]))//ALPHANUM
 		{
 			t.min = t.i;
 			while (line[t.i] && ft_is(line[t.i]) && !ft_strchr(strset,line[t.i]))
 				t.i++;
 			if (line[t.i] == '\'')
 			{
-
 				while_quotes(line, strset, &t, '\'',1);
 			}
 				
@@ -218,7 +215,7 @@ char	**ft_strtok(const char *line, char	*strset)
 			}
 		}//ALPHANUM
 		
-		if (ft_strchr(strset,line[t.i]))//STRSET
+		if (line[t.i] && ft_strchr(strset,line[t.i]))//STRSET
 		{
 			t.min = t.i;
 			while (line[t.i] && ft_strchr(strset,line[t.i]))
@@ -228,7 +225,8 @@ char	**ft_strtok(const char *line, char	*strset)
 					ft_freee(t.num, t.str);
 			t.num++;
 		}//STRSET
-		t.i++;
+		if (line[t.i])
+			t.i++;
 	}
 	return (t.str);
 }
