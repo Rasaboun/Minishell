@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/01 16:02:24 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/02 14:28:04 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 
 
-
-
+t_cmd *ccmd;
 
 void	ft_freecmd(t_cmd *cmd)
 {
@@ -39,14 +38,12 @@ void	ft_freecmd(t_cmd *cmd)
 	}
 }
 
-
-
 void sig_handler(int signum)
 {
   exit(0);
 }
 
-void	printcmd()
+void	ft_init_minishell(t_minishell *minishell, char **envp)
 {
 	while(g_ccmd != NULL) // AFFICHE CHAQUE COMMANDE AVEC SON TYPE
 	{
@@ -61,7 +58,6 @@ void	printcmd()
 	}
 }
 
-
 int main(int ac, char **av, char **envp)
 {
 	(void)ac;
@@ -71,9 +67,11 @@ int main(int ac, char **av, char **envp)
 	t_cmd *tmp;
 	g_ccmd = NULL;
 	cmd = NULL;
-	env = ft_init_env(envp);
+	//env = ft_init_env(envp);
+	ft_init_minishell(&minishell, envp);
+
 	//
-	while(1)
+	while(minishell.exit == 0)
 	{
 		signal(SIGINT,sig_handler);
 		cmd = readline("\x1b[36m❯ \x1b[35m(Minishell)\x1b[37m ");
@@ -93,6 +91,5 @@ int main(int ac, char **av, char **envp)
 		}
 		
 	}
-
-
+	return (minishell.ret);
 }

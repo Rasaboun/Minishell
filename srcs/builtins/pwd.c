@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_commands.c                                    :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/10 17:16:08 by dkoriaki         ###   ########.fr       */
+/*   Created: 2021/09/01 10:50:24 by dkoriaki          #+#    #+#             */
+/*   Updated: 2021/09/01 11:03:56 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
+int	ft_pwd(void)
 {
-	int	ret;
-	t_cmd *cmd;
-
-	ret = SUCCESS;
-	cmd = ccmd;
-	while(cmd)
+	char	path[PATH_MAX];
+	
+	if (getcwd(path, sizeof(path)))
 	{
-		ret = exec_builtins(cmd, minishell);
-		cmd = cmd->next;
+		write(STDOUT_FILENO, &path, ft_strlen(path));
+		write(STDOUT_FILENO, "\n", 1);
+		return (SUCCESS);
 	}
-	return (ret);
+	return (FAILURE);
 }
