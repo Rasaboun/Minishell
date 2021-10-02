@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:38:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/01 14:07:08 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/02 15:28:21 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char	**ft_list_to_array(t_env *env)
 
 	i = 0;
 	nb_lines = ft_env_len(env);
-	//print_lst(env);
 	array = (char **)malloc(sizeof(char *) * (nb_lines + 1));
 	if (!array)
 		return (NULL);
