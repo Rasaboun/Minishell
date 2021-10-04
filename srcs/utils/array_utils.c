@@ -6,13 +6,13 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 16:56:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:00:23 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:28:11 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_array_len(char **array)
+int	ft_array_len(char **array)
 {
 	int		i;
 
@@ -29,7 +29,7 @@ void	ft_free_array(char **array)
 	i = 0;
 	if (array)
 	{	
-		while(array[i])
+		while (array[i])
 		{
 			free (array[i]);
 			i++;
@@ -56,7 +56,6 @@ char	**ft_list_to_array(t_env *env)
 		i++;
 	}
 	array[i] = NULL;
-	
 	return (array);
 }
 
@@ -66,14 +65,13 @@ void	print_env_array(char **array)
 	int		x;
 	int		equal;
 
-	
 	y = 0;
 	while (array[y])
 	{
 		x = 0;
 		equal = 0;
 		write(STDOUT_FILENO, "declare -x ", 11);
-		while(array[y][x])
+		while (array[y][x])
 		{
 			write(STDOUT_FILENO, &array[y][x], 1);
 			if (array[y][x] == '=')

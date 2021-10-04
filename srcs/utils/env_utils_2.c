@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 16:58:33 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:03:54 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:31:16 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**ft_sort_env(char **envp)
 	return (envp);
 }
 
-int		ft_env_len(t_env *env)
+int	ft_env_len(t_env *env)
 {
 	int		i;
 
@@ -75,7 +75,7 @@ char	*ft_env_value(char *str, t_env *env)
 	if (cur == NULL)
 		return (NULL);
 	i = ft_strlen(cur->str) - (len + 1);
-	ret = malloc(sizeof(char*) * (i + 1));
+	ret = malloc(sizeof(char *) * (i + 1));
 	if (ret == NULL)
 		return (NULL);
 	i = len + 1;
@@ -100,7 +100,8 @@ char	*ft_strjoin_env(char *s1, char *s2)
 	if (!s1)
 		return (NULL);
 	mallen = ft_strlen(s1) + ft_strlen(s2) + 1;
-	if (!(out = (char *)malloc(sizeof(char) * mallen + 1)))
+	out = (char *)malloc(sizeof(char) * mallen + 1);
+	if (!out)
 		return (NULL);
 	i = 0;
 	j = 0;

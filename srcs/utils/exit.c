@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 17:08:08 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:09:55 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:28:27 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	ft_clean_all(t_minishell *minishell)
 
 void	ft_freecmd(t_cmd *cmd)
 {
-	int i;
-	t_cmd *tmp;
+	int		i;
+	t_cmd	*tmp;
 
 	i = 0;
 	while (cmd)

@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:47:10 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:04:26 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:32:02 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_change_env(t_env *env, char *str, char *value)
 	free(env->str);
 	out = ft_strjoin_env(str, value);
 	env->new = 1;
-	return(out);
+	return (out);
 }
 
 t_env	*ft_find_env(char *str, t_env *env)
@@ -38,9 +38,9 @@ t_env	*ft_find_env(char *str, t_env *env)
 	return (NULL);
 }
 
-void    print_lst(t_env *env)
+void	print_lst(t_env *env)
 {
-    while (env)
+	while (env)
     {
         printf("%s\n", env->str);
         env = env->next;
