@@ -6,13 +6,13 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:32:31 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 15:26:17 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:33:20 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		parse_export(char *str)
+int	parse_export(char *str)
 {
 	int		i;
 
@@ -35,7 +35,7 @@ void	ft_len_variable_and_value(char *str, t_exp *exp)
 	exp->len_value = 0;
 	exp->len_var = 0;
 	exp->equal = 0;
-	while(str[i] && str[i] != '=')
+	while (str[i] && str[i] != '=')
 	{
 		exp->len_var++;
 		i++;
@@ -65,7 +65,7 @@ char	*ft_set_value_export(int i, char *str, int value_len)
 	value = malloc(sizeof(char) * (value_len + 1));
 	if (!value)
 		return (NULL);
-	while(str[i])
+	while (str[i])
 	{
 		value[j] = str[i];
 		i++;
@@ -87,7 +87,7 @@ void	ft_set_variable_and_value(char *str, t_exp *exp)
 	if (exp->len_var > 0)
 	{
 		exp->var = malloc(sizeof(char) * (exp->len_var + 1));
-		while(str[i] && str[i] != '=')
+		while (str[i] && str[i] != '=')
 		{
 			exp->var[i] = str[i];
 			i++;
