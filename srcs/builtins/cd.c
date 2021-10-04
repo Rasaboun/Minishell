@@ -6,16 +6,17 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 11:10:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/01 15:48:41 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 14:21:05 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		go_to_home(t_env *env)
+int	go_to_home(t_env *env)
 {
 	t_env	*cur;
 	char	*str;
+	int		i;
 
 	cur = ft_find_env("HOME", env);
 	if (cur == NULL)
@@ -24,7 +25,7 @@ int		go_to_home(t_env *env)
 		return (FAILURE);
 	}
 	str = cur->str;
-	int i = 1;
+	i = 1;
 	while (str[i - 1] != '=')
 		i++;
 	if (chdir(&str[i]) == 0)
@@ -80,7 +81,7 @@ int	ft_save_oldpwd(t_env *env)
 	return (SUCCESS);
 }
 
-int		ft_cd(t_cmd *ccmd, t_env *env)
+int	ft_cd(t_cmd *ccmd, t_env *env)
 {
 	char	*directory;
 
@@ -91,7 +92,7 @@ int		ft_cd(t_cmd *ccmd, t_env *env)
 	else if (chdir(directory) == 0)
 	{
 		ft_save_pwd(env);
-		return(SUCCESS);
+		return (SUCCESS);
 	}
 	else
 	{
