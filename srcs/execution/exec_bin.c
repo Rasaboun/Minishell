@@ -6,14 +6,14 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:59:27 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 13:09:12 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:49:58 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-int		ft_check_bin_error(char *path)
+int	ft_check_bin_error(char *path)
 {
 	int		fd;
 	DIR		*dir;
@@ -51,7 +51,7 @@ void	ft_write_error_bin(ret)
 		ft_write_error("Abort trap: 6\n");
 }
 
-int		bin_fonction(char **argv, t_env *env)
+int	bin_fonction(char **argv, t_env *env)
 {
 	char	**array;
 	char	**env_cpy;
@@ -65,7 +65,8 @@ int		bin_fonction(char **argv, t_env *env)
 	env_cpy = ft_list_to_array(env);
 	while (array && array[i])
 	{
-		if ((ret = bin_is_exist(array[i], argv, env_cpy)) != -1)
+		ret = bin_is_exist(array[i], argv, env_cpy);
+		if (ret != -1)
 		{
 			found = 1;
 			break ;
@@ -113,10 +114,10 @@ int		exec_bin(char *path, char **cmd, char **env_cpy)
 	else
 	{
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status)) // Query status to see if a child process ended normally
-			ret = WEXITSTATUS(status); //Obtain exit status of a child process
-		if (WIFSIGNALED(status)) // Query status to see if a child process ended abnormally
-			ret = WTERMSIG(status) + 128; //Determine which signal caused the child process to exit.
+		if (WIFEXITED(status))
+			ret = WEXITSTATUS(status);
+		if (WIFSIGNALED(status))
+			ret = WTERMSIG(status) + 128;
 		ft_write_error_bin(ret);
 	}
 	return (ret);

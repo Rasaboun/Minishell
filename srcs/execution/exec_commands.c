@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/02 18:59:57 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:50:29 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ int	builtin_is_exist(char *str)
 
 int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 {
-	int	ret;
-	t_cmd *cmd;
+	int		ret;
+	t_cmd	*cmd;
 
 	ret = -1;
 	cmd = ccmd;
-	while(cmd)
+	while (cmd)
 	{
 		if (builtin_is_exist(cmd->args[0]) == 1)
 			ret = exec_builtins(cmd, minishell);
