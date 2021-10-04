@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 10:50:24 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/01 11:03:56 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:34:20 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_pwd(void)
 {
 	char	path[PATH_MAX];
-	
+
 	if (getcwd(path, sizeof(path)))
 	{
 		write(STDOUT_FILENO, &path, ft_strlen(path));
