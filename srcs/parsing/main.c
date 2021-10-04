@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/02 18:32:11 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:10:28 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,86 +14,10 @@
 
 t_cmd *ccmd;
 
-void	ft_clean_all(t_minishell *minishell)
-{
-	t_env	*env;
-	t_env	*tmp;
-
-	env = minishell->env;
-	while (env)
-	{
-		if (env->new == 1)
-			free(env->str);
-		tmp = env;
-		env = env->next;
-		free(tmp);
-	}
-}
-
-void	ft_freecmd(t_cmd *cmd)
-{
-	int i;
-	t_cmd *tmp;
-
-	i = 0;
-	while (cmd)
-	{
-		i = 0;
-		while (cmd->args && cmd->args[i])
-		{
-			free(cmd->args[i]);
-			i++;
-		}
-		free(cmd->args);
-		tmp = cmd;
-		cmd = cmd->next;
-		free(tmp);
-	}
-}
-
 void sig_handler(int signum)
 {
   ft_freecmd(ccmd);
   exit(0);
-}
-
-void	ft_increment_shlvl(t_env *env)
-{
-	t_env	*cur;
-	char	*tmp;
-	char	*env_value;
-	int		value;
-
-	cur = ft_find_env("SHLVL", env);
-	env_value = ft_env_value("SHLVL" ,env);
-	if (!cur)
-		lst_add_back(env, "SHLVL=1", 0);
-	else if (!ft_isnum(env_value))
-	{
-		cur->str = ft_change_env(cur, "SHLVL", "1");
-	}
-	else
-	{
-		value = ft_atoi(env_value);
-		cur->str = NULL;
-		free(cur->str);
-		tmp = ft_itoa(value + 1);
-		cur->str = ft_change_env(cur, "SHLVL", tmp);
-		free(tmp);
-		free(env_value);
-	}
-}
-
-void	ft_init_minishell(t_minishell *minishell, char **envp)
-{
-	minishell->env = ft_init_env(envp);
-	//printf("hello world2\n");
-	ft_increment_shlvl(minishell->env);
-	//printf("hello world3\n");
-	minishell->exit = 0;
-	minishell->ret = 0;
-	minishell->stdout = dup(STDOUT_FILENO);
-	minishell->stdin = dup(STDIN_FILENO);
 }
 
 int main(int ac, char **av, char **envp)
@@ -103,12 +27,9 @@ int main(int ac, char **av, char **envp)
 	char			*cmd;
 	t_minishell		minishell;
 
-	//printf("hello world\n");
-	//print_env_array(envp);
 	ccmd = NULL;
 	cmd = NULL;
 	ft_init_minishell(&minishell, envp);
-	//printf("hello world4\n");
 	while(minishell.exit == 0)
 	{
 		signal(SIGINT,sig_handler);
@@ -122,9 +43,7 @@ int main(int ac, char **av, char **envp)
 			ft_freecmd(ccmd);
 			ccmd = NULL;
 		}
-		
 	}
-	printf("bye bye\n");
 	ft_clean_all(&minishell);
 	//Faut tout free
 	return (minishell.ret);

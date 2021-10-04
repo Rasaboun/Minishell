@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/04 15:45:14 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:11:36 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ typedef	struct	s_cmd
 int		bin_fonction(char **argv, t_env *env);
 int		bin_is_exist(char *path, char **cmd, char **env_cpy);
 int		exec_bin(char *path, char **cmd, char **env_cpy);
+int		ft_check_bin_error(char *path);
+void	ft_write_error_bin(int ret);
 
 //------- Builtins -------//
 
@@ -113,7 +115,8 @@ void	ft_set_variable_and_value(char *str, t_exp *exp);
 void	ft_len_variable_and_value(char *str, t_exp *exp);
 int		parse_export(char *str);
 
-
+void	ft_init_minishell(t_minishell *minishell, char **envp);
+int		is_empty_list(t_env *env);
 t_env	*ft_find_env(char *str, t_env *env);
 char	*ft_change_env(t_env *env, char *str, char *value);
 char	*ft_strjoin_env(char *s1, char *s2);
@@ -135,5 +138,7 @@ void	ft_cutcmd(t_cmd **cmd, char *line);
 //---------- FREE ----------//
 
 void	ft_free_array(char **array);
+void	ft_clean_all(t_minishell *minishell);
+void	ft_freecmd(t_cmd *cmd);
 
 #endif

@@ -1,48 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 21:56:24 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:02:50 by dkoriaki         ###   ########.fr       */
+/*   Created: 2021/10/04 17:08:08 by dkoriaki          #+#    #+#             */
+/*   Updated: 2021/10/04 17:09:55 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+void	ft_clean_all(t_minishell *minishell)
 {
-	size_t	i;
+	t_env	*env;
+	t_env	*tmp;
 
-	i = 0;
-	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
-		++i;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-int		ft_write_error(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i])
+	env = minishell->env;
+	while (env)
 	{
-		write(STDERR_FILENO, &str[i], 1);
-		i++;
+		if (env->new == 1)
+			free(env->str);
+		tmp = env;
+		env = env->next;
+		free(tmp);
 	}
-	return (FAILURE);
 }
 
-void	ft_putstr(char *str)
+void	ft_freecmd(t_cmd *cmd)
 {
-	int		i;
+	int i;
+	t_cmd *tmp;
 
 	i = 0;
-	while (str[i])
+	while (cmd)
 	{
-		write(STDOUT_FILENO, &str[i], 1);
-		i++;
+		i = 0;
+		while (cmd->args && cmd->args[i])
+		{
+			free(cmd->args[i]);
+			i++;
+		}
+		free(cmd->args);
+		tmp = cmd;
+		cmd = cmd->next;
+		free(tmp);
 	}
 }

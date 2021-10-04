@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 11:10:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 14:28:17 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:56:07 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	ft_save_pwd(t_env *env)
 	cur = ft_find_env("PWD", env);
 	if (cur == NULL)
 		return (FAILURE);
-	printf("cur->new = %d\n", cur->new);
 	if (cur->new == 1)
 		tmp = cur->str;
 	cur->str = ft_change_env(cur, "PWD", path);

@@ -1,48 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 21:56:24 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:02:50 by dkoriaki         ###   ########.fr       */
+/*   Created: 2021/10/04 16:55:13 by dkoriaki          #+#    #+#             */
+/*   Updated: 2021/10/04 16:57:50 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+int	ft_isnum(char *str)
 {
-	size_t	i;
+	int		i;
 
 	i = 0;
-	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
-		++i;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	if (str)
+	{
+		while (str[i])
+		{
+			if (str[i] < '0' || str[i] > '9')
+				return (0);
+			i++;
+		}
+	}
+	return (1);
 }
 
-int		ft_write_error(char *str)
+int	ft_charchr(char *str, char c)
 {
 	int		i;
 
 	i = 0;
 	while (str[i])
 	{
-		write(STDERR_FILENO, &str[i], 1);
+		if (str[i] == c)
+			return (SUCCESS);
 		i++;
 	}
 	return (FAILURE);
 }
 
-void	ft_putstr(char *str)
+char	**split_path(t_env *env)
 {
-	int		i;
+	char	**array;
+	char	*path;
 
-	i = 0;
-	while (str[i])
-	{
-		write(STDOUT_FILENO, &str[i], 1);
-		i++;
-	}
+	path = ft_env_value("PATH", env);
+	array = ft_split(path, ':');
+	free(path);
+	return (array);
 }

@@ -22,7 +22,11 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/builtins/exit.c \
 					./srcs/utils/env_init.c \
 					./srcs/utils/env_utils.c \
-					./srcs/utils/utils.c
+					./srcs/utils/env_utils_2.c \
+					./srcs/utils/utils.c \
+					./srcs/utils/utils_2.c \
+					./srcs/utils/array_utils.c \
+					./srcs/utils/exit.c
 					
 OBJS		=	$(SRCS:.c=.o)
 
