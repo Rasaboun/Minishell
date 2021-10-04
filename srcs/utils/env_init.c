@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:44:58 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:18:31 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 18:12:52 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_env	*ft_init_env(char **envp)
 	return (env);
 }
 
-
 void	ft_increment_shlvl(t_env *env)
 {
 	t_env	*cur;
@@ -36,7 +35,7 @@ void	ft_increment_shlvl(t_env *env)
 	int		value;
 
 	cur = ft_find_env("SHLVL", env);
-	env_value = ft_env_value("SHLVL" ,env);
+	env_value = ft_env_value("SHLVL", env);
 	if (!cur)
 		lst_add_back(env, "SHLVL=1", 0);
 	else if (!ft_isnum(env_value))
@@ -65,9 +64,9 @@ void	ft_init_minishell(t_minishell *minishell, char **envp)
 	minishell->stdin = dup(STDIN_FILENO);
 }
 
-int		is_empty_list(t_env *env)
+int	is_empty_list(t_env *env)
 {
-    if (env == NULL)
-        return (1);
-    return (0);
+	if (env == NULL)
+		return (1);
+	return (0);
 }

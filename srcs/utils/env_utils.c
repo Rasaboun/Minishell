@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:47:10 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:32:02 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 18:11:55 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,25 @@ t_env	*ft_find_env(char *str, t_env *env)
 void	print_lst(t_env *env)
 {
 	while (env)
-    {
-        printf("%s\n", env->str);
-        env = env->next;
-    }
-    printf("\n");
+	{
+		printf("%s\n", env->str);
+		env = env->next;
+	}
+	printf("\n");
 }
-
 
 t_env	*create_cell(char *str)
 {
 	t_env	*env;
 
-	if (!(env = malloc(sizeof(t_env))))
+	env = malloc(sizeof(t_env));
 		return NULL;
 	env->str = str;
 	env->next = NULL;
 	return (env);
 }
 
-t_env  *lst_add_back(t_env *env, char *str, int new_var)
+t_env	*lst_add_back(t_env *env, char *str, int new_var)
 {
 	t_env	*new;
 	t_env	*cur;
