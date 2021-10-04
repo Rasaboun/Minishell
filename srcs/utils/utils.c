@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 21:56:24 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/14 14:18:54 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 12:35:35 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,15 @@ int	ft_charchr(char *str, char c)
 		i++;
 	}
 	return (FAILURE);
+}
+
+char	**split_path(t_env *env)
+{
+	char	**array;
+	char	*path;
+
+	path = ft_env_value("PATH", env);
+	array = ft_split(path, ':');
+	free(path);
+	return (array);
 }

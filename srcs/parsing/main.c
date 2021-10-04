@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/01 14:09:48 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/02 18:32:11 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,12 @@ void	ft_increment_shlvl(t_env *env)
 
 	cur = ft_find_env("SHLVL", env);
 	env_value = ft_env_value("SHLVL" ,env);
-	if (!ft_isnum(env_value))
+	if (!cur)
+		lst_add_back(env, "SHLVL=1", 0);
+	else if (!ft_isnum(env_value))
+	{
 		cur->str = ft_change_env(cur, "SHLVL", "1");
+	}
 	else
 	{
 		value = ft_atoi(env_value);
@@ -83,7 +87,9 @@ void	ft_increment_shlvl(t_env *env)
 void	ft_init_minishell(t_minishell *minishell, char **envp)
 {
 	minishell->env = ft_init_env(envp);
+	//printf("hello world2\n");
 	ft_increment_shlvl(minishell->env);
+	//printf("hello world3\n");
 	minishell->exit = 0;
 	minishell->ret = 0;
 	minishell->stdout = dup(STDOUT_FILENO);
@@ -97,9 +103,12 @@ int main(int ac, char **av, char **envp)
 	char			*cmd;
 	t_minishell		minishell;
 
+	//printf("hello world\n");
+	//print_env_array(envp);
 	ccmd = NULL;
 	cmd = NULL;
 	ft_init_minishell(&minishell, envp);
+	//printf("hello world4\n");
 	while(minishell.exit == 0)
 	{
 		signal(SIGINT,sig_handler);
@@ -115,6 +124,7 @@ int main(int ac, char **av, char **envp)
 		}
 		
 	}
+	printf("bye bye\n");
 	ft_clean_all(&minishell);
 	//Faut tout free
 	return (minishell.ret);

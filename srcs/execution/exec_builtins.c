@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 17:38:30 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/02 12:41:37 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/02 18:42:17 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,5 @@ int		exec_builtins(t_cmd *ccmd, t_minishell *minishell)
 		ret = ft_env(env);
 	else if (ft_strcmp(ccmd->args[0], "exit") == 0)
 		ret = ft_exit(ccmd, minishell);
-	printf("\n\necho $? = %d\n", ret);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/01 14:09:07 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 12:35:44 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 # include <stdio.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <dirent.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <readline/readline.h>
@@ -35,6 +35,9 @@
 
 # define SUCCESS 0
 # define FAILURE 1
+
+# define CANNOT_EXECUTE 126
+# define UNKNOWN_COMMAND 127
 
 typedef struct	s_env {
 	char			*str;
@@ -68,6 +71,13 @@ typedef	struct	s_cmd
 	struct s_cmd	*previous;
 }				t_cmd;
 
+
+//------- binary functions -------//
+
+int		bin_fonction(char **argv, t_env *env);
+int		bin_is_exist(char *path, char **cmd, char **env_cpy);
+int		exec_bin(char *path, char **cmd, char **env_cpy);
+
 //------- Builtins -------//
 
 int		ft_echo(t_cmd *ccmd);
@@ -93,6 +103,10 @@ void	ft_putstr(char *str);
 void	ft_write_error(char *str);
 int		ft_isnum(char *str);
 int		ft_charchr(char *str, char c);
+
+char	**split_path(t_env *env);
+char	**ft_list_to_array(t_env *env);
+void	print_env_array(char **array);
 
 t_env	*ft_find_env(char *str, t_env *env);
 char	*ft_change_env(t_env *env, char *str, char *value);
