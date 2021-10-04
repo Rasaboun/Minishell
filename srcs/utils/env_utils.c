@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:47:10 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 18:11:55 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 18:14:40 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ t_env	*create_cell(char *str)
 	t_env	*env;
 
 	env = malloc(sizeof(t_env));
-		return NULL;
+	if (!env)
+		return (NULL);
 	env->str = str;
 	env->next = NULL;
 	return (env);
