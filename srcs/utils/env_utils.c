@@ -6,11 +6,92 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:47:10 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/01 14:18:42 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 14:30:54 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_env_array(char **array)
+{
+	int		y;
+	int		x;
+	int		equal;
+
+	
+	y = 0;
+	while (array[y])
+	{
+		x = 0;
+		equal = 0;
+		write(STDOUT_FILENO, "declare -x ", 11);
+		while(array[y][x])
+		{
+			write(STDOUT_FILENO, &array[y][x], 1);
+			if (array[y][x] == '=')
+			{
+				write(STDOUT_FILENO, "\"", 1);
+				equal = 1;
+			}
+			x++;
+		}
+		if (equal == 1)
+			write(STDOUT_FILENO, "\"", 1);
+		write(STDOUT_FILENO, "\n", 1);
+		y++;
+	}
+}
+
+char	**ft_sort_env(char **envp)
+{
+	char	*tmp;
+	int		i;
+	int		j;
+	int		env_len;
+
+	tmp = NULL;
+	i = 0;
+	j = 0;
+	env_len = ft_array_len(envp);
+	while (i < env_len)
+	{
+		j = 0;
+		while (j < env_len - 1)
+		{
+			if (ft_strcmp(envp[j], envp[j + 1]) > 0)
+			{
+				tmp = envp[j];
+				envp[j] = envp[j + 1];
+				envp[j + 1] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (envp);
+}
+
+char	**ft_list_to_array(t_env *env)
+{
+	int		nb_lines;
+	int		i;
+	char	**array;
+
+	i = 0;
+	nb_lines = ft_env_len(env);
+	array = (char **)malloc(sizeof(char *) * (nb_lines + 1));
+	if (!array)
+		return (NULL);
+	while (env && i < nb_lines)
+	{
+		array[i] = ft_strdup(env->str);
+		env = env->next;
+		i++;
+	}
+	array[i] = NULL;
+	
+	return (array);
+}
 
 int		ft_env_len(t_env *env)
 {

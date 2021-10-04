@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 21:56:24 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 12:35:35 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 14:27:01 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_free_array(char **array)
 	}
 }
 
-void	ft_write_error(char *str)
+int		ft_write_error(char *str)
 {
 	int		i;
 
@@ -48,6 +48,7 @@ void	ft_write_error(char *str)
 		write(STDERR_FILENO, &str[i], 1);
 		i++;
 	}
+	return (FAILURE);
 }
 
 void	ft_putstr(char *str)

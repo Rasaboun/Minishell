@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 11:10:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 14:21:05 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 14:28:17 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ int	go_to_home(t_env *env)
 
 	cur = ft_find_env("HOME", env);
 	if (cur == NULL)
-	{
-		ft_write_error(" cd: HOME not set");
-		return (FAILURE);
-	}
+		return (ft_write_error(" cd: HOME not set"));
 	str = cur->str;
 	i = 1;
 	while (str[i - 1] != '=')
@@ -35,7 +32,7 @@ int	go_to_home(t_env *env)
 	}
 	else
 	{
-		ft_write_error(" cd: ");
+		ft_write_error("minishell: cd: ");
 		ft_write_error(&str[i]);
 		ft_write_error(": No such file or directory\n");
 	}

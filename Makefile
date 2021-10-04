@@ -14,6 +14,7 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/execution/exec_bin.c \
 					./srcs/builtins/echo.c \
 					./srcs/builtins/export.c \
+					./srcs/builtins/export_utils.c \
 					./srcs/builtins/unset.c \
 					./srcs/builtins/env.c \
 					./srcs/builtins/cd.c \
