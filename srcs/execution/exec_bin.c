@@ -6,12 +6,11 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:59:27 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 15:49:58 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:53:35 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_check_bin_error(char *path)
 {
@@ -41,7 +40,7 @@ int	ft_check_bin_error(char *path)
 	return (ret);
 }
 
-void	ft_write_error_bin(ret)
+void	ft_write_error_bin(int ret)
 {
 	if (ret == 139)
 		ft_write_error("Segmentation fault: 11\n");
@@ -80,11 +79,11 @@ int	bin_fonction(char **argv, t_env *env)
 	return (ret);
 }
 
-int		bin_is_exist(char *path, char **cmd, char **env_cpy)
+int	bin_is_exist(char *path, char **cmd, char **env_cpy)
 {
-	struct stat sb;
-	char	*tmp;
-	int		ret;
+	struct stat	sb;
+	char		*tmp;
+	int			ret;
 
 	ret = -1;
 	tmp = ft_strjoin(path, "/");
@@ -96,7 +95,7 @@ int		bin_is_exist(char *path, char **cmd, char **env_cpy)
 	return (ret);
 }
 
-int		exec_bin(char *path, char **cmd, char **env_cpy)
+int	exec_bin(char *path, char **cmd, char **env_cpy)
 {
 	pid_t	pid;
 	int		ret;
