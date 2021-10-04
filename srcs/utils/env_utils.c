@@ -6,11 +6,19 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:47:10 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 14:30:54 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:43:53 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_env_cell(t_env *env, int how)
+{
+	if (how == 1 || how == 2)
+		free(env);
+	if (how == 2)
+		free(env->str);
+}
 
 void	print_env_array(char **array)
 {

@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/04 15:19:46 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:45:14 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void	ft_set_variable_and_value(char *str, t_exp *exp);
 void	ft_len_variable_and_value(char *str, t_exp *exp);
 int		parse_export(char *str);
 
+
 t_env	*ft_find_env(char *str, t_env *env);
 char	*ft_change_env(t_env *env, char *str, char *value);
 char	*ft_strjoin_env(char *s1, char *s2);
@@ -123,6 +124,7 @@ int		ft_env_len(t_env *env);
 char	**ft_list_to_array(t_env *env);
 char	**ft_sort_env(char **envp);
 void	print_env_array(char **array);
+void	free_env_cell(t_env *env, int how);
 
 void	ft_tcmdadd_back(t_cmd **alst, t_cmd *new);
 t_cmd	*ft_tcmdlast(t_cmd *lst);

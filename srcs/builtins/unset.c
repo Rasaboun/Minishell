@@ -6,13 +6,13 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:54:51 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 15:38:16 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:46:06 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		env_variable_len(char *str)
+int	env_variable_len(char *str)
 {
 	int		len;
 
@@ -24,7 +24,7 @@ int		env_variable_len(char *str)
 	return (len);
 }
 
-int		parse_unset(char *str)
+int	parse_unset(char *str)
 {
 	int		i;
 
@@ -47,12 +47,11 @@ void	ft_exec_unset(char *str, t_env *env)
 	cur = env;
 	prec = env;
 	if (!env || ft_find_env(str, env) == NULL)
-		return;
+		return ;
 	if (ft_strncmp(str, env->str, env_variable_len(env->str)) == 0)
 	{
 		env = env->next;
-		free(cur->str);
-		free(cur);
+		free_env_cell(cur, 2);
 	}
 	while (cur)
 	{
@@ -64,7 +63,7 @@ void	ft_exec_unset(char *str, t_env *env)
 			if (env->new == 1)
 				free(cur->str);
 			free(cur);
-			return;
+			return ;
 		}
 	}
 }
@@ -78,7 +77,7 @@ int	ft_unset(t_cmd *ccmd, t_env *env)
 	i = 0;
 	ret = 0;
 	ret2 = 0;
-	while(ccmd->args[i])
+	while (ccmd->args[i])
 	{
 		ret = parse_unset(ccmd->args[i]);
 		if (ret == 0)
