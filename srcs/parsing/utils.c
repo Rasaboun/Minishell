@@ -269,39 +269,46 @@ void    delquotes(char *line)
     tmp = ft_lcharnew(line[i]);
     ft_lcharadd_back(&q,tmp);
     free(line);
+
     while (q->next)
     {
-        while (q->next && q->c == '\'')
+        while (q && q->c == '\'')
         {
             if (!q->previous && q->next && q->c == '\'')
             {
                 q->next->previous = NULL;
                 q = q->next;
             }
-            /*if (q->next && q->previous && q->c == '\'')
+            if (q && q->previous && q->c == '\'')
             {
-                q->next->previous = q->previous;
                 q->previous->next = q->next;
+                q->next->previous = q->previous;
                 q = q->next;
-            }*/
-            //while (q->next && q->c != '\'')
+            }
+            while (q->next && q->c != '\'' && q->c != '\0')
                 q = q->next;
         }
-        /*if (q && q->c == '\"')
+        while (q && q->c == '\"')
         {
-            if (!q->previous && q->next)
+            if (!q->previous && q->next && q->c == '\"')
             {
                 q->next->previous = NULL;
+                q = q->next;
             }
-            if (q->next && q->previous)
+            if (q && q->previous && q->c == '\"')
             {
-                q->next->previous = q->previous;
                 q->previous->next = q->next;
+                q->next->previous = q->previous;
+                q = q->next;
             }
-        }*/
+            while (q->next && q->c != '\"' && q->c != '\0')
+                q = q->next;
+        }
         if (q->next)
             q = q->next;
     }
+    if (!q)
+        fprintf(stderr,"WTF");
     while (q->previous)
         q = q->previous;
     while (q->next)
