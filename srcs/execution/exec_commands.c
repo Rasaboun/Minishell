@@ -6,32 +6,38 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 15:50:29 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/05 20:24:56 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_is_exist(char *str)
+int	exec_without_pipe(t_cmd *cmd, t_minishell *minishell)
+{
+	int		ret;
+	int		redir_ret;
+
+	ret = FAILURE;
+	redir_ret = ft_check_redir(cmd->args);
+	if (redir_ret == SUCCESS)
+		cmd->args = delete_redir_in_args(cmd->args);
+	if (cmd->args[0])
+	{
+		if (builtin_is_exist(cmd->args[0]) == 1)
+			ret = exec_builtins(cmd, minishell);
+		else if (redir_ret != 2)
+			ret = bin_fonction(cmd->args, minishell->env);
+	}
+	ft_reset_fds(minishell);
+	return (ret);
+}
+
+int	exec_with_pipe(t_cmd *cmd, t_minishell *minishell)
 {
 	int		ret;
 
-	if (ft_strcmp(str, "echo") == 0)
-		ret = 1;
-	else if (ft_strcmp(str, "cd") == 0)
-		ret = 1;
-	else if (ft_strcmp(str, "pwd") == 0)
-		ret = 1;
-	else if (ft_strcmp(str, "export") == 0)
-		ret = 1;
-	else if (ft_strcmp(str, "unset") == 0)
-		ret = 1;
-	else if (ft_strcmp(str, "env") == 0)
-		ret = 1;
-	else if (ft_strcmp(str, "exit") == 0)
-		ret = 1;
-	else
-		ret = 0;
+	ret = FAILURE;
+	//if (cmd->type == PIPED || (cmd->previous && cmd->previous->type == PIPED))
 	return (ret);
 }
 
@@ -44,10 +50,12 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 	cmd = ccmd;
 	while (cmd)
 	{
-		if (builtin_is_exist(cmd->args[0]) == 1)
-			ret = exec_builtins(cmd, minishell);
+		
+		if (cmd->type == PIPED || (cmd->previous &&
+				cmd->previous->type == PIPED))
+			ret = exec_with_pipe(cmd, minishell);
 		else
-			ret = bin_fonction(cmd->args, minishell->env);
+			ret = exec_without_pipe(cmd, minishell);
 		cmd = cmd->next;
 		printf("\n\necho $? = %d\n", ret);
 	}

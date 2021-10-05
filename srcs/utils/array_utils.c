@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 16:56:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:28:11 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/05 19:31:37 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,27 @@ char	**ft_list_to_array(t_env *env)
 	{
 		array[i] = ft_strdup(env->str);
 		env = env->next;
+		i++;
+	}
+	array[i] = NULL;
+	return (array);
+}
+
+char	**ft_list_to_array_args(t_args *args)
+{
+	int		nb_lines;
+	int		i;
+	char	**array;
+
+	i = 0;
+	nb_lines = ft_list_args_len(args);
+	array = (char **)malloc(sizeof(char *) * (nb_lines + 1));
+	if (!array)
+		return (NULL);
+	while (args && i < nb_lines)
+	{
+		array[i] = ft_strdup(args->str);
+		args = args->next;
 		i++;
 	}
 	array[i] = NULL;

@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/04 17:11:36 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/05 18:38:11 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ typedef	struct	s_cmd
 	struct s_cmd	*previous;
 }				t_cmd;
 
+typedef	struct	s_args
+{
+	char	*str;
+	struct s_args	*next;
+	struct s_args	*previous;
+}				t_args;
 
 //------- binary functions -------//
 
@@ -114,6 +120,14 @@ t_exp	ft_export_split(char *str);
 void	ft_set_variable_and_value(char *str, t_exp *exp);
 void	ft_len_variable_and_value(char *str, t_exp *exp);
 int		parse_export(char *str);
+
+int		builtin_is_exist(char *str);
+int		ft_check_redir(char **args);
+void	ft_close(int fd);
+void	ft_reset_fds(t_minishell *minishell);
+char	**delete_redir_in_args(char **args);
+int		ft_list_args_len(t_args *args);
+char	**ft_list_to_array_args(t_args *args);
 
 void	ft_init_minishell(t_minishell *minishell, char **envp);
 int		is_empty_list(t_env *env);

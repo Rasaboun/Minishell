@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:42:40 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 15:40:04 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/05 19:03:53 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_exit(t_cmd *ccmd, t_minishell *minishell)
 	minishell->exit = 1;
 	ret = 0;
 	ft_write_error("exit\n");
+	if (!ccmd)
+		return (ret);
 	if (!ccmd->args[1])
 		return (ret);
 	if (ft_isnum(ccmd->args[1]) == 1 && !ccmd->args[2])

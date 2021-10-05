@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 21:56:24 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:28:44 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/05 19:29:42 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,18 @@ void	ft_putstr(char *str)
 		write(STDOUT_FILENO, &str[i], 1);
 		i++;
 	}
+}
+
+void	ft_close(int fd)
+{
+	if (fd > 0)
+		close(fd);
+}
+
+void	ft_reset_fds(t_minishell *minishell)
+{
+	if (minishell->stdout != STDOUT_FILENO)
+		dup2(minishell->stdout, STDOUT_FILENO);
+	if (minishell->stdin != STDIN_FILENO)
+		dup2(minishell->stdin, STDIN_FILENO);
 }

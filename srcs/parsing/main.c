@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:10:28 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/05 19:24:33 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ t_cmd *ccmd;
 
 void sig_handler(int signum)
 {
-  ft_freecmd(ccmd);
-  exit(0);
+	printf("LOL");
+	ft_freecmd(ccmd);
+	exit(0);
 }
 
 int main(int ac, char **av, char **envp)
@@ -32,7 +33,8 @@ int main(int ac, char **av, char **envp)
 	ft_init_minishell(&minishell, envp);
 	while(minishell.exit == 0)
 	{
-		signal(SIGINT,sig_handler);
+		//signal(SIGINT,sig_handler);
+		//signal(SIGQUIT,sig_handler);
 		cmd = readline("\x1b[36m❯ \x1b[35m(Minishell)\x1b[37m ");
 		if (cmd != NULL)
 		{
@@ -43,6 +45,8 @@ int main(int ac, char **av, char **envp)
 			ft_freecmd(ccmd);
 			ccmd = NULL;
 		}
+		/*else
+			ft_exit(ccmd, &minishell);*/
 	}
 	ft_clean_all(&minishell);
 	//Faut tout free

@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:59:27 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 15:53:35 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/05 11:27:38 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_check_bin_error(char *path)
 		ret = UNKNOWN_COMMAND;
 	else
 		ret = CANNOT_EXECUTE;
-	close(fd);
+	ft_close(fd);
 	if (dir)
 		closedir(dir);
 	return (ret);
