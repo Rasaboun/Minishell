@@ -11,8 +11,10 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/parsing/ft_cutcmd.c \
 					./srcs/execution/exec_builtins.c \
 					./srcs/execution/exec_commands.c \
+					./srcs/execution/exec_bin.c \
 					./srcs/builtins/echo.c \
 					./srcs/builtins/export.c \
+					./srcs/builtins/export_utils.c \
 					./srcs/builtins/unset.c \
 					./srcs/builtins/env.c \
 					./srcs/builtins/cd.c \
@@ -22,13 +24,18 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/utils/env_utils.c \
 					./srcs/utils/utils.c \
 					./srcs/parsing/strtok.c \
-					./srcs/parsing/utils.c
+					./srcs/parsing/utils.c \
+					./srcs/utils/env_utils_2.c \
+					./srcs/utils/utils.c \
+					./srcs/utils/utils_2.c \
+					./srcs/utils/array_utils.c \
+					./srcs/utils/exit.c
 					
 OBJS		=	$(SRCS:.c=.o)
 
 INCLUDES	=	./includes
 
-CC			=	gcc #-g3 -fsanitize=address
+CC			=	gcc -g3 -fsanitize=address
 
 HEAD		=	-I./$(INCLUDES) -I./$(LIBFT_DIR)
 

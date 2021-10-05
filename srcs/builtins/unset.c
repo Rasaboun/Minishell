@@ -6,15 +6,13 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:54:51 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/02 14:50:28 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/05 18:12:25 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-
-int		env_variable_len(char *str)
+int	env_variable_len(char *str)
 {
 	int		len;
 
@@ -26,7 +24,7 @@ int		env_variable_len(char *str)
 	return (len);
 }
 
-int		parse_unset(char *str)
+int	parse_unset(char *str)
 {
 	int		i;
 
@@ -48,15 +46,12 @@ void	ft_exec_unset(char *str, t_env *env)
 
 	cur = env;
 	prec = env;
-	if (ft_find_env(str, env) == NULL)
-		return;
-	if (!env)
-		return;
+	if (!env || ft_find_env(str, env) == NULL)
+		return ;
 	if (ft_strncmp(str, env->str, env_variable_len(env->str)) == 0)
 	{
 		env = env->next;
-		free(cur->str);
-		free(cur);
+		free_env_cell(cur, 2);
 	}
 	while (cur)
 	{
@@ -68,12 +63,12 @@ void	ft_exec_unset(char *str, t_env *env)
 			if (env->new == 1)
 				free(cur->str);
 			free(cur);
-			return;
+			return ;
 		}
 	}
 }
 
-int		ft_unset(t_cmd *ccmd, t_env *env)
+int	ft_unset(t_cmd *ccmd, t_env *env)
 {
 	int		i;
 	int		ret;
@@ -82,7 +77,7 @@ int		ft_unset(t_cmd *ccmd, t_env *env)
 	i = 0;
 	ret = 0;
 	ret2 = 0;
-	while(ccmd->args[i])
+	while (ccmd->args[i])
 	{
 		ret = parse_unset(ccmd->args[i]);
 		if (ret == 0)
@@ -93,35 +88,3 @@ int		ft_unset(t_cmd *ccmd, t_env *env)
 	}
 	return (ret2);
 }
-
-/*
-int		*ftt_exec_unset(char *str, t_env *env)
-{
-	t_env	*cur;
-	t_env	*prec;
-
-	cur = env;
-	prec = env;
-	if (ft_find_env(str, env) == NULL)
-		return (0);
-	if (!env)
-		return (0);
-	if (ft_strncmp(str, env->str, env_variable_len(env->str)) == 0)
-	{
-		env = env->next;
-		free(cur);
-		return (0);
-	}
-	while (cur)
-	{
-		prec = cur;
-		cur = cur->next;
-		if (ft_strncmp(str, cur->str, env_variable_len(cur->str)) == 0)
-		{
-			prec->next = cur->next;
-			free(cur);
-			return (0);
-		}
-	}
-	return (0);
-}*/

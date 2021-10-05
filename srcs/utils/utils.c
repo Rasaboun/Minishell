@@ -6,39 +6,23 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 21:56:24 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/09/14 14:18:54 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:28:44 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_array_len(char **array)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	int		i;
+	size_t	i;
 
 	i = 0;
-	while (array[i])
-		i++;
-	return (i);
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+		++i;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-void	ft_free_array(char **array)
-{
-	int		i;
-
-	i = 0;
-	if (array)
-	{	
-		while(array[i])
-		{
-			free (array[i]);
-			i++;
-		}
-		free(array);
-	}
-}
-
-void	ft_write_error(char *str)
+int	ft_write_error(char *str)
 {
 	int		i;
 
@@ -48,6 +32,7 @@ void	ft_write_error(char *str)
 		write(STDERR_FILENO, &str[i], 1);
 		i++;
 	}
+	return (FAILURE);
 }
 
 void	ft_putstr(char *str)
@@ -60,35 +45,4 @@ void	ft_putstr(char *str)
 		write(STDOUT_FILENO, &str[i], 1);
 		i++;
 	}
-}
-
-int	ft_isnum(char *str)
-{
-	int		i;
-
-	i = 0;
-	if (str)
-	{
-		while (str[i])
-		{
-			if (str[i] < '0' || str[i] > '9')
-				return (0);
-			i++;
-		}
-	}
-	return (1);
-}
-
-int	ft_charchr(char *str, char c)
-{
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (SUCCESS);
-		i++;
-	}
-	return (FAILURE);
 }

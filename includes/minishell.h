@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/04 17:30:36 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/05 18:12:00 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 # include <stdio.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <dirent.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <readline/readline.h>
@@ -98,6 +98,15 @@ typedef	struct	s_redir
 }				t_redir;
 
 t_cmd	*g_ccmd;
+
+//------- binary functions -------//
+
+int		bin_fonction(char **argv, t_env *env);
+int		bin_is_exist(char *path, char **cmd, char **env_cpy);
+int		exec_bin(char *path, char **cmd, char **env_cpy);
+int		ft_check_bin_error(char *path);
+void	ft_write_error_bin(int ret);
+
 //------- Builtins -------//
 
 int		ft_echo(t_cmd *ccmd);
@@ -128,10 +137,21 @@ void	ft_rediradd_back(t_redir **alst, t_redir *rnew);
 t_redir	*ft_redirnew(char *st);
 char **rediredit(char **tabs);
 char	**ft_strtok(const char *line, char	*strset);
-void	ft_write_error(char *str);
+int		ft_write_error(char *str);
 int		ft_isnum(char *str);
 int		ft_charchr(char *str, char c);
 
+char	**split_path(t_env *env);
+char	**ft_list_to_array(t_env *env);
+void	print_env_array(char **array);
+
+t_exp	ft_export_split(char *str);
+void	ft_set_variable_and_value(char *str, t_exp *exp);
+void	ft_len_variable_and_value(char *str, t_exp *exp);
+int		parse_export(char *str);
+
+void	ft_init_minishell(t_minishell *minishell, char **envp);
+int		is_empty_list(t_env *env);
 t_env	*ft_find_env(char *str, t_env *env);
 char	*ft_change_env(t_env *env, char *str, char *value);
 char	*ft_strjoin_env(char *s1, char *s2);
@@ -139,6 +159,10 @@ int		ft_save_pwd(t_env *env);
 char	*ft_env_value(char *str, t_env *env);
 int		ft_array_len(char **array);
 int		ft_env_len(t_env *env);
+char	**ft_list_to_array(t_env *env);
+char	**ft_sort_env(char **envp);
+void	print_env_array(char **array);
+void	free_env_cell(t_env *env, int how);
 
 int		ft_is(int c);
 char	*ft_substrs(const char *s, int min, int max);
@@ -154,5 +178,7 @@ void	ft_cutcmd(t_cmd **cmd, char *line);
 //---------- FREE ----------//
 
 void	ft_free_array(char **array);
+void	ft_clean_all(t_minishell *minishell);
+void	ft_freecmd(t_cmd *cmd);
 
 #endif

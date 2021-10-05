@@ -6,25 +6,23 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 11:10:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/01 15:48:41 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:56:07 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		go_to_home(t_env *env)
+int	go_to_home(t_env *env)
 {
 	t_env	*cur;
 	char	*str;
+	int		i;
 
 	cur = ft_find_env("HOME", env);
 	if (cur == NULL)
-	{
-		ft_write_error(" cd: HOME not set");
-		return (FAILURE);
-	}
+		return (ft_write_error(" cd: HOME not set"));
 	str = cur->str;
-	int i = 1;
+	i = 1;
 	while (str[i - 1] != '=')
 		i++;
 	if (chdir(&str[i]) == 0)
@@ -34,7 +32,7 @@ int		go_to_home(t_env *env)
 	}
 	else
 	{
-		ft_write_error(" cd: ");
+		ft_write_error("minishell: cd: ");
 		ft_write_error(&str[i]);
 		ft_write_error(": No such file or directory\n");
 	}
@@ -52,7 +50,6 @@ int	ft_save_pwd(t_env *env)
 	cur = ft_find_env("PWD", env);
 	if (cur == NULL)
 		return (FAILURE);
-	printf("cur->new = %d\n", cur->new);
 	if (cur->new == 1)
 		tmp = cur->str;
 	cur->str = ft_change_env(cur, "PWD", path);
@@ -80,7 +77,7 @@ int	ft_save_oldpwd(t_env *env)
 	return (SUCCESS);
 }
 
-int		ft_cd(t_cmd *ccmd, t_env *env)
+int	ft_cd(t_cmd *ccmd, t_env *env)
 {
 	char	*directory;
 
@@ -91,7 +88,7 @@ int		ft_cd(t_cmd *ccmd, t_env *env)
 	else if (chdir(directory) == 0)
 	{
 		ft_save_pwd(env);
-		return(SUCCESS);
+		return (SUCCESS);
 	}
 	else
 	{

@@ -1,26 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/01 10:50:24 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 15:34:20 by dkoriaki         ###   ########.fr       */
+/*   Created: 2021/10/04 16:55:13 by dkoriaki          #+#    #+#             */
+/*   Updated: 2021/10/04 17:28:56 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pwd(void)
+int	ft_isnum(char *str)
 {
-	char	path[PATH_MAX];
+	int		i;
 
-	if (getcwd(path, sizeof(path)))
+	i = 0;
+	if (str)
 	{
-		write(STDOUT_FILENO, &path, ft_strlen(path));
-		write(STDOUT_FILENO, "\n", 1);
-		return (SUCCESS);
+		while (str[i])
+		{
+			if (str[i] < '0' || str[i] > '9')
+				return (0);
+			i++;
+		}
+	}
+	return (1);
+}
+
+int	ft_charchr(char *str, char c)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (SUCCESS);
+		i++;
 	}
 	return (FAILURE);
+}
+
+char	**split_path(t_env *env)
+{
+	char	**array;
+	char	*path;
+
+	path = ft_env_value("PATH", env);
+	array = ft_split(path, ':');
+	free(path);
+	return (array);
 }
