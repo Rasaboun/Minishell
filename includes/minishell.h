@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/05 18:12:00 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/05 18:17:17 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define SUCCESS 0
 # define FAILURE 1
 
+# define CANNOT_EXECUTE 126
+# define UNKNOWN_COMMAND 127
 
 typedef struct	s_env {
 	char			*str;

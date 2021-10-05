@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 18:12:56 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/05 18:15:58 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 	cmd = ccmd;
 	while (cmd)
 	{
-		ret = exec_builtins(cmd, minishell);
+		if (builtin_is_exist(cmd->args[0]) == 1)
+			ret = exec_builtins(cmd, minishell);
+		else
+			ret = bin_fonction(cmd->args, minishell->env);
 		cmd = cmd->next;
 		printf("\n\necho $? = %d\n", ret);
 	}

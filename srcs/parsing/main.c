@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 18:15:19 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/05 18:21:49 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int main(int ac, char **av, char **envp)
 		if (cmd != NULL)
 		{
 			add_history(cmd);
-			ft_cutcmd(&ccmd,cmd);
+			//ft_cutcmd(&ccmd,cmd);
 			minishell.ret = exec_cmds(ccmd, &minishell);
 			free(cmd);
 			ft_freecmd(ccmd);

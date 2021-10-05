@@ -336,57 +336,8 @@ void    ft_delquotes(char **line)
 
     while (line[i])
     {
-        /*ii = 0;
-        while (line[i][ii])
-        {
-            if (line[i][ii] == '\'')
-            {
-                ii++;
-                n = ii;
-                while (line[i][ii] && line[i][ii] != '\'')
-                    ii++;
-                if (line[i][ii] && n == ii)
-                {
-                    line[i][0] = '\0'; 
-                    ii++;
-                    break;
-                }
-                final = ft_substrs(line[i],n,ii-1);
-                line[i] = final;
-                i++;
-                ii = 0;
-                
-            }
-            else
-                ii++;
-        }*/
         delquotes(line[i]);
         i++;
-       /* if (ft_strchr(line[i],'\''))
-        {
-            sp = ft_split(line[i],'\'');
-            
-            n = 0;
-            while (sp[n])
-            {
-                final = ft_strfjoin(final, sp[n]);
-                n++;
-            }
-            line[i] = final;
-        }
-        if (ft_strchr(line[i],'\"'))
-        {
-            sp = ft_split(line[i],'\"');
-            
-            n = 0;
-            while (sp[n])
-            {
-                final = ft_strfjoin(final, sp[n]);
-                n++;
-            }
-            line[i] = final;
-        }
-        i++;*/
     }
     for (i = 0;line[i];i++)
         printf("line = %s\n",line[i]);
