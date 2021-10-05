@@ -269,7 +269,7 @@ void    delquotes(char *line)
     tmp = ft_lcharnew(line[i]);
     ft_lcharadd_back(&q,tmp);
     free(line);
-    while (q && q->next)
+    while (q->next)
     {
         while (q->next && q->c == '\'')
         {
@@ -278,16 +278,16 @@ void    delquotes(char *line)
                 q->next->previous = NULL;
                 q = q->next;
             }
-            if (q->next && q->previous && q->c == '\'')
+            /*if (q->next && q->previous && q->c == '\'')
             {
                 q->next->previous = q->previous;
                 q->previous->next = q->next;
                 q = q->next;
-            }
-            while (q->next && q->c != '\'')
+            }*/
+            //while (q->next && q->c != '\'')
                 q = q->next;
         }
-        if (q && q->c == '\"')
+        /*if (q && q->c == '\"')
         {
             if (!q->previous && q->next)
             {
@@ -298,8 +298,8 @@ void    delquotes(char *line)
                 q->next->previous = q->previous;
                 q->previous->next = q->next;
             }
-        }
-        if (q)
+        }*/
+        if (q->next)
             q = q->next;
     }
     while (q->previous)
