@@ -2,13 +2,13 @@
 
 int		ft_is(int c)
 {
-	if (c != '\'' && c != '\"')
+	if (c != '\'' && c != '\"' && c != ' ')
 		return (1);
 	return (0);
 }
 
 
-static char	*ft_substrs(const char *s, int min, int max)
+char	*ft_substrs(const char *s, int min, int max)
 {
 	int		i;
 	char	*s2;
@@ -16,7 +16,7 @@ static char	*ft_substrs(const char *s, int min, int max)
 	if (!(s2 = malloc(sizeof(char*) * (max - min + 1))))
 		return (NULL);
 	i = 0;
-	while (min < max)
+	while (min <= max)
 	{
 		s2[i] = s[min];
 		i++;
@@ -41,24 +41,48 @@ static	int	ft_countt(const char *line, char *strset)
 	{
 		while(line[i] && line[i] == ' ')
 			i++;
-		if (line[i] == '\'')//QUOTE
+		if (line[i] == '\'')
 		{
-			i++;
-			while (line[i] && line[i] != '\'')
-				i++;
-			if (line[i] && line[i] == '\'')
+			while (line[i] == '\'')//QUOTE
 			{
+				
 				i++;
-				num++;
+				while (line[i] && line[i] != '\'')
+					i++;
+				if (line[i] && line[i] == '\'')
+				{
+					i++;
+				}
+				else
+				{
+					write(1,"Not closed quote\n",17);
+					exit(0);
+				}
 			}
-			else
+			num++;
+		}
+		if (line[i] == '\"')
+		{
+			while (line[i] == '\"')//QUOTE
 			{
-				write(1,"Not closed quote\n",17);
-				exit(0);
+				
+				i++;
+				while (line[i] && line[i] != '\"')
+					i++;
+				if (line[i] && line[i] == '\"')
+				{
+					i++;
+				}
+				else
+				{
+					write(1,"Not closed quote\n",17);
+					exit(0);
+				}
 			}
+			num++;
 		}
 
-		if (ft_is(line[i]) && !ft_strchr(strset,line[i]))//ALPHANUM
+		if (line[i] && ft_is(line[i]) && !ft_strchr(strset,line[i]))//ALPHANUM
 		{
 			while (line[i] && ft_is(line[i]) && !ft_strchr(strset,line[i]))
 				i++;
@@ -68,6 +92,26 @@ static	int	ft_countt(const char *line, char *strset)
 			while (line[i] && line[i] != '\'')
 				i++;
 			if (line[i] && line[i] == '\'')
+			{
+				i++;
+				while(line[i] && ft_is(line[i]))
+					i++;
+				
+				num++;
+			}
+			else
+			{
+				write(1,"Not closed quote\n",17);
+				exit(0);
+			}	//QUOTE
+
+			}
+			if (line[i] == '\"')
+			{
+				i++;
+			while (line[i] && line[i] != '\"')
+				i++;
+			if (line[i] && line[i] == '\"')
 			{
 				i++;
 				while(line[i] && ft_is(line[i]))
@@ -132,6 +176,7 @@ void	init_strok(const char *line, char *strset, t_tok *t)
 
 	i = 0;
 	t->num = ft_countt(line, strset);
+	
 	if (t->num < 1)
 	{
 		perror("Error size");
@@ -160,26 +205,26 @@ void	while_quotes(const char *line, char *strset, t_tok *t, char c, int w)
 		{
 			if (w == 0)
 				t->min = t->i;
-			t->i++;
-			while (line[t->i] && line[t->i] != c)
-				t->i++;
-			if (line[t->i])
+			while (line[t->i] == c)
 			{
 				t->i++;
-				while(line[t->i] && ft_is(line[t->i]))
+				while (line[t->i] && line[t->i] != c)
 					t->i++;
-				t->str[t->num] = ft_substrs(line, t->min, t->i);
-				if (!t->str[t->num])
-					ft_freee(t->num, t->str);
-				t->num++;
+				if (line[t->i])
+				{
+					if (line[t->i] != c)
+					{
+						while(line[t->i] && line[t->i] != c)
+							t->i++;
+					}
+					if (line[t->i] == c)
+						t->i++;
+				}
 			}
-			else
-			{
-				fprintf(stderr, "line i : %c",line[t->i]);
-				exit(0);
-			}	//QUOTE
-
-
+			t->str[t->num] = ft_substrs(line, t->min, t->i);
+			if (!t->str[t->num])
+				ft_freee(t->num, t->str);
+			t->num++;
 		}
 }
 
@@ -196,6 +241,7 @@ char	**ft_strtok(const char *line, char	*strset)
 			t.i++;
 		//QUOTES
 		while_quotes(line, strset, &t, '\'', 0);
+		while_quotes(line, strset, &t, '\"', 0);
 		if (line[t.i] && ft_is(line[t.i]) && !ft_strchr(strset,line[t.i]))//ALPHANUM
 		{
 			t.min = t.i;
@@ -204,6 +250,10 @@ char	**ft_strtok(const char *line, char	*strset)
 			if (line[t.i] == '\'')
 			{
 				while_quotes(line, strset, &t, '\'',1);
+			}
+			if (line[t.i] == '\"')
+			{
+				while_quotes(line, strset, &t, '\"',1);
 			}
 				
 			else if (t.min < t.i)

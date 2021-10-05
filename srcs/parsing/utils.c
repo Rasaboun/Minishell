@@ -2,6 +2,92 @@
 
 
 
+t_lchar	*ft_lcharlast(t_lchar *lst)
+{
+	t_lchar	*lst2;
+
+	lst2 = lst;
+	if (!lst)
+		return (NULL);
+	while (lst2->next)
+		lst2 = lst2->next;
+	return (lst2);
+}
+
+void	ft_lcharadd_back(t_lchar **alst, t_lchar *rnew)
+{
+	t_lchar	*lst2;
+
+	if (*alst == NULL)
+		*alst = rnew;
+	else
+	{
+		lst2 = ft_lcharlast(*alst);
+		lst2->next = rnew;
+		rnew->next = NULL;
+        rnew->previous = lst2;
+	}
+}
+
+t_lchar	*ft_lcharnew(char st)
+{
+	t_lchar *s;
+
+	if (!(s = (t_lchar *)malloc(sizeof(t_lchar))))
+		return (NULL);
+	s->c = st;
+	s->next = NULL;
+    s->previous = NULL;
+	return (s);
+}
+
+
+
+
+
+
+
+
+
+t_cm	*ft_cmlast(t_cm *lst)
+{
+	t_cm	*lst2;
+
+	lst2 = lst;
+	if (!lst)
+		return (NULL);
+	while (lst2->next)
+		lst2 = lst2->next;
+	return (lst2);
+}
+
+void	ft_cmadd_back(t_cm **alst, t_cm *rnew)
+{
+	t_cm	*lst2;
+
+	if (*alst == NULL)
+		*alst = rnew;
+	else
+	{
+		lst2 = ft_cmlast(*alst);
+		lst2->next = rnew;
+		rnew->next = NULL;
+        rnew->previous = lst2;
+	}
+}
+
+t_cm	*ft_cmnew(char **st)
+{
+	t_cm *s;
+
+	if (!(s = (t_cm *)malloc(sizeof(t_cm))))
+		return (NULL);
+	s->str = st;
+	s->next = NULL;
+    s->previous = NULL;
+	return (s);
+}
+
 static int	ft_whil(char *s3, const char *s1, int i)
 {
 	int		p;
@@ -165,6 +251,67 @@ char **rediredit(char **tabs)
     return (final);
 }
 
+void    delquotes(char *line)
+{
+    int  i;
+    t_lchar *q;
+    t_lchar *tmp;
+
+    i = 0;
+    q = NULL;
+    tmp = NULL;
+    while (line[i])
+    {
+        tmp = ft_lcharnew(line[i]);
+        ft_lcharadd_back(&q,tmp);
+        i++;
+    }
+    tmp = ft_lcharnew(line[i]);
+    ft_lcharadd_back(&q,tmp);
+    free(line);
+    while (q && q->next)
+    {
+        while (q->next && q->c == '\'')
+        {
+            if (!q->previous && q->next && q->c == '\'')
+            {
+                q->next->previous = NULL;
+                q = q->next;
+            }
+            if (q->next && q->previous && q->c == '\'')
+            {
+                q->next->previous = q->previous;
+                q->previous->next = q->next;
+                q = q->next;
+            }
+            while (q->next && q->c != '\'')
+                q = q->next;
+        }
+        if (q && q->c == '\"')
+        {
+            if (!q->previous && q->next)
+            {
+                q->next->previous = NULL;
+            }
+            if (q->next && q->previous)
+            {
+                q->next->previous = q->previous;
+                q->previous->next = q->next;
+            }
+        }
+        if (q)
+            q = q->next;
+    }
+    while (q->previous)
+        q = q->previous;
+    while (q->next)
+    {
+        printf("%c",q->c);
+        q = q->next;
+    }
+    exit(0);
+
+}
 
 void    ft_delquotes(char **line)
 {
@@ -172,7 +319,9 @@ void    ft_delquotes(char **line)
     char *final;
     int i;
     int n;
+    int ii;
 
+    ii = 0;
     n = 0;
     sp = NULL;
     final = NULL;
@@ -180,7 +329,33 @@ void    ft_delquotes(char **line)
 
     while (line[i])
     {
-        if (ft_strchr(line[i],'\''))
+        /*ii = 0;
+        while (line[i][ii])
+        {
+            if (line[i][ii] == '\'')
+            {
+                ii++;
+                n = ii;
+                while (line[i][ii] && line[i][ii] != '\'')
+                    ii++;
+                if (line[i][ii] && n == ii)
+                {
+                    line[i][0] = '\0'; 
+                    ii++;
+                    break;
+                }
+                final = ft_substrs(line[i],n,ii-1);
+                line[i] = final;
+                i++;
+                ii = 0;
+                
+            }
+            else
+                ii++;
+        }*/
+        delquotes(line[i]);
+        i++;
+       /* if (ft_strchr(line[i],'\''))
         {
             sp = ft_split(line[i],'\'');
             
@@ -192,6 +367,20 @@ void    ft_delquotes(char **line)
             }
             line[i] = final;
         }
-        i++;
+        if (ft_strchr(line[i],'\"'))
+        {
+            sp = ft_split(line[i],'\"');
+            
+            n = 0;
+            while (sp[n])
+            {
+                final = ft_strfjoin(final, sp[n]);
+                n++;
+            }
+            line[i] = final;
+        }
+        i++;*/
     }
+    for (i = 0;line[i];i++)
+        printf("line = %s\n",line[i]);
 }

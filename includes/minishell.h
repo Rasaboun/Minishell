@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/02 14:35:49 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:30:36 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,19 @@ typedef	struct	s_tok{
 	int		num;
 }				t_tok;
 
+typedef	struct	s_cm
+{
+	char **str;
+	struct	s_cm	*next;
+	struct	s_cm	*previous;
+}				t_cm;
+
+typedef	struct	s_lchar
+{
+	char c;
+	struct	s_lchar	*next;
+	struct	s_lchar	*previous;
+}				t_lchar;
 
 typedef	struct	s_redir
 {
@@ -127,6 +140,11 @@ char	*ft_env_value(char *str, t_env *env);
 int		ft_array_len(char **array);
 int		ft_env_len(t_env *env);
 
+int		ft_is(int c);
+char	*ft_substrs(const char *s, int min, int max);
+t_cm	*ft_cmlast(t_cm *lst);
+void	ft_cmadd_back(t_cm **alst, t_cm *rnew);
+t_cm	*ft_cmnew(char **st);
 void	ft_tcmdadd_back(t_cmd **alst, t_cmd *new);
 t_cmd	*ft_tcmdlast(t_cmd *lst);
 int		ft_tcmdsize(t_cmd *lst);
