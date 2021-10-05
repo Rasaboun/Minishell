@@ -1,6 +1,20 @@
 #include "minishell.h"
 
+int	ft_istrchr(const char *s, int c)
+{
+	int		i;
 
+	i = 0;
+	if (c == '\0')
+		return (0);
+	while (s[i] != c)
+	{
+		if (s[i] == '\0')
+			return (0);
+		i++;
+	}
+	return (i);
+}
 
 t_lchar	*ft_lcharlast(t_lchar *lst)
 {
@@ -260,6 +274,7 @@ void    delquotes(char *line)
     i = 0;
     q = NULL;
     tmp = NULL;
+    //printf("line = %s\n",line);
     while (line[i])
     {
         tmp = ft_lcharnew(line[i]);
@@ -279,13 +294,14 @@ void    delquotes(char *line)
                 q->next->previous = NULL;
                 q = q->next;
             }
+            while (q->next && q->c != '\'' && q->c != '\0')
+                q = q->next;
             if (q && q->previous && q->c == '\'')
             {
                 q->previous->next = q->next;
                 q->next->previous = q->previous;
-                q = q->next;
             }
-            while (q->next && q->c != '\'' && q->c != '\0')
+            if (q->next)
                 q = q->next;
         }
         while (q && q->c == '\"')
@@ -295,17 +311,18 @@ void    delquotes(char *line)
                 q->next->previous = NULL;
                 q = q->next;
             }
+            while (q->next && q->c != '\"' && q->c != '\0')
+                q = q->next;
             if (q && q->previous && q->c == '\"')
             {
                 q->previous->next = q->next;
                 q->next->previous = q->previous;
-                q = q->next;
             }
-            while (q->next && q->c != '\"' && q->c != '\0')
+            if (q->next)
                 q = q->next;
         }
-        if (q->next)
-            q = q->next;
+       if (q->next && q->c != '\'' && q->c != '\"')
+            q = q->next; 
     }
     if (!q)
         fprintf(stderr,"WTF");
@@ -316,7 +333,7 @@ void    delquotes(char *line)
         printf("%c",q->c);
         q = q->next;
     }
-    exit(0);
+  //exit(0);
 
 }
 
@@ -339,6 +356,5 @@ void    ft_delquotes(char **line)
         delquotes(line[i]);
         i++;
     }
-    for (i = 0;line[i];i++)
-        printf("line = %s\n",line[i]);
+    
 }

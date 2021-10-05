@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 18:21:49 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/05 19:46:12 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ t_cmd *ccmd;
 void sig_handler(int signum)
 {
   ft_freecmd(ccmd);
-  exit(0);
+  printf("\n");
+  rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 int main(int ac, char **av, char **envp)
@@ -32,17 +35,23 @@ int main(int ac, char **av, char **envp)
 	ft_init_minishell(&minishell, envp);
 	while(minishell.exit == 0)
 	{
-		signal(SIGINT,sig_handler);
+		
+		//signal(SIGQUIT,sig_handler);
 		cmd = readline("\x1b[36m❯ \x1b[35m(Minishell)\x1b[37m ");
+		signal(SIGINT,sig_handler);
 		if (cmd != NULL)
 		{
-			add_history(cmd);
-			//ft_cutcmd(&ccmd,cmd);
+			if (cmd && cmd[0] != '\0')
+				add_history(cmd);
+			ft_cutcmd(&ccmd,cmd);
 			minishell.ret = exec_cmds(ccmd, &minishell);
 			free(cmd);
 			ft_freecmd(ccmd);
 			ccmd = NULL;
 		}
+		else
+			exit(0);
+		
 	}
 	ft_clean_all(&minishell);
 	//Faut tout free

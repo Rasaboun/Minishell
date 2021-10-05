@@ -16,7 +16,7 @@ char	*ft_substrs(const char *s, int min, int max)
 	if (!(s2 = malloc(sizeof(char*) * (max - min + 1))))
 		return (NULL);
 	i = 0;
-	while (min <= max)
+	while (min < max)
 	{
 		s2[i] = s[min];
 		i++;
@@ -32,7 +32,9 @@ static	int	ft_countt(const char *line, char *strset)
 	int num;
 	int min;
 	int n;
+	int m;
 
+	m = 0;
 	n = 0;
 	min = 0;
 	num = 0;
@@ -210,9 +212,10 @@ void	while_quotes(const char *line, char *strset, t_tok *t, char c, int w)
 				t->i++;
 				while (line[t->i] && line[t->i] != c)
 					t->i++;
-				if (line[t->i])
+				if (line[t->i] && line[t->i] == c)
 				{
-					if (line[t->i] != c)
+					t->i++;
+					if (line[t->i] != c && line[t->i] != ' ')
 					{
 						while(line[t->i] && line[t->i] != c)
 							t->i++;
@@ -251,7 +254,7 @@ char	**ft_strtok(const char *line, char	*strset)
 			{
 				while_quotes(line, strset, &t, '\'',1);
 			}
-			if (line[t.i] == '\"')
+			else if (line[t.i] == '\"')
 			{
 				while_quotes(line, strset, &t, '\"',1);
 			}
