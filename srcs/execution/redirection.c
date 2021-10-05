@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:57:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 20:22:43 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/06 00:07:04 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,35 @@ int	ft_redir_input(char **args, int i)
 	ft_close(fd_in);
 	return (SUCCESS);
 }
-/*
-void	ft_redir_input_eof()
-{
 
-}*/
+int	ft_redir_input_eof(char **args, int i)
+{
+	int		fd_in;
+	int		fd_out;
+	char	*line;
+
+	line = NULL;
+	fd_out = open(".heredoc", O_WRONLY|O_CREAT|O_APPEND, S_IRUSR | S_IWUSR);
+	while ((line = readline("> ")) != NULL)
+	{
+		if (ft_strcmp(line, args[i + 1]) == 0)
+		{
+			free(line);
+			break ;
+		}
+		else
+		{
+			ft_putstr_fd(line, fd_out);
+			free(line);
+			ft_putstr_fd("\n", fd_out);
+		}
+	}
+	ft_close(fd_out);
+	fd_in = open(".heredoc", O_RDONLY, S_IRUSR);
+	dup2(fd_in, STDIN_FILENO);
+	ft_close(fd_in);
+	return (SUCCESS);
+}
 
 int	ft_check_redir(char **args)
 {
@@ -83,7 +107,8 @@ int	ft_check_redir(char **args)
 			ret = ft_redir_output_append(args, i);
 		else if (strcmp(args[i], "<") == 0)
 			ret = ft_redir_input(args, i);
-		/*else if (strcmp(args[i], "<<") == 0)*/
+		else if (strcmp(args[i], "<<") == 0)
+			ret = ft_redir_input_eof(args, i);
 		i++;
 	}
 	return (ret);

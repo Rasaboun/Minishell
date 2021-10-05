@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 19:24:33 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/05 20:49:15 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	char			*cmd;
+	char			*path;
 	t_minishell		minishell;
 
 	ccmd = NULL;

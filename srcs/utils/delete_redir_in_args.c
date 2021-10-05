@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 12:43:50 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 20:18:43 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/05 22:14:23 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int		ft_is_redir(char *str)
 		return (SUCCESS);
 	if (ft_strcmp(str, "<") == 0)
 		return (SUCCESS);
-	//if (ft_strcmp(str, "<<") == 0)
-	//	return (SUCCESS);
+	if (ft_strcmp(str, "<<") == 0)
+		return (SUCCESS);
 	return (FAILURE);
 }
 
