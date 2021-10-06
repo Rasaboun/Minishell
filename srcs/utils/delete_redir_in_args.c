@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 12:43:50 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/06 11:44:54 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/06 15:14:44 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_args	*ft_init_args(char **args)
 	return (list_args);
 }
 
-int		ft_is_redir(char *str)
+int	ft_is_redir(char *str)
 {
 	if (ft_strcmp(str, ">") == 0)
 		return (SUCCESS);
@@ -75,107 +75,3 @@ int		ft_is_redir(char *str)
 		return (SUCCESS);
 	return (FAILURE);
 }
-
-t_args	*ft_delete_cell_args(t_args *args)
-{
-	t_args	*cur;
-	t_args	*prev;
-
-	cur = args;
-	if (ft_is_redir(args->str) == SUCCESS)
-	{
-		if (args->next->next)
-		{
-			args = args->next->next;
-			args->previous = NULL;
-		}
-		else
-			args = NULL;
-		free(cur->next->str);
-		free(cur->next);
-		free(cur->str);
-		free(cur);
-	}
-	while (args && args->next != NULL)
-	{
-		if (args->previous)
-			prev = args->previous;
-		cur = args;
-		if (ft_is_redir(args->str) == SUCCESS)
-		{
-			if (args->next->next)
-			{
-				args->next->next->previous = prev;
-				prev->next = args->next->next;
-				args = args->next->next;
-				free(cur->next->str);
-				free(cur->next);
-				free(cur->str);
-				free(cur);
-			}
-			else
-			{
-				prev->next = NULL;
-				free(cur->next->str);
-				free(cur->next);
-				free(cur->str);
-				free(cur);
-				args = prev;
-			}
-		}
-		else
-			args = args->next;
-	}
-	return (args);
-}
-
-t_args	*list_rewind(t_args *args)
-{
-	while (args && args->previous)
-	{
-		args = args->previous;
-	}
-	return (args);
-}
-
-char	**delete_redir_in_args(char **args)
-{
-	char	**args_without_redir;
-	t_args	*list_args;
-	t_args	*tmp;
-
-	list_args = ft_init_args(args);
-	list_args = ft_delete_cell_args(list_args);
-	list_args = list_rewind(list_args);
-	ft_free_array(args);
-	args_without_redir = ft_list_to_array_args(list_args);
-	while (list_args)
-	{
-		tmp = list_args;
-		list_args = list_args->next;
-		free(tmp->str);
-		free(tmp);
-	}
-	return (args_without_redir);
-}
-/*
-void	ft_freecmd(t_cmd *cmd)
-{
-	int		i;
-	t_cmd	*tmp;
-
-	i = 0;
-	while (cmd)
-	{
-		i = 0;
-		while (cmd->args && cmd->args[i])
-		{
-			free(cmd->args[i]);
-			i++;
-		}
-		free(cmd->args);
-		tmp = cmd;
-		cmd = cmd->next;
-		free(tmp);
-	}
-}*/

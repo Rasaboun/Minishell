@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:57:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/06 00:07:04 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/06 15:11:43 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	ft_redir_output_trunc(char **args, int i)
 {
 	int		fd_out;
-	
-	fd_out = open(args[i + 1], O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR | S_IWUSR);
+
+	fd_out = open(args[i + 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	if (fd_out == -1)
 	{
 		ft_write_error("minishell: ");
@@ -32,8 +32,9 @@ int	ft_redir_output_trunc(char **args, int i)
 int	ft_redir_output_append(char **args, int i)
 {
 	int		fd_out;
-	
-	fd_out = open(args[i + 1], O_WRONLY|O_CREAT|O_APPEND, S_IRUSR | S_IWUSR);
+
+	fd_out = open(args[i + 1], O_WRONLY
+			| O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
 	if (fd_out == -1)
 	{
 		ft_write_error("minishell: ");
@@ -70,9 +71,10 @@ int	ft_redir_input_eof(char **args, int i)
 	char	*line;
 
 	line = NULL;
-	fd_out = open(".heredoc", O_WRONLY|O_CREAT|O_APPEND, S_IRUSR | S_IWUSR);
-	while ((line = readline("> ")) != NULL)
+	fd_out = open(".heredoc", O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+	while (1)
 	{
+		line = readline("> ");
 		if (ft_strcmp(line, args[i + 1]) == 0)
 		{
 			free(line);
@@ -80,9 +82,8 @@ int	ft_redir_input_eof(char **args, int i)
 		}
 		else
 		{
-			ft_putstr_fd(line, fd_out);
+			ft_putstr_eol_fd(line, fd_out);
 			free(line);
-			ft_putstr_fd("\n", fd_out);
 		}
 	}
 	ft_close(fd_out);

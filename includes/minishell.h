@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/05 18:38:11 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/06 15:27:46 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@
 # define CANNOT_EXECUTE 126
 # define UNKNOWN_COMMAND 127
 
-typedef struct	s_env {
+typedef struct s_env {
 	char			*str;
 	int				new;
 	struct s_env	*next;
 }				t_env;
 
-typedef struct	s_exp {
+typedef struct s_exp {
 	int		len_var;
 	int		len_value;
 	int		equal;
@@ -53,7 +53,7 @@ typedef struct	s_exp {
 	char	*value;
 }				t_exp;
 
-typedef struct	s_minishell
+typedef struct s_minishell
 {
 	t_env	*env;
 	int		exit;
@@ -62,18 +62,18 @@ typedef struct	s_minishell
 	int		stdin;
 }				t_minishell;
 
-typedef	struct	s_cmd
+typedef struct s_cmd
 {
-	char **args;
-	int pipe[2];
-	int type;
+	char			**args;
+	int				pipe[2];
+	int				type;
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
 }				t_cmd;
 
-typedef	struct	s_args
+typedef struct s_args
 {
-	char	*str;
+	char			*str;
 	struct s_args	*next;
 	struct s_args	*previous;
 }				t_args;
@@ -128,6 +128,11 @@ void	ft_reset_fds(t_minishell *minishell);
 char	**delete_redir_in_args(char **args);
 int		ft_list_args_len(t_args *args);
 char	**ft_list_to_array_args(t_args *args);
+void	ft_free_cell_args_next(t_args *cur);
+t_args	*ft_delete_cell_args(t_args *args);
+void	ft_delete_cell_args_next(t_args *args, t_args *cur, t_args *prev);
+t_args	*ft_init_args(char **args);
+int		ft_is_redir(char *str);
 
 void	ft_init_minishell(t_minishell *minishell, char **envp);
 int		is_empty_list(t_env *env);

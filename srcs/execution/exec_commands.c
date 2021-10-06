@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/06 00:43:31 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/06 15:02:19 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,16 @@ int	exec_with_pipe(t_cmd *cmd, t_minishell *minishell)
 
 int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 {
-	int		ret;
-	t_cmd	*cmd;
+	int			ret;
+	t_cmd		*cmd;
 	struct stat	sb;
 
 	ret = -1;
 	cmd = ccmd;
 	while (cmd)
 	{
-		if (cmd->type == PIPED || (cmd->previous &&
-				cmd->previous->type == PIPED))
+		if (cmd->type == PIPED || (cmd->previous
+				&& cmd->previous->type == PIPED))
 			ret = exec_with_pipe(cmd, minishell);
 		else
 			ret = exec_without_pipe(cmd, minishell);
