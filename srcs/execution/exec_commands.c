@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 23:05:02 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/06 00:43:31 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 	cmd = ccmd;
 	while (cmd)
 	{
-		
 		if (cmd->type == PIPED || (cmd->previous &&
 				cmd->previous->type == PIPED))
 			ret = exec_with_pipe(cmd, minishell);
@@ -61,7 +60,6 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 		if (stat("./.heredoc", &sb) == 0)
 			unlink("./.heredoc");
 		printf("\n\necho $? = %d\n", ret);
-
 	}
 	return (ret);
 }

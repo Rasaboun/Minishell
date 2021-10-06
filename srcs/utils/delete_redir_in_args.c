@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 12:43:50 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 22:14:23 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/06 11:33:57 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_args	*args_create_cell(char *str)
 	args = malloc(sizeof(t_args));
 	if (!args)
 		return (NULL);
-	args->str = str;
+	args->str = ft_strdup(str);
 	args->next = NULL;
 	args->previous = NULL;
 	return (args);
@@ -134,16 +134,41 @@ t_args	*list_rewind(t_args *args)
 
 char	**delete_redir_in_args(char **args)
 {
-	char	**tmp;
 	char	**args_without_redir;
 	t_args	*list_args;
+	t_args	*tmp;
 
-	tmp = args;
 	list_args = ft_init_args(args);
 	list_args = ft_delete_cell_args(list_args);
 	list_args = list_rewind(list_args);
+	ft_free_array(args);
 	args_without_redir = ft_list_to_array_args(list_args);
-	int	i = 0;
-	free(args);
+	while (list_args)
+	{
+		tmp = list_args;
+		list_args = list_args->next;
+		free(tmp);
+	}
 	return (args_without_redir);
 }
+/*
+void	ft_freecmd(t_cmd *cmd)
+{
+	int		i;
+	t_cmd	*tmp;
+
+	i = 0;
+	while (cmd)
+	{
+		i = 0;
+		while (cmd->args && cmd->args[i])
+		{
+			free(cmd->args[i]);
+			i++;
+		}
+		free(cmd->args);
+		tmp = cmd;
+		cmd = cmd->next;
+		free(tmp);
+	}
+}*/
