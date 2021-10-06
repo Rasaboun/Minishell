@@ -133,7 +133,7 @@ t_env 	*lst_add_back(t_env *env, char *str, int new);
 void	ft_putstr(char *str);
 
 int	ft_istrchr(const char *s, int c);
-void    ft_delquotes(char **line);
+void    ft_delquotes(char **line, t_env *env);
 t_redir	*ft_redirlast(t_redir *lst);
 void	ft_rediradd_back(t_redir **alst, t_redir *rnew);
 t_redir	*ft_redirnew(char *st);
@@ -175,7 +175,7 @@ void	ft_tcmdadd_back(t_cmd **alst, t_cmd *new);
 t_cmd	*ft_tcmdlast(t_cmd *lst);
 int		ft_tcmdsize(t_cmd *lst);
 t_cmd	*ft_tcmdnew(char **args);
-void	ft_cutcmd(t_cmd **cmd, char *line);
+void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env);
 
 //---------- FREE ----------//
 

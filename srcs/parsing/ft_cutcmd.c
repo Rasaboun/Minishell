@@ -31,7 +31,7 @@ char	*ft_cutequotes(char *line)
 }
 
 
-void	ft_cutcmd(t_cmd **cmd, char *line)
+void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
 {
 	int	i;
 	char *l;
@@ -52,7 +52,7 @@ void	ft_cutcmd(t_cmd **cmd, char *line)
 
 	i = 0;
 	str = ft_strtok(line, "|;");
-	ft_delquotes(str);
+	ft_delquotes(str, env);
 	while (str[i])
 	{
 		n = 0;

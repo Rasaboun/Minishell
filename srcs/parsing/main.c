@@ -43,7 +43,7 @@ int main(int ac, char **av, char **envp)
 		{
 			if (cmd && cmd[0] != '\0')
 				add_history(cmd);
-			ft_cutcmd(&ccmd,cmd);
+			ft_cutcmd(&ccmd,cmd,minishell.env);
 			minishell.ret = exec_cmds(ccmd, &minishell);
 			free(cmd);
 			ft_freecmd(ccmd);
