@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/06 15:27:46 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/06 17:10:37 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	ft_len_variable_and_value(char *str, t_exp *exp);
 int		parse_export(char *str);
 
 int		builtin_is_exist(char *str);
-int		ft_check_redir(char **args);
+int		ft_check_redir(char **args, t_minishell *minishell);
 void	ft_close(int fd);
 void	ft_reset_fds(t_minishell *minishell);
 char	**delete_redir_in_args(char **args);
