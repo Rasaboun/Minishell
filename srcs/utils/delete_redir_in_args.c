@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 12:43:50 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/06 11:33:57 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/06 11:44:54 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,9 @@ t_args	*ft_delete_cell_args(t_args *args)
 		}
 		else
 			args = NULL;
+		free(cur->next->str);
 		free(cur->next);
+		free(cur->str);
 		free(cur);
 	}
 	while (args && args->next != NULL)
@@ -106,13 +108,17 @@ t_args	*ft_delete_cell_args(t_args *args)
 				args->next->next->previous = prev;
 				prev->next = args->next->next;
 				args = args->next->next;
+				free(cur->next->str);
 				free(cur->next);
+				free(cur->str);
 				free(cur);
 			}
 			else
 			{
 				prev->next = NULL;
+				free(cur->next->str);
 				free(cur->next);
+				free(cur->str);
 				free(cur);
 				args = prev;
 			}
@@ -147,6 +153,7 @@ char	**delete_redir_in_args(char **args)
 	{
 		tmp = list_args;
 		list_args = list_args->next;
+		free(tmp->str);
 		free(tmp);
 	}
 	return (args_without_redir);
