@@ -12,6 +12,7 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/execution/exec_builtins.c \
 					./srcs/execution/exec_commands.c \
 					./srcs/execution/exec_bin.c \
+					./srcs/execution/redirection.c \
 					./srcs/builtins/echo.c \
 					./srcs/builtins/export.c \
 					./srcs/builtins/export_utils.c \
@@ -28,7 +29,9 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/utils/utils.c \
 					./srcs/utils/utils_2.c \
 					./srcs/utils/array_utils.c \
-					./srcs/utils/exit.c
+					./srcs/utils/exit.c \
+					./srcs/utils/delete_redir_in_args.c \
+					./srcs/utils/delete_redir_utils.c
 					
 OBJS		=	$(SRCS:.c=.o)
 

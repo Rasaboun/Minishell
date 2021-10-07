@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/07 17:39:33 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/07 19:35:28 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	char			*cmd;
+	char			*path;
 	t_minishell		minishell;
 	t_cmd *ccmd;
 	ccmd = NULL;
@@ -51,7 +52,6 @@ int main(int ac, char **av, char **envp)
 		}
 		else
 			exit(0);
-		
 	}
 	ft_clean_all(&minishell);
 	//Faut tout free

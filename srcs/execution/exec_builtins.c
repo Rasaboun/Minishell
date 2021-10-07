@@ -6,11 +6,35 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 17:38:30 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:03:15 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/05 20:02:15 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	builtin_is_exist(char *str)
+{
+	int		ret;
+
+	ret = 0;
+	if (!str)
+		return (ret);
+	if (ft_strcmp(str, "echo") == 0)
+		ret = 1;
+	else if (ft_strcmp(str, "cd") == 0)
+		ret = 1;
+	else if (ft_strcmp(str, "pwd") == 0)
+		ret = 1;
+	else if (ft_strcmp(str, "export") == 0)
+		ret = 1;
+	else if (ft_strcmp(str, "unset") == 0)
+		ret = 1;
+	else if (ft_strcmp(str, "env") == 0)
+		ret = 1;
+	else if (ft_strcmp(str, "exit") == 0)
+		ret = 1;
+	return (ret);
+}
 
 int	exec_builtins(t_cmd *ccmd, t_minishell *minishell)
 {
