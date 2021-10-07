@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/06 17:33:29 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/07 15:06:16 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,12 @@ int	exec_with_pipe(t_cmd *cmd, t_minishell *minishell)
 	if (pid < 0)
 		return (ret);
 	else if (pid == 0)
-	{
-		if (cmd->type == PIPED)
-			dup2(cmd->pipe[1], STDOUT_FILENO);
-		if (cmd->previous && cmd->previous->type == PIPED)
-			dup2(cmd->previous->pipe[0], STDIN_FILENO);
-		redir_ret = ft_check_redir(cmd->args, minishell);
-		if (redir_ret == SUCCESS)
-			cmd->args = delete_redir_in_args(cmd->args);
-		if (cmd->args[0])
-		{
-			if (builtin_is_exist(cmd->args[0]) == 1)
-				ret = exec_builtins(cmd, minishell);
-			else if (redir_ret != 2)
-				ret = bin_fonction(cmd->args, minishell->env);
-		}
-		exit(ret);
-	}
+		ft_child_pid_exec_pipe(cmd, minishell);
 	else
 	{
 		waitpid(pid, &status, 0);
 		close(cmd->pipe[1]);
-		if (!cmd->next /*|| cmd->next->type != PIPED*/)
+		if (!cmd->next)
 			close(cmd->pipe[0]);
 		if (cmd->previous && cmd->previous->type == PIPED)
 			close(cmd->previous->pipe[0]);
@@ -81,6 +65,8 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 {
 	int			ret;
 	t_cmd		*cmd;
+	t_cmd		*cmd_copy;
+	int			status;
 	struct stat	sb;
 
 	ret = -1;

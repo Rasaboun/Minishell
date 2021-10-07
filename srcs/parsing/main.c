@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 20:49:15 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/07 14:22:09 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	char			*cmd;
-	char			*path;
 	t_minishell		minishell;
 
 	ccmd = NULL;
@@ -46,8 +45,6 @@ int main(int ac, char **av, char **envp)
 			ft_freecmd(ccmd);
 			ccmd = NULL;
 		}
-		/*else
-			ft_exit(ccmd, &minishell);*/
 	}
 	ft_clean_all(&minishell);
 	//Faut tout free
