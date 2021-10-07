@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:35:05 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/01 14:52:31 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/07 19:36:26 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ char	*ft_strchr(const char *s, int c)
 			return (NULL);
 		i++;
 	}
-	return ((char*)&s[i]);
+	return ((char *)&s[i]);
 }

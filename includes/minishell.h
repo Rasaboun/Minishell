@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/07 19:34:23 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/07 19:36:38 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <dirent.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <string.h>
@@ -132,9 +133,9 @@ int		exec_builtins(t_cmd *ccmd, t_minishell *minishell);
 //---------- Utils ----------//
 
 int		ft_strcmp(const char *s1, const char *s2);
-void    print_lst(t_env *env);
+void	print_lst(t_env *env);
 t_env	*ft_init_env(char **envp);
-t_env 	*lst_add_back(t_env *env, char *str, int new);
+t_env	*lst_add_back(t_env *env, char *str, int new);
 void	ft_putstr(char *str);
 
 int	ft_istrchr(const char *s, int c);
@@ -156,6 +157,8 @@ t_exp	ft_export_split(char *str);
 void	ft_set_variable_and_value(char *str, t_exp *exp);
 void	ft_len_variable_and_value(char *str, t_exp *exp);
 int		parse_export(char *str);
+void	ft_rl_input_eof(char *args, int	fd_out);
+void	ft_child_pid_exec_pipe(t_cmd *cmd, t_minishell *minishell);
 
 int		builtin_is_exist(char *str);
 int		ft_check_redir(char **args, t_minishell *minishell);

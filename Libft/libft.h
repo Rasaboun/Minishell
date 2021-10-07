@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 13:43:39 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/06 15:05:57 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/06 23:27:27 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef	struct	s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;

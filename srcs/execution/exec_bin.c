@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:59:27 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/06 13:29:50 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/07 13:57:37 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	ft_check_bin_error(char *path)
 	ft_write_error("minishell: ");
 	ft_write_error(path);
 	if (ft_strchr(path, '/') == NULL)
-		ft_write_error(": command not found");
+		ft_write_error(": command not found\n");
 	else if (fd == -1 && dir != NULL)
-		ft_write_error(": is a directory");
+		ft_write_error(": is a directory\n");
 	else if (access(path, R_OK) == 0 && access(path, X_OK) != 0 && dir == NULL)
-		ft_write_error(": Permission denied");
+		ft_write_error(": Permission denied\n");
 	else if (fd == -1 && dir == NULL)
-		ft_write_error(": No such file or directory");
+		ft_write_error(": No such file or directory\n");
 	if (ft_strchr(path, '/') == NULL || (fd == -1 && dir == NULL))
 		ret = UNKNOWN_COMMAND;
 	else

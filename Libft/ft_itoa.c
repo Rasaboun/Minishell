@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 12:59:36 by rasaboun          #+#    #+#             */
-/*   Updated: 2019/11/07 14:24:35 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/06 23:15:10 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char		*ft_malloc(int i)
+static char	*ft_malloc(int i)
 {
-	char *s;
+	char	*s;
 
-	if (!(s = (char *)malloc(sizeof(char) * (i + 1))))
+	s = (char *)malloc(sizeof(char) * (i + 1));
+	if (!s)
 		return (0);
 	return (s);
 }
 
-static	int		ft_numlen(long nb)
+static	int	ft_numlen(long nb)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (nb == 0)
@@ -41,7 +42,7 @@ static	int		ft_numlen(long nb)
 	return (i);
 }
 
-static char		*make(int i, unsigned int nb, char *s)
+static char	*make(int i, unsigned int nb, char *s)
 {
 	while (nb > 0)
 	{
@@ -52,14 +53,15 @@ static char		*make(int i, unsigned int nb, char *s)
 	return (s);
 }
 
-char			*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	unsigned int	nb;
 	int				i;
 	char			*s;
 
 	i = ft_numlen((long)n);
-	if (!(s = ft_malloc(i)))
+	s = ft_malloc(i);
+	if (!s)
 		return (0);
 	s[i--] = '\0';
 	if (n == 0)

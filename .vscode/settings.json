@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "limits": "c",
-        "utils.C": "cpp"
+        "utils.C": "cpp",
+        "minishell.h": "c"
     }
 }
