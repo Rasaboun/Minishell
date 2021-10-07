@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/07 19:36:31 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/07 19:37:22 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,8 @@ int main(int ac, char **av, char **envp)
 			ft_freecmd(ccmd);
 			ccmd = NULL;
 		}
-<<<<<<< HEAD
 		else
 			exit(0);
-=======
->>>>>>> master
 	}
 	ft_clean_all(&minishell);
 	//Faut tout free
