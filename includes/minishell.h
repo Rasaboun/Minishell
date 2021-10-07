@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/05 20:00:24 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/07 17:39:07 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ typedef	struct	s_redir
 	struct s_redir	*previous;
 }				t_redir;
 
-t_cmd	*g_ccmd;
 
 //------- binary functions -------//
 

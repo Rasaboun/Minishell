@@ -6,17 +6,16 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 19:46:12 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/07 17:39:33 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd *ccmd;
+
 
 void sig_handler(int signum)
 {
-  ft_freecmd(ccmd);
   printf("\n");
   rl_replace_line("", 0);
 	rl_on_new_line();
@@ -29,7 +28,7 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	char			*cmd;
 	t_minishell		minishell;
-
+	t_cmd *ccmd;
 	ccmd = NULL;
 	cmd = NULL;
 	ft_init_minishell(&minishell, envp);
@@ -38,6 +37,7 @@ int main(int ac, char **av, char **envp)
 		
 		//signal(SIGQUIT,sig_handler);
 		cmd = readline("\x1b[36m❯ \x1b[35m(Minishell)\x1b[37m ");
+		fprintf(stderr, "Line : %s\n",cmd);
 		signal(SIGINT,sig_handler);
 		if (cmd != NULL)
 		{

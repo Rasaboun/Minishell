@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 18:14:09 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 20:00:33 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/07 18:29:07 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
 	char **strt;
 	t_cm *cutcm;
 	t_cm *newcut;
-	newcut = NULL;
-	cutcm = NULL;
 	t_cmd	*cmds;
 	int ii;
 
 
 	ii = 0;
 	n = 0;
-
+	newcut = NULL;
+	cutcm = NULL;
 	i = 0;
 	str = ft_strtok(line, "|;");
 	ft_delquotes(str, env);
+	
 	while (str[i])
 	{
 		n = 0;
@@ -63,7 +63,7 @@ void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
 		}
 		if (n > 0)
 		{
-			strt = malloc(sizeof(char*) * n+1);
+			strt = malloc(sizeof(char*) * (n+1));
 			strt[n] = NULL;
 			n--;
 			ii = i-1;
@@ -87,15 +87,6 @@ void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
 		}	
 	}
 
-	while (cutcm)
-	{
-		/*for (int u = 0;cutcm->str[u];u++)
-			printf("string = %s\n",cutcm->str[u]);
-		printf("PAUSE");*/
-		cutcm = cutcm->next;
-	}
-	exit(0);
-	
 	while (cutcm)
 	{
 		if (cutcm->next && ft_strcmp(cutcm->next->str[0], "|") == 0)

@@ -13,7 +13,9 @@ char	*ft_substrs(const char *s, int min, int max)
 	int		i;
 	char	*s2;
 
-	if (!(s2 = malloc(sizeof(char*) * (max - min + 1))))
+
+	
+	if (!(s2 = malloc(sizeof(char) * (max - min + 1))))
 		return (NULL);
 	i = 0;
 	while (min < max)
@@ -32,7 +34,7 @@ static	int	ft_countt(const char *line, char *strset)
 	int num;
 	int min;
 	int n;
-	int m;
+	char m;
 
 	m = 0;
 	n = 0;
@@ -138,13 +140,14 @@ static	int	ft_countt(const char *line, char *strset)
 		
 		if (ft_strchr(strset,line[i]))//STRSET
 		{
+			m = line[i];
 			while (line[i] && (ft_strchr(strset,line[i]) || line[i] == ' '))
 			{
 				if (ft_strchr(strset,line[i]))
 					n++;
 				i++;
 			}
-			if (!line[i])
+			if (!line[i] && m != ';')
 			{
 				write(1, "error strset",13);
 				exit(0);
@@ -178,7 +181,6 @@ void	init_strok(const char *line, char *strset, t_tok *t)
 
 	i = 0;
 	t->num = ft_countt(line, strset);
-	
 	if (t->num < 1)
 	{
 		perror("Error size");
@@ -261,6 +263,7 @@ char	**ft_strtok(const char *line, char	*strset)
 				
 			else if (t.min < t.i)
 			{
+				
 				t.str[t.num] = ft_substrs(line, t.min, t.i);
 				if (!t.str[t.num])
 					ft_freee(t.num, t.str);
@@ -278,7 +281,7 @@ char	**ft_strtok(const char *line, char	*strset)
 					ft_freee(t.num, t.str);
 			t.num++;
 		}//STRSET
-		if (line[t.i])
+		if (line[t.i] == ' ')
 			t.i++;
 	}
 	return (t.str);

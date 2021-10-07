@@ -288,6 +288,21 @@ t_lchar    *ft_lcharadd(t_lchar *alst, t_lchar *rnew)
     t_lchar *lst;
 
     lst = alst;
+    if (!rnew)
+    {
+        tmp = lst;
+        if (!lst->previous)
+        {
+            lst = lst->next;
+            lst->previous = NULL;
+        }
+        else
+        {
+            lst = lst->next;
+            lst->previous = tmp->previous;
+        }
+        return (lst);
+    }
     if (lst->previous == NULL)
     {
         tmp = ft_lcharlast(rnew);
@@ -306,6 +321,7 @@ t_lchar    *ft_lcharadd(t_lchar *alst, t_lchar *rnew)
     }
     else
     {
+        
         tmp = ft_lcharlast(rnew);
         tmp->next = lst->next;
         if (lst->next)
@@ -370,6 +386,8 @@ t_lchar    *ft_tabtolchar(char *line)
     c = NULL;
     tmp = NULL;
     i = 0;
+    if (!line)
+        return (NULL);
     while (line[i])
     {
         tmp = ft_lcharnew(line[i]);
@@ -392,6 +410,8 @@ char    *delquotes(char *line, t_env *env)
     i = 0;
     q = NULL;
     tmp = NULL;
+    if (!line)
+        return (NULL);
     while (line[i])
     {
         tmp = ft_lcharnew(line[i]);
@@ -403,7 +423,7 @@ char    *delquotes(char *line, t_env *env)
     i = 0;
     free(line);
 
-    while (q->next)
+    while (q && q->next)
     {
         while (q && q->c == '\'')
         {
@@ -432,10 +452,12 @@ char    *delquotes(char *line, t_env *env)
             q = q->next;
             if (q->next && q->c != ' ')
             {
-                final = get_dollar(&q); 
+                final = get_dollar(&q);
                 str = ft_env_value(final,env);
-                if (str)
                 first = ft_tabtolchar(str);
+                if (!first)
+                    return (NULL);
+                else
                     q = ft_lcharadd(q,first);
             }
         }
@@ -455,8 +477,7 @@ char    *delquotes(char *line, t_env *env)
                     {
                         final = get_dollar(&q);
                         str = ft_env_value(final,env);
-                        if (str)
-                            first = ft_tabtolchar(str);
+                        first = ft_tabtolchar(str);
                         q = ft_lcharadd(q,first);
                     }
                 }
@@ -473,10 +494,10 @@ char    *delquotes(char *line, t_env *env)
                 q->next->previous = NULL;
                 q = q->next;
             }
-            if (q->next)
+            if (q && q->next)
                 q = q->next;
         }
-       if (q->next && q->c != '\'' && q->c != '\"')
+       if (q && q->next && q->c != '\'' && q->c != '\"')
             q = q->next; 
     }
     if (!q)
@@ -486,18 +507,16 @@ char    *delquotes(char *line, t_env *env)
         q = q->previous;
         
     i = ft_lcharlen(q);
-    final = (char *)malloc(sizeof(char) * i);
+
+    final = (char *)malloc(sizeof(char) * (i+1));
     i = 0;
-    while (q->next)
+    while (q)
     {
         final[i] = q->c;
-        //printf("%c",q->c);
         q = q->next;
         i++;
     }
     return (final);
-  //exit(0);
-
 }
 
 void    ft_delquotes(char **line, t_env *env)
@@ -516,16 +535,15 @@ void    ft_delquotes(char **line, t_env *env)
 
     while (line[i])
     {
+        if (line[i] && line[i][0] == '|' || line[i][0] == ';')
+        {
+            if (i == 0)
+            {
+                fprintf(stderr,"Error");
+                exit(0);
+            }
+        }
         line[i] = delquotes(line[i], env);
         i++;
     }
-    i = 0;
-    printf("line = ");
-    while (line[i])
-    {
-        printf("|%s|\n", line[i]);
-        i++;
-    }
-    printf("\n");
-    
 }
