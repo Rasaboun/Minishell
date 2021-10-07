@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/07 19:37:22 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/07 21:13:16 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int main(int ac, char **av, char **envp)
 		
 		//signal(SIGQUIT,sig_handler);
 		cmd = readline("\x1b[36m❯ \x1b[35m(Minishell)\x1b[37m ");
-		fprintf(stderr, "Line : %s\n",cmd);
 		signal(SIGINT,sig_handler);
 		if (cmd != NULL)
 		{
