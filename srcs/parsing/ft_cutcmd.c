@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 18:14:09 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/07 18:29:07 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/07 20:05:25 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
 	i = 0;
 	str = ft_strtok(line, "|;");
 	ft_delquotes(str, env);
-	
+
 	while (str[i])
 	{
 		n = 0;
-		while (str[i] && ft_strcmp(str[i], "|") != 0)
+		while (str[i] && ft_strcmp(str[i], "|") != 0 && ft_strcmp(str[i], ";") != 0)
 		{
 			n++;
 			i++;
