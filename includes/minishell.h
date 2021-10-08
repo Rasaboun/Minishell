@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/08 22:59:15 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/08 23:40:55 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ int		ft_charchr(char *str, char c);
 char	**split_path(t_env *env);
 char	**ft_list_to_array(t_env *env);
 void	print_env_array(char **array);
+void	stop_bin_process(int signum);
+void	quit_bin_process(int signum);
 
 t_exp	ft_export_split(char *str);
 void	ft_set_variable_and_value(char *str, t_exp *exp);
@@ -174,6 +176,7 @@ t_args	*ft_delete_cell_args(t_args *args);
 void	ft_delete_cell_args_next(t_args *args, t_args *cur, t_args *prev);
 t_args	*ft_init_args(char **args);
 int		ft_is_redir(char *str);
+void	prompt(int signal);
 
 void	ft_init_minishell(t_minishell *minishell, char **envp);
 int		is_empty_list(t_env *env);

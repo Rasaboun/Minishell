@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:59:27 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/07 13:57:37 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/08 23:39:14 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	exec_bin(char *path, char **cmd, char **env_cpy)
 	if (strchr(path, '/') == NULL || access(path, R_OK) != 0)
 		return (ft_check_bin_error(path));
 	pid = fork();
+	signal(SIGINT, stop_bin_process);
+	signal(SIGQUIT, quit_bin_process);
 	if (pid == 0)
 	{
 		if (strchr(path, '/') != NULL)
