@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:59:27 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/09 00:09:18 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 01:43:07 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,7 @@ int	exec_bin(char *path, char **cmd, char **env_cpy)
 	else
 	{
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			ret = WEXITSTATUS(status);
-		if (WIFSIGNALED(status))
-			ret = WTERMSIG(status) + 128;
+		ret = ft_ret_fork_status(status);
 		ft_write_error_bin(ret);
 	}
 	return (ret);

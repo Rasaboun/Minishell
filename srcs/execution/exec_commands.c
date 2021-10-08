@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/09 00:37:07 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 01:50:52 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@ int	exec_without_pipe(t_cmd *cmd, t_minishell *minishell)
 	return (ret);
 }
 
+void	ft_close_for_exec_with_pipe(t_cmd *cmd)
+{
+	close(cmd->pipe[1]);
+	if (!cmd->next)
+		close(cmd->pipe[0]);
+	if (cmd->previous && cmd->previous->type == PIPED)
+		close(cmd->previous->pipe[0]);
+}
+
 int	exec_with_pipe(t_cmd *cmd, t_minishell *minishell)
 {
 	int		ret;
@@ -45,7 +54,6 @@ int	exec_with_pipe(t_cmd *cmd, t_minishell *minishell)
 	pid = fork();
 	signal(SIGINT, stop_bin_process);
 	signal(SIGQUIT, quit_bin_process);
-	//
 	if (pid < 0)
 		return (ret);
 	else if (pid == 0)
@@ -53,11 +61,7 @@ int	exec_with_pipe(t_cmd *cmd, t_minishell *minishell)
 	else
 	{
 		waitpid(pid, &status, 0);
-		close(cmd->pipe[1]);
-		if (!cmd->next)
-			close(cmd->pipe[0]);
-		if (cmd->previous && cmd->previous->type == PIPED)
-			close(cmd->previous->pipe[0]);
+		ft_close_for_exec_with_pipe(cmd);
 		if (WIFEXITED(status))
 			ret = WEXITSTATUS(status);
 	}

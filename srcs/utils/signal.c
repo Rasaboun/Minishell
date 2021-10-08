@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 23:07:57 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/09 00:15:23 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 01:34:06 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,3 @@ void	quit_bin_process(int signum)
 		g_minishell.ret = 131;
 	}
 }
-
