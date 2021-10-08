@@ -152,8 +152,9 @@ static	int	ft_countt(const char *line, char *strset)
 				write(1, "error strset",13);
 				exit(0);
 			}
-			if (n > 1)
+			if (n > 1 && i > 0 && line[i-2] != '>')
 			{
+				fprintf(stderr,"line i : %c",line[i]);
 				write(1, "DOUBLE BREAK",12);
 				exit(0);
 			}
