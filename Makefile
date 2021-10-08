@@ -28,6 +28,7 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/parsing/utils.c \
 					./srcs/utils/env_utils_2.c \
 					./srcs/utils/utils.c \
+					./srcs/utils/signal.c \
 					./srcs/utils/utils_2.c \
 					./srcs/utils/array_utils.c \
 					./srcs/utils/exit.c \
