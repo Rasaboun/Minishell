@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/08 23:03:37 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/08 23:30:34 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ int		parse_export(char *str);
 void	ft_rl_input_eof(char *args, int fd_out);
 void	ft_child_pid_exec_pipe(t_cmd *cmd, t_minishell *minishell);
 
+void	ft_werror(char *s1, char *s2, char *s3);
 int		builtin_is_exist(char *str);
 int		ft_check_redir(char **args, t_minishell *minishell);
 void	ft_close(int fd);

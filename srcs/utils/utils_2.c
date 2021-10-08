@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 16:55:13 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/08 21:38:33 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/08 23:27:16 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,12 @@ char	**split_path(t_env *env)
 	array = ft_split(path, ':');
 	free(path);
 	return (array);
+}
+
+void	ft_werror(char *s1, char *s2, char *s3)
+{
+	ft_write_error(s1);
+	ft_write_error(s2);
+	ft_write_error(s3);
+	ft_write_error("\n");
 }

@@ -1,207 +1,197 @@
 #include "minishell.h"
 
-int	ft_istrchr(const char *s, int c)
+int ft_istrchr(const char *s, int c)
 {
-	int		i;
+    int i;
 
-	i = 0;
-	if (c == '\0')
-		return (0);
-	while (s[i] != c)
-	{
-		if (s[i] == '\0')
-			return (0);
-		i++;
-	}
-	return (i);
+    i = 0;
+    if (c == '\0')
+        return (0);
+    while (s[i] != c)
+    {
+        if (s[i] == '\0')
+            return (0);
+        i++;
+    }
+    return (i);
 }
 
-t_lchar	*ft_lcharlast(t_lchar *lst)
+t_lchar *ft_lcharlast(t_lchar *lst)
 {
-	t_lchar	*lst2;
+    t_lchar *lst2;
 
-	lst2 = lst;
-	if (!lst)
-		return (NULL);
-	while (lst2->next)
-		lst2 = lst2->next;
-	return (lst2);
+    lst2 = lst;
+    if (!lst)
+        return (NULL);
+    while (lst2->next)
+        lst2 = lst2->next;
+    return (lst2);
 }
 
 int ft_lcharlen(t_lchar *lst)
 {
-	t_lchar	*lst2;
+    t_lchar *lst2;
     int i;
 
     i = 0;
-	lst2 = lst;
-	if (!lst)
-		return (0);
-	while (lst2->next)
+    lst2 = lst;
+    if (!lst)
+        return (0);
+    while (lst2->next)
     {
         lst2 = lst2->next;
         i++;
     }
-	return (i);
+    return (i);
 }
 
-void	ft_lcharadd_back(t_lchar **alst, t_lchar *rnew)
+void ft_lcharadd_back(t_lchar **alst, t_lchar *rnew)
 {
-	t_lchar	*lst2;
+    t_lchar *lst2;
 
-	if (*alst == NULL)
-		*alst = rnew;
-	else
-	{
-		lst2 = ft_lcharlast(*alst);
-		lst2->next = rnew;
-		rnew->next = NULL;
+    if (*alst == NULL)
+        *alst = rnew;
+    else
+    {
+        lst2 = ft_lcharlast(*alst);
+        lst2->next = rnew;
+        rnew->next = NULL;
         rnew->previous = lst2;
-	}
+    }
 }
 
-t_lchar	*ft_lcharnew(char st)
+t_lchar *ft_lcharnew(char st)
 {
-	t_lchar *s;
+    t_lchar *s;
 
-	if (!(s = (t_lchar *)malloc(sizeof(t_lchar))))
-		return (NULL);
-	s->c = st;
-	s->next = NULL;
+    if (!(s = (t_lchar *)malloc(sizeof(t_lchar))))
+        return (NULL);
+    s->c = st;
+    s->next = NULL;
     s->previous = NULL;
-	return (s);
+    return (s);
 }
 
-
-
-
-
-
-
-
-
-t_cm	*ft_cmlast(t_cm *lst)
+t_cm *ft_cmlast(t_cm *lst)
 {
-	t_cm	*lst2;
+    t_cm *lst2;
 
-	lst2 = lst;
-	if (!lst)
-		return (NULL);
-	while (lst2->next)
-		lst2 = lst2->next;
-	return (lst2);
+    lst2 = lst;
+    if (!lst)
+        return (NULL);
+    while (lst2->next)
+        lst2 = lst2->next;
+    return (lst2);
 }
 
-void	ft_cmadd_back(t_cm **alst, t_cm *rnew)
+void ft_cmadd_back(t_cm **alst, t_cm *rnew)
 {
-	t_cm	*lst2;
+    t_cm *lst2;
 
-	if (*alst == NULL)
-		*alst = rnew;
-	else
-	{
-		lst2 = ft_cmlast(*alst);
-		lst2->next = rnew;
-		rnew->next = NULL;
+    if (*alst == NULL)
+        *alst = rnew;
+    else
+    {
+        lst2 = ft_cmlast(*alst);
+        lst2->next = rnew;
+        rnew->next = NULL;
         rnew->previous = lst2;
-	}
+    }
 }
 
-t_cm	*ft_cmnew(char **st)
+t_cm *ft_cmnew(char **st)
 {
-	t_cm *s;
+    t_cm *s;
 
-	if (!(s = (t_cm *)malloc(sizeof(t_cm))))
-		return (NULL);
-	s->str = st;
-	s->next = NULL;
+    if (!(s = (t_cm *)malloc(sizeof(t_cm))))
+        return (NULL);
+    s->str = st;
+    s->next = NULL;
     s->previous = NULL;
-	return (s);
+    return (s);
 }
 
-static int	ft_whil(char *s3, const char *s1, int i)
+static int ft_whil(char *s3, const char *s1, int i)
 {
-	int		p;
-	int		y;
+    int p;
+    int y;
 
-	p = 0;
-	y = 0;
-	while (p < i)
-	{
-		s3[p] = s1[y];
-		p++;
-		y++;
-	}
-	return (p);
+    p = 0;
+    y = 0;
+    while (p < i)
+    {
+        s3[p] = s1[y];
+        p++;
+        y++;
+    }
+    return (p);
 }
 
-char		*ft_strfjoin(char const *s1, char *s2)
+char *ft_strfjoin(char const *s1, char *s2)
 {
-	int		p;
-	char	*s3;
-	int		y;
-	int		i;
+    int p;
+    char *s3;
+    int y;
+    int i;
 
-	if (!s2)
-		return (NULL);
+    if (!s2)
+        return (NULL);
     if (!s1)
         return (s2);
-	y = 0;
-	p = 0;
-	i = (int)ft_strlen(s1);
-	if (!(s3 = (char *)malloc(sizeof(char) * (i + ft_strlen(s2) + 1))))
-		return (0);
-	p = ft_whil(s3, s1, i);
-	y = 0;
-	while (p <= (int)(i + ft_strlen(s2) - 1))
-	{
-		s3[p] = s2[y];
-		p++;
-		y++;
-	}
-	s3[p] = '\0';
-	return (s3);
+    y = 0;
+    p = 0;
+    i = (int)ft_strlen(s1);
+    if (!(s3 = (char *)malloc(sizeof(char) * (i + ft_strlen(s2) + 1))))
+        return (0);
+    p = ft_whil(s3, s1, i);
+    y = 0;
+    while (p <= (int)(i + ft_strlen(s2) - 1))
+    {
+        s3[p] = s2[y];
+        p++;
+        y++;
+    }
+    s3[p] = '\0';
+    return (s3);
 }
 
-
-
-t_redir	*ft_redirlast(t_redir *lst)
+t_redir *ft_redirlast(t_redir *lst)
 {
-	t_redir	*lst2;
+    t_redir *lst2;
 
-	lst2 = lst;
-	if (!lst)
-		return (NULL);
-	while (lst2->next)
-		lst2 = lst2->next;
-	return (lst2);
+    lst2 = lst;
+    if (!lst)
+        return (NULL);
+    while (lst2->next)
+        lst2 = lst2->next;
+    return (lst2);
 }
 
-void	ft_rediradd_back(t_redir **alst, t_redir *rnew)
+void ft_rediradd_back(t_redir **alst, t_redir *rnew)
 {
-	t_redir	*lst2;
+    t_redir *lst2;
 
-	if (*alst == NULL)
-		*alst = rnew;
-	else
-	{
-		lst2 = ft_redirlast(*alst);
-		lst2->next = rnew;
-		rnew->next = NULL;
+    if (*alst == NULL)
+        *alst = rnew;
+    else
+    {
+        lst2 = ft_redirlast(*alst);
+        lst2->next = rnew;
+        rnew->next = NULL;
         rnew->previous = lst2;
-	}
+    }
 }
 
-t_redir	*ft_redirnew(char *st)
+t_redir *ft_redirnew(char *st)
 {
-	t_redir *s;
+    t_redir *s;
 
-	if (!(s = (t_redir *)malloc(sizeof(t_redir))))
-		return (NULL);
-	s->str = st;
-	s->next = NULL;
+    if (!(s = (t_redir *)malloc(sizeof(t_redir))))
+        return (NULL);
+    s->str = st;
+    s->next = NULL;
     s->previous = NULL;
-	return (s);
+    return (s);
 }
 
 char **rediredit(char **tabs)
@@ -223,37 +213,36 @@ char **rediredit(char **tabs)
     lnew = NULL;
     while (tabs[i])
     {
-       lnew = ft_redirnew(tabs[i]);
-       ft_rediradd_back(&lst, lnew);
-       i++;
+        lnew = ft_redirnew(tabs[i]);
+        ft_rediradd_back(&lst, lnew);
+        i++;
     }
     tmp = lst;
     while (lst->next)
     {
-        if (strcmp(lst->str,">") == 0)
+        if (strcmp(lst->str, ">") == 0)
         {
-            if (lst && lst->previous && strcmp(lst->previous->str,">"))
+            if (lst && lst->previous && strcmp(lst->previous->str, ">"))
             {
                 if (lst->next)
                 {
                     lst->previous->next = lst->next->next;
-                   if (lst->next->next)
+                    if (lst->next->next)
                         lst->next->next->previous = lst->previous;
                     /*tmp = lst;
                     lst = lst->previous;
                     free(tmp);
                     free(tmp->next);*/
-                    
                 }
                 else
                 {
-                    write(1, "Error END REDIR",15);
+                    write(1, "Error END REDIR", 15);
                     exit(0);
                 }
             }
             else
             {
-                write(1, "Error END REDIR",15);
+                write(1, "Error END REDIR", 15);
                 exit(0);
             }
         }
@@ -265,13 +254,13 @@ char **rediredit(char **tabs)
     }
     tmp = lst;
     i = 0;
-    while(tmp->next)
+    while (tmp->next)
     {
         i++;
         tmp = tmp->next;
     }
-    
-    final = (char**)malloc(sizeof(char *) * (i));
+
+    final = (char **)malloc(sizeof(char *) * (i));
     i = 0;
     while (lst->next)
     {
@@ -282,7 +271,7 @@ char **rediredit(char **tabs)
     return (final);
 }
 
-t_lchar    *ft_lcharadd(t_lchar *alst, t_lchar *rnew)
+t_lchar *ft_lcharadd(t_lchar *alst, t_lchar *rnew)
 {
     t_lchar *tmp;
     t_lchar *lst;
@@ -314,14 +303,14 @@ t_lchar    *ft_lcharadd(t_lchar *alst, t_lchar *rnew)
         }
         else
         {
-        tmp->next = lst->next;
-        lst->next->previous = tmp;
-        lst = rnew;
+            tmp->next = lst->next;
+            lst->next->previous = tmp;
+            lst = rnew;
         }
     }
     else
     {
-        
+
         tmp = ft_lcharlast(rnew);
         tmp->next = lst->next;
         if (lst->next)
@@ -331,11 +320,10 @@ t_lchar    *ft_lcharadd(t_lchar *alst, t_lchar *rnew)
         lst = rnew;
     }
 
-   return (lst);
-    
+    return (lst);
 }
 
-char    *get_dollar(t_lchar **lst)
+char *get_dollar(t_lchar **lst)
 {
     t_lchar *tmp;
     t_lchar *lchar;
@@ -346,7 +334,7 @@ char    *get_dollar(t_lchar **lst)
     i = 0;
     lchar = *lst;
     tmp = *lst;
-    
+
     while (lchar->next && ft_isalnum(lchar->c) && lchar->c != '\"')
     {
         i++;
@@ -371,13 +359,13 @@ char    *get_dollar(t_lchar **lst)
     }
     else
         tmp->previous = NULL;
-    
+
     lchar->previous = tmp->previous;
     *lst = lchar;
     return (line);
 }
 
-t_lchar    *ft_tabtolchar(char *line)
+t_lchar *ft_tabtolchar(char *line)
 {
     int i;
     t_lchar *tmp;
@@ -391,18 +379,44 @@ t_lchar    *ft_tabtolchar(char *line)
     while (line[i])
     {
         tmp = ft_lcharnew(line[i]);
-        ft_lcharadd_back(&c,tmp);
+        ft_lcharadd_back(&c, tmp);
         i++;
     }
     return (c);
 }
 
-char    *delquotes(char *line, t_env *env)
+void quotesdl(t_lchar *q, char c)
 {
-    int  i;
+    while (q && q->c == c)
+    {
+        if (!q->previous && q->next && q->c == c)
+        {
+            q->next->previous = NULL;
+            q = q->next;
+        }
+        while (q->next && q->c != c && q->c != '\0')
+            q = q->next;
+        if (q && q->previous && q->c == c)
+        {
+            q->previous->next = q->next;
+            q->next->previous = q->previous;
+        }
+        if (q->c == c && q->next->c == '\0' && !q->previous)
+        {
+            q->next->previous = NULL;
+            q = q->next;
+        }
+        if (q->next)
+            q = q->next;
+    }
+}
+
+char *delquotes(char *line, t_env *env)
+{
+    int i;
     t_lchar *q;
     t_lchar *tmp;
-    char    *final;
+    char *final;
     t_lchar *first;
     char *str;
 
@@ -415,11 +429,11 @@ char    *delquotes(char *line, t_env *env)
     while (line[i])
     {
         tmp = ft_lcharnew(line[i]);
-        ft_lcharadd_back(&q,tmp);
+        ft_lcharadd_back(&q, tmp);
         i++;
     }
     tmp = ft_lcharnew(line[i]);
-    ft_lcharadd_back(&q,tmp);
+    ft_lcharadd_back(&q, tmp);
     i = 0;
     free(line);
 
@@ -452,13 +466,18 @@ char    *delquotes(char *line, t_env *env)
             q = q->next;
             if (q->next && q->c != ' ')
             {
-                final = get_dollar(&q);
-                str = ft_env_value(final,env);
+                if (q->c == '?' && (q->next->c == ' ' || q->next->c == '\0'))
+                    str = ft_itoa(g_minishell.ret);
+                else
+                {
+                    final = get_dollar(&q);
+                    str = ft_env_value(final, env);
+                }
                 first = ft_tabtolchar(str);
                 if (!first)
                     return (NULL);
                 else
-                    q = ft_lcharadd(q,first);
+                    q = ft_lcharadd(q, first);
             }
         }
         while (q && q->c == '\"')
@@ -475,13 +494,18 @@ char    *delquotes(char *line, t_env *env)
                     q = q->next;
                     if (q->next && q->c != ' ')
                     {
-                        final = get_dollar(&q);
-                        str = ft_env_value(final,env);
+                        if (q->c == '?' && (q->next->c == ' ' || q->next->c == '\0'))
+                            str = ft_itoa(g_minishell.ret);
+                        else
+                        {
+                            final = get_dollar(&q);
+                            str = ft_env_value(final, env);
+                        }
                         first = ft_tabtolchar(str);
-                        q = ft_lcharadd(q,first);
+                        q = ft_lcharadd(q, first);
                     }
                 }
-                if (q->c != '\"')    
+                if (q->c != '\"')
                     q = q->next;
             }
             if (q && q->previous && q->c == '\"')
@@ -497,18 +521,18 @@ char    *delquotes(char *line, t_env *env)
             if (q && q->next)
                 q = q->next;
         }
-       if (q && q->next && q->c != '\'' && q->c != '\"')
-            q = q->next; 
+        if (q && q->next && q->c != '\'' && q->c != '\"')
+            q = q->next;
     }
     if (!q)
-        fprintf(stderr,"error");
-    
+        fprintf(stderr, "error");
+
     while (q->previous)
         q = q->previous;
-        
+
     i = ft_lcharlen(q);
 
-    final = (char *)malloc(sizeof(char) * (i+1));
+    final = (char *)malloc(sizeof(char) * (i + 1));
     i = 0;
     while (q)
     {
@@ -519,7 +543,7 @@ char    *delquotes(char *line, t_env *env)
     return (final);
 }
 
-int    ft_delquotes(char **line, t_env *env)
+int ft_delquotes(char **line, t_env *env)
 {
     char **sp;
     char *final;
@@ -533,16 +557,13 @@ int    ft_delquotes(char **line, t_env *env)
     final = NULL;
     i = 0;
     if (!line)
-        return (0) ;
+        return (0);
     while (line[i])
     {
-        if (line[i] && (line[i][0] == '|' || line[i][0] == ';'))
+        if (line[i] && (line[i][0] == '|' || line[i][0] == ';') && i == 0)
         {
-            if (i == 0)
-            {
-                ft_write_error("erreur de syntaxe près du symbole inattendu\n");
-                return (0);
-            }
+            ft_werror("syntax error near unexpected token `", line[i], "'");
+            return (0);
         }
         line[i] = delquotes(line[i], env);
         i++;
