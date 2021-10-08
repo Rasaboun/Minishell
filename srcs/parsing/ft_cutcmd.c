@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 18:14:09 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/07 21:38:42 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/08 21:28:49 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,19 @@ char	*ft_cutequotes(char *line)
 	return (NULL);
 }
 
-
-void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
+void	ft_addarg(char **str, t_cm **cutcm)
 {
 	int	i;
-	char *l;
 	int n;
-	t_cmd *tmp;
-	char **str;
 	char **strt;
-	t_cm *cutcm;
 	t_cm *newcut;
-	t_cmd	*cmds;
 	int ii;
 
 
 	ii = 0;
 	n = 0;
 	newcut = NULL;
-	cutcm = NULL;
 	i = 0;
-	str = ft_strtok(line, "|;>");
-	ft_delquotes(str, env);
-
 	while (str[i])
 	{
 		n = 0;
@@ -74,7 +64,7 @@ void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
 				ii--;
 			}
 			newcut = ft_cmnew(strt);
-			ft_cmadd_back(&cutcm, newcut);
+			ft_cmadd_back(cutcm, newcut);
 		}
 		if (str[i])
 		{
@@ -82,11 +72,17 @@ void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
 			strt[0] = str[i];
 			strt[1] = NULL;
 			newcut = ft_cmnew(strt);
-			ft_cmadd_back(&cutcm, newcut);
+			ft_cmadd_back(cutcm, newcut);
 			i++;
 		}	
 	}
+}
 
+void	ft_addcmd(t_cm *cutcm, t_cmd **cmd)
+{
+	t_cmd	*tmp;
+
+	tmp = NULL;
 	while (cutcm)
 	{
 		if (cutcm->next && ft_strcmp(cutcm->next->str[0], "|") == 0)
@@ -110,7 +106,24 @@ void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
 			ft_tcmdadd_back(cmd, tmp);
 			cutcm = cutcm->next;
 		}
-		i++;
 	}
+}
 
+void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
+{
+	char **str;
+	t_cm *cutcm;
+
+
+	cutcm = NULL;
+	str = ft_strtok(line, "|;><");
+	ft_delquotes(str, env);
+	if (!str)
+	{	
+		fprintf(stderr,"str : NULL");
+		*cmd = NULL;
+		return ;
+	}
+	ft_addarg(str, &cutcm);
+	ft_addcmd(cutcm, cmd);
 }

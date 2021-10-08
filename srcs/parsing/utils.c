@@ -352,8 +352,7 @@ char    *get_dollar(t_lchar **lst)
         i++;
         lchar = lchar->next;
     }
-    line = (char *)malloc(sizeof(char) * i);
-    
+    line = (char *)malloc(sizeof(char) * (i + 1));
     lchar = *lst;
     i = 0;
     while (lchar->next && ft_isalnum(lchar->c) && lchar->c != '\"')
@@ -362,6 +361,7 @@ char    *get_dollar(t_lchar **lst)
         lchar = lchar->next;
         i++;
     }
+    line[i] = '\0';
     lchar = lchar->previous;
     tmp->previous = tmp->previous->previous;
     if (tmp->previous)
@@ -501,7 +501,7 @@ char    *delquotes(char *line, t_env *env)
             q = q->next; 
     }
     if (!q)
-        fprintf(stderr,"WTF");
+        fprintf(stderr,"error");
     
     while (q->previous)
         q = q->previous;
@@ -532,7 +532,8 @@ void    ft_delquotes(char **line, t_env *env)
     sp = NULL;
     final = NULL;
     i = 0;
-
+    if (!line)
+        return ;
     while (line[i])
     {
         if (line[i] && (line[i][0] == '|' || line[i][0] == ';'))
@@ -540,7 +541,8 @@ void    ft_delquotes(char **line, t_env *env)
             if (i == 0)
             {
                 fprintf(stderr,"Error");
-                exit(0);
+                line = NULL;
+                return ;
             }
         }
         line[i] = delquotes(line[i], env);

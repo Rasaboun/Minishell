@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/07 19:36:38 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/08 21:45:38 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ t_redir	*ft_redirlast(t_redir *lst);
 void	ft_rediradd_back(t_redir **alst, t_redir *rnew);
 t_redir	*ft_redirnew(char *st);
 char **rediredit(char **tabs);
-char	**ft_strtok(const char *line, char	*strset);
+char	**ft_strtok(char *line, char	*strset);
 int		ft_write_error(char *str);
 int		ft_isnum(char *str);
 int		ft_charchr(char *str, char c);
