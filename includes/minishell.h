@@ -6,7 +6,11 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/10/08 21:45:38 by rasaboun         ###   ########.fr       */
+=======
+/*   Updated: 2021/10/08 20:13:02 by dkoriaki         ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +161,7 @@ t_exp	ft_export_split(char *str);
 void	ft_set_variable_and_value(char *str, t_exp *exp);
 void	ft_len_variable_and_value(char *str, t_exp *exp);
 int		parse_export(char *str);
-void	ft_rl_input_eof(char *args, int	fd_out);
+void	ft_rl_input_eof(char *args, int fd_out);
 void	ft_child_pid_exec_pipe(t_cmd *cmd, t_minishell *minishell);
 
 int		builtin_is_exist(char *str);

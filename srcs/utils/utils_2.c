@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 16:55:13 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:28:56 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/08 21:38:33 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_isnum(char *str)
 	i = 0;
 	if (str)
 	{
+		if (str[0] == '-' || str[0] == '+')
+			i++;
 		while (str[i])
 		{
 			if (str[i] < '0' || str[i] > '9')

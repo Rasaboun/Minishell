@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:42:40 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 19:03:53 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/08 20:32:36 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_exit(t_cmd *ccmd, t_minishell *minishell)
 	int		ret;
 
 	minishell->exit = 1;
-	ret = 0;
+	ret = minishell->ret;
 	ft_write_error("exit\n");
 	if (!ccmd)
 		return (ret);
@@ -27,7 +27,7 @@ int	ft_exit(t_cmd *ccmd, t_minishell *minishell)
 		ret = ft_atoi(ccmd->args[1]);
 	else if (ccmd->args[1] && ft_isnum(ccmd->args[1]) == 0)
 	{
-		ret = 255;
+		ret = 2;
 		ft_write_error("minishell: exit: ");
 		ft_write_error(ccmd->args[1]);
 		ft_write_error(": numeric argument required\n");
