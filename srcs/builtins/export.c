@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:38:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 15:32:02 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 01:24:30 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ int	ft_export(t_cmd *ccmd, t_env *env)
 	while (ccmd->args[i])
 	{
 		ret = parse_export(ccmd->args[i]);
-		if (ret == 0)
+		if (ccmd->args[i][0] != '\0' && ret == 0)
 		{
 			exp = ft_export_split(ccmd->args[i]);
 			ft_exec_export(ccmd->args[i], &exp, env);
 			ft_exp_free(&exp);
 		}
-		else
+		else if (ret != 0)
 			ret2 = 1;
 		i++;
 	}
