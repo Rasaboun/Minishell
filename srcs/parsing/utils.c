@@ -535,7 +535,7 @@ void    ft_delquotes(char **line, t_env *env)
 
     while (line[i])
     {
-        if (line[i] && line[i][0] == '|' || line[i][0] == ';')
+        if (line[i] && (line[i][0] == '|' || line[i][0] == ';'))
         {
             if (i == 0)
             {
