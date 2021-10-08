@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 16:55:13 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/08 23:27:16 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/09 01:41:43 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,20 @@ void	ft_werror(char *s1, char *s2, char *s3)
 	ft_write_error(s2);
 	ft_write_error(s3);
 	ft_write_error("\n");
+}
+
+int	ft_ret_fork_status(int status)
+{
+	int	ret;
+
+	ret = FAILURE;
+	if (WIFEXITED(status))
+		ret = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		ret = WTERMSIG(status);
+		if (ret != 131)
+			ret += 128;
+	}
+	return (ret);
 }

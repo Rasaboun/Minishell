@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/08 23:47:59 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/09 01:53:37 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,30 +72,30 @@ typedef struct s_cmd
 	struct s_cmd	*previous;
 }				t_cmd;
 
-typedef	struct	s_tok{
+typedef struct s_tok{
 	int		i;
 	int		min;
 	char	**str;
 	int		num;
 }				t_tok;
 
-typedef	struct	s_cm
+typedef struct s_cm
 {
-	char **str;
-	struct	s_cm	*next;
-	struct	s_cm	*previous;
+	char		**str;
+	struct s_cm	*next;
+	struct s_cm	*previous;
 }				t_cm;
 
-typedef	struct	s_lchar
+typedef struct s_lchar
 {
-	char c;
-	struct	s_lchar	*next;
-	struct	s_lchar	*previous;
+	char			c;
+	struct s_lchar	*next;
+	struct s_lchar	*previous;
 }				t_lchar;
 
-typedef	struct	s_redir
+typedef struct s_redir
 {
-	char *str;
+	char			*str;
 	struct s_redir	*next;
 	struct s_redir	*previous;
 }				t_redir;
@@ -140,12 +140,12 @@ t_env	*ft_init_env(char **envp);
 t_env	*lst_add_back(t_env *env, char *str, int new);
 void	ft_putstr(char *str);
 
-int	ft_istrchr(const char *s, int c);
-int    ft_delquotes(char **line, t_env *env);
+int		ft_istrchr(const char *s, int c);
+int		ft_delquotes(char **line, t_env *env);
 t_redir	*ft_redirlast(t_redir *lst);
 void	ft_rediradd_back(t_redir **alst, t_redir *rnew);
 t_redir	*ft_redirnew(char *st);
-char **rediredit(char **tabs);
+char	**rediredit(char **tabs);
 char	**ft_strtok(char *line, char	*strset);
 int		ft_write_error(char *str);
 int		ft_isnum(char *str);
@@ -163,6 +163,7 @@ void	ft_len_variable_and_value(char *str, t_exp *exp);
 int		parse_export(char *str);
 void	ft_rl_input_eof(char *args, int fd_out);
 void	ft_child_pid_exec_pipe(t_cmd *cmd, t_minishell *minishell);
+int		ft_ret_fork_status(int status);
 
 void	ft_werror(char *s1, char *s2, char *s3);
 int		builtin_is_exist(char *str);
