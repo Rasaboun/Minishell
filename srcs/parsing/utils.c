@@ -280,13 +280,14 @@ t_lchar *ft_lcharadd(t_lchar *alst, t_lchar *rnew)
     if (!rnew)
     {
         tmp = lst;
-        if (!lst->previous)
+        if (!lst->previous && lst->next && lst->next->c != '\"')
         {
             lst = lst->next;
             lst->previous = NULL;
         }
         else
         {
+            fprintf(stderr, "HERE");
             lst = lst->next;
             lst->previous = tmp->previous;
         }
@@ -340,6 +341,7 @@ char *get_dollar(t_lchar **lst)
         i++;
         lchar = lchar->next;
     }
+    fprintf(stderr, "i : %d",i);
     line = (char *)malloc(sizeof(char) * (i + 1));
     lchar = *lst;
     i = 0;
@@ -350,6 +352,8 @@ char *get_dollar(t_lchar **lst)
         i++;
     }
     line[i] = '\0';
+    if (i > 0)
+    {
     lchar = lchar->previous;
     tmp->previous = tmp->previous->previous;
     if (tmp->previous)
@@ -362,6 +366,7 @@ char *get_dollar(t_lchar **lst)
 
     lchar->previous = tmp->previous;
     *lst = lchar;
+    }
     return (line);
 }
 
@@ -467,7 +472,13 @@ char *delquotes(char *line, t_env *env)
             if (q->next && q->c != ' ')
             {
                 if (q->c == '?' && (q->next->c == ' ' || q->next->c == '\0'))
+                {
+                    q = q->next;
+                    q->previous = NULL;
+                    
                     str = ft_itoa(g_minishell.ret);
+
+                }
                 else
                 {
                     final = get_dollar(&q);
@@ -487,7 +498,7 @@ char *delquotes(char *line, t_env *env)
                 q->next->previous = NULL;
                 q = q->next;
             }
-            while (q->next && q->c != '\"' && q->c != '\0')
+            while (q && q->next && q->c != '\"' && q->c != '\0')
             {
                 if (q->c == '$')
                 {
@@ -513,7 +524,7 @@ char *delquotes(char *line, t_env *env)
                 q->previous->next = q->next;
                 q->next->previous = q->previous;
             }
-            if (q->c == '\"' && q->next->c == '\0' && !q->previous)
+            if (q && q->c == '\"' && q->next->c == '\0' && !q->previous)
             {
                 q->next->previous = NULL;
                 q = q->next;

@@ -32,6 +32,7 @@ static	int	ft_countt(const char *line, char *strset)
 	int min;
 	int n;
 	char m;
+	char mm;
 
 	m = 0;
 	n = 0;
@@ -139,11 +140,13 @@ static	int	ft_countt(const char *line, char *strset)
 			{
 				if (ft_strchr(strset, line[i]))
 					n++;
+				mm = line[i];
 				i++;
 			}
-			if (!line[i] && m != ';')
+			fprintf(stderr,"n : %d",n);
+			if (!line[i] && (m != ';' || m != mm))
 			{
-				ft_write_error("Error");
+				ft_write_error("Error 2");
 				return (0);
 			}
 			if (n > 2 && i > 0 && (line[i - 2] != '>' || line[i - 2] != '<'))
@@ -153,7 +156,6 @@ static	int	ft_countt(const char *line, char *strset)
 			}
 			else
 				n = 0;
-
 			num++;
 		}
 	}
