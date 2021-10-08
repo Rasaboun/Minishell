@@ -134,6 +134,7 @@ static	int	ft_countt(const char *line, char *strset)
 
 		if (ft_strchr(strset, line[i]))
 		{
+			m = line[i];
 			while (line[i] && (ft_strchr(strset, line[i]) || line[i] == ' '))
 			{
 				if (ft_strchr(strset, line[i]))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/08 22:59:15 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/08 23:03:37 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ t_env	*lst_add_back(t_env *env, char *str, int new);
 void	ft_putstr(char *str);
 
 int	ft_istrchr(const char *s, int c);
-void    ft_delquotes(char **line, t_env *env);
+int    ft_delquotes(char **line, t_env *env);
 t_redir	*ft_redirlast(t_redir *lst);
 void	ft_rediradd_back(t_redir **alst, t_redir *rnew);
 t_redir	*ft_redirnew(char *st);

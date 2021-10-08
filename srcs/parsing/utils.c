@@ -519,7 +519,7 @@ char    *delquotes(char *line, t_env *env)
     return (final);
 }
 
-void    ft_delquotes(char **line, t_env *env)
+int    ft_delquotes(char **line, t_env *env)
 {
     char **sp;
     char *final;
@@ -533,19 +533,19 @@ void    ft_delquotes(char **line, t_env *env)
     final = NULL;
     i = 0;
     if (!line)
-        return ;
+        return (0) ;
     while (line[i])
     {
         if (line[i] && (line[i][0] == '|' || line[i][0] == ';'))
         {
             if (i == 0)
             {
-                fprintf(stderr,"Error");
-                line = NULL;
-                return ;
+                ft_write_error("erreur de syntaxe près du symbole inattendu\n");
+                return (0);
             }
         }
         line[i] = delquotes(line[i], env);
         i++;
     }
+    return (1);
 }
