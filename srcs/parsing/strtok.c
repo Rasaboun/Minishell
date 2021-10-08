@@ -175,10 +175,7 @@ int init_strok(const char *line, char *strset, t_tok *t)
 	i = 0;
 	t->num = ft_countt(line, strset);
 	if (t->num < 1)
-	{
-		ft_write_error("Error");
 		return (EXIT_FAILURE);
-	}
 	t->str = malloc(sizeof(char *) * (t->num + 1));
 	while (i < t->num + 1)
 	{
