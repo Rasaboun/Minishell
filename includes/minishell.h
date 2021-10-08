@@ -6,11 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/10/08 23:30:34 by rasaboun         ###   ########.fr       */
-=======
-/*   Updated: 2021/10/08 23:40:55 by dkoriaki         ###   ########.fr       */
->>>>>>> a063e2527c19d7f33238450c390856475b293773
+/*   Updated: 2021/10/08 23:47:59 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +177,7 @@ t_args	*ft_delete_cell_args(t_args *args);
 void	ft_delete_cell_args_next(t_args *args, t_args *cur, t_args *prev);
 t_args	*ft_init_args(char **args);
 int		ft_is_redir(char *str);
-void	prompt(int signal);
+void	prompt_signal(int signal);
 
 void	ft_init_minishell(t_minishell *minishell, char **envp);
 int		is_empty_list(t_env *env);
