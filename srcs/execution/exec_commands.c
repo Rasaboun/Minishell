@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/08 23:14:47 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 00:37:07 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ int	exec_with_pipe(t_cmd *cmd, t_minishell *minishell)
 	if (pipe(cmd->pipe))
 		return (ret);
 	pid = fork();
+	signal(SIGINT, stop_bin_process);
+	signal(SIGQUIT, quit_bin_process);
+	//
 	if (pid < 0)
 		return (ret);
 	else if (pid == 0)
@@ -75,7 +78,10 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 	{
 		if (cmd->type == PIPED || (cmd->previous
 				&& cmd->previous->type == PIPED))
-			ret = exec_with_pipe(cmd, minishell);
+		{
+			if (g_minishell.ret != 130 && g_minishell.ret != 131)
+				ret = exec_with_pipe(cmd, minishell);
+		}
 		else
 			ret = exec_without_pipe(cmd, minishell);
 		cmd = cmd->next;

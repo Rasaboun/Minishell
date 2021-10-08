@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:42:40 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/08 20:32:36 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 00:04:13 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_exit(t_cmd *ccmd, t_minishell *minishell)
 {
 	int		ret;
 
-	minishell->exit = 1;
+	g_minishell.exit = 1;
 	ret = minishell->ret;
 	ft_write_error("exit\n");
 	if (!ccmd)
