@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/08 22:46:44 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/08 22:59:36 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	char *cmd;
-	t_minishell minishell;
+	//t_minishell minishell;
 	t_cmd *ccmd;
 
 	ccmd = NULL;
 	cmd = NULL;
-	ft_init_minishell(&minishell, envp);
-	while (minishell.exit == 0)
+	ft_init_minishell(&g_minishell, envp);
+	while (g_minishell.exit == 0)
 	{
 		
 		signal(SIGINT, sig_handler);
@@ -44,19 +44,19 @@ int main(int ac, char **av, char **envp)
 		{
 			if (cmd && cmd[0] != '\0')
 				add_history(cmd);
-			ft_cutcmd(&ccmd, cmd, minishell.env);
+			ft_cutcmd(&ccmd, cmd, g_minishell.env);
 			if (ccmd)
 			{
-				minishell.ret = exec_cmds(ccmd, &minishell);
+				g_minishell.ret = exec_cmds(ccmd, &g_minishell);
 				free(cmd);
 				ft_freecmd(ccmd);
 				ccmd = NULL;
 			}
 		}
 		else
-			ft_exit(ccmd, &minishell);
+			ft_exit(ccmd, &g_minishell);
 	}
-	ft_clean_all(&minishell);
+	ft_clean_all(&g_minishell);
 	//Faut tout free
-	return (minishell.ret);
+	return (g_minishell.ret);
 }
