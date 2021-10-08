@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/07 15:06:16 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/08 21:38:50 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 		cmd = cmd->next;
 		if (stat("./.heredoc", &sb) == 0)
 			unlink("./.heredoc");
-		//printf("\n\necho $? = %d\n", ret);
 	}
 	return (ret);
 }

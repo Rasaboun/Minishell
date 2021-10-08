@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:57:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/07 14:57:00 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/08 21:28:57 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_redir_output_trunc(char **args, int i)
 	{
 		ft_write_error("minishell: ");
 		ft_write_error(args[i + 1]);
-		ft_write_error(": No such file or directory");
+		ft_write_error(": No such file or directory\n");
 		return (FAILURE);
 	}
 	dup2(fd_out, STDOUT_FILENO);
@@ -39,7 +39,7 @@ int	ft_redir_output_append(char **args, int i)
 	{
 		ft_write_error("minishell: ");
 		ft_write_error(args[i + 1]);
-		ft_write_error(": No such file or directory");
+		ft_write_error(": No such file or directory\n");
 		return (FAILURE);
 	}
 	dup2(fd_out, STDOUT_FILENO);
@@ -56,7 +56,7 @@ int	ft_redir_input(char **args, int i)
 	{
 		ft_write_error("minishell: ");
 		ft_write_error(args[i + 1]);
-		ft_write_error(": No such file or directory");
+		ft_write_error(": No such file or directory\n");
 		return (2);
 	}
 	dup2(fd_in, STDIN_FILENO);
