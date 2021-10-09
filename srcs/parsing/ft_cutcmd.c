@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 18:14:09 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/09 12:18:39 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 00:11:08 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ void	ft_addarg(char **str, t_cm **cutcm)
 	n = 0;
 	newcut = NULL;
 	i = 0;
+	
 	while (str[i])
 	{
+		
 		n = 0;
 		while (str[i] && ft_strcmp(str[i], "|") != 0 && ft_strcmp(str[i], ";") != 0)
 		{

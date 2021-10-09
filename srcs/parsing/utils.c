@@ -536,8 +536,6 @@ char *delquotes(char *line, t_env *env)
 		q = q->previous;
 
 	i = ft_lcharlen(q);
-	if (i == 0)
-		return (NULL);
 	final = (char *)malloc(sizeof(char) * (i + 1));
 	i = 0;
 	while (q)
@@ -554,7 +552,7 @@ int strsetcmp(char **line, int i)
 	char *l;
 
 	l = line[i];
-	if (!line)
+	if (!line[i])
 		return (0);
 	if (ft_strchr(";|><", line[i][0]))
 	{
