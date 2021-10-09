@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 14:49:42 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/09 18:59:58 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 01:25:51 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_child_pid_exec_pipe(t_cmd *cmd, t_minishell *minishell)
 		cmd->args = delete_redir_in_args(cmd->args);
 	if (cmd->args[0])
 	{
-		if (builtin_is_exist(cmd->args[0]) == 1)
+		if (builtin_is_exist(cmd->args[0]) == 1 && redir_ret != 2)
 			ret = exec_builtins(cmd, minishell);
 		else if (redir_ret != 2)
 			ret = bin_fonction(cmd->args, minishell->env);

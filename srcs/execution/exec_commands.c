@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/10/10 01:10:57 by dkoriaki         ###   ########.fr       */
+=======
+/*   Updated: 2021/10/10 01:24:30 by rasaboun         ###   ########.fr       */
+>>>>>>> f2e25a452083b2e8de10d691dc204c6a434f613d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +27,7 @@ int	exec_without_pipe(t_cmd *cmd, t_minishell *minishell)
 		cmd->args = delete_redir_in_args(cmd->args);
 	if (cmd->args[0])
 	{
-		if (builtin_is_exist(cmd->args[0]) == 1)
+		if (builtin_is_exist(cmd->args[0]) == 1 && redir_ret != 2)
 			ret = exec_builtins(cmd, minishell);
 		else if (redir_ret != 2)
 			ret = bin_fonction(cmd->args, minishell->env);

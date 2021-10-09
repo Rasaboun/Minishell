@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:54:51 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 18:12:25 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 00:55:52 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	parse_unset(char *str)
 	int		i;
 
 	i = 0;
-	if (str[i] && ft_isalpha(str[i]) != 1 && str[i] != '_')
+	if ((str[i] && ft_isalpha(str[i]) != 1 && str[i] != '_') || str[i] == '\0')
 	{
 		ft_write_error(" unset: `");
 		ft_write_error(str);

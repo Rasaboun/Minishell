@@ -454,7 +454,7 @@ char *delquotes(char *line, t_env *env)
 		}
 		if (q->c == '$')
 		{
-			if (q->next->c != ' ' && q->next->c != '\"')
+			if (q->next->c != ' ' && q->next->c != '\0')
 			{
 				quotesdl(&q, '$');
 				if (q->c == '?' && (q->next->c == ' ' || q->next->c == '\"' || q->next->c == '\0'))
@@ -536,8 +536,6 @@ char *delquotes(char *line, t_env *env)
 		q = q->previous;
 
 	i = ft_lcharlen(q);
-	if (i == 0)
-		return (NULL);
 	final = (char *)malloc(sizeof(char) * (i + 1));
 	i = 0;
 	while (q)
@@ -554,11 +552,11 @@ int strsetcmp(char **line, int i)
 	char *l;
 
 	l = line[i];
-	if (!line)
+	if (!line[i])
 		return (0);
 	if (ft_strchr(";|><", line[i][0]))
-	{
-		if (i > 0 && (line[i][0] == ';' || line[i][0] == '|') && ft_strchr(";|><", line[i - 1][0]))
+	{	
+		if (i > 0 && (line[i][0] == ';' || line[i][0] == '|' || line[i][0] == '>' || line[i][0] == '<') && ft_strchr(";|><", line[i - 1][0]))
 			return (1);
 		if (line[i][0] != ';' && !line[i + 1])
 			return (1);
@@ -586,12 +584,25 @@ int ft_delquotes(char **line, t_env *env)
 	i = 0;
 	if (!line)
 		return (0);
+
+	while (line[i])
+	{
+		if (line[i] && strsetcmp(line, i))
+		{
+			ft_werror("syntax error near unexpected token `", line[i], "'");
+			g_minishell.ret = 2;
+			return (0);
+		}
+		i++;
+	}
+	i  = 0;
 	while (line[i])
 	{
 
 		if (line[i] && strsetcmp(line, i))
 		{
 			ft_werror("syntax error near unexpected token `", line[i], "'");
+			g_minishell.ret = 2;
 			return (0);
 		}
 		line[i] = delquotes(line[i], env);
