@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:57:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/08 21:28:57 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 23:08:03 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ int	ft_check_redir(char **args, t_minishell *minishell)
 	i = 0;
 	while (args[i])
 	{
-		if (strcmp(args[i], ">") == 0)
+		if (strcmp(args[i], "'>'") == 0)
 			ret = ft_redir_output_trunc(args, i);
-		else if (strcmp(args[i], ">>") == 0)
+		else if (strcmp(args[i], "'>>'") == 0)
 			ret = ft_redir_output_append(args, i);
-		else if (strcmp(args[i], "<") == 0)
+		else if (strcmp(args[i], "'<'") == 0)
 			ret = ft_redir_input(args, i);
-		else if (strcmp(args[i], "<<") == 0)
+		else if (strcmp(args[i], "'<<'") == 0)
 			ret = ft_redir_input_eof(args, i, minishell);
 		i++;
 	}
