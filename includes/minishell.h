@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/09 22:59:10 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 01:14:17 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,11 @@ int		parse_export(char *str);
 void	ft_rl_input_eof(char *args, int fd_out);
 void	ft_child_pid_exec_pipe(t_cmd *cmd, t_minishell *minishell);
 int		ft_ret_fork_status(int status);
+int		fd_exec_is_double_redir(t_cmd **cmd, t_minishell *minishell);
+int		exec_with_pipe_2(t_cmd *cmd, t_minishell *minishell);
+int		exec_with_pipe(t_cmd *cmd, t_minishell *minishell);
+void	ft_close_for_exec_with_pipe(t_cmd *cmd);
+int		exec_without_pipe(t_cmd *cmd, t_minishell *minishell);
 
 void	ft_werror(char *s1, char *s2, char *s3);
 int		builtin_is_exist(char *str);

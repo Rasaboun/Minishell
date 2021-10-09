@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/09 19:53:46 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 01:10:57 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	exec_with_pipe(t_cmd *cmd, t_minishell *minishell)
 int	exec_with_pipe_2(t_cmd *cmd, t_minishell *minishell)
 {
 	int		ret;
-	//pid_t	pid;
 	int		status;
 	int		redir_ret;
 
@@ -88,12 +87,7 @@ int	exec_with_pipe_2(t_cmd *cmd, t_minishell *minishell)
 	else if (cmd->pid == 0)
 		ft_child_pid_exec_pipe(cmd, minishell);
 	else
-	{
-		//waitpid(cmd->pid, &status, 0);
 		ft_close_for_exec_with_pipe(cmd);
-		//if (WIFEXITED(status))
-		//	ret = WEXITSTATUS(status);
-	}
 	return (ret);
 }
 
@@ -103,7 +97,7 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 	t_cmd		*cmd;
 	t_cmd		*cmd_2;
 	int			status;
-	struct stat	sb;
+	//struct stat	sb;
 
 	ret = -1;
 	cmd = ccmd;
@@ -112,7 +106,8 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 		g_minishell.in_pipe = 0;
 		if (ft_is_double_redir_left(cmd) == SUCCESS)
 		{
-			if (cmd->type == PIPED || (cmd->previous
+			ret = fd_exec_is_double_redir(&cmd, minishell);
+			/*if (cmd->type == PIPED || (cmd->previous
 				&& cmd->previous->type == PIPED))
 			{
 				if (g_minishell.ret != 130 && g_minishell.ret != 131)
@@ -122,7 +117,7 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 				ret = exec_without_pipe(cmd, minishell);
 			cmd = cmd->next;
 			if (stat("./.heredoc", &sb) == 0)
-				unlink("./.heredoc");
+				unlink("./.heredoc");*/
 		}
 		else
 		{
