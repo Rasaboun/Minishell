@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 00:07:52 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 01:11:42 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 01:33:52 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,33 @@ int	fd_exec_is_double_redir(t_cmd **cmd, t_minishell *minishell)
 	if (stat("./.heredoc", &sb) == 0)
 		unlink("./.heredoc");
 	return (ret);
+}
+
+int	fd_exec_is_not_double_redir(t_cmd **cmd, t_minishell *minishell)
+{
+	if (cmd->type == PIPED || (cmd->previous
+				&& cmd->previous->type == PIPED))
+	{
+		cmd_2 = cmd;
+		while (cmd && (cmd->type == PIPED || (cmd->previous
+					&& cmd->previous->type == PIPED)))
+		{
+			if (g_minishell.ret != 130 && g_minishell.ret != 131)
+				ret = exec_with_pipe_2(cmd, minishell);
+			cmd = cmd->next;
+		}
+		while (cmd_2 && (cmd_2->type == PIPED || (cmd_2->previous
+					&& cmd_2->previous->type == PIPED)))
+		{
+			waitpid(cmd_2->pid, &status, 0);
+			if (WIFEXITED(status))
+				ret = WEXITSTATUS(status);
+			cmd_2 = cmd_2->next;
+		}
+			}
+			else
+			{
+				ret = exec_without_pipe(cmd, minishell);
+				cmd = cmd->next;
+			}
 }
