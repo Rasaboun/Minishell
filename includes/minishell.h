@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/09 22:15:37 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/09 22:59:10 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_minishell
 	t_env	*env;
 	int		exit;
 	int		ret;
+	int		in_pipe;
 	int		stdout;
 	int		stdin;
 }				t_minishell;
@@ -68,6 +69,7 @@ typedef struct s_cmd
 	char			**args;
 	int				pipe[2];
 	int				type;
+	pid_t			pid;
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
 }				t_cmd;
@@ -179,6 +181,7 @@ void	ft_delete_cell_args_next(t_args *args, t_args *cur, t_args *prev);
 t_args	*ft_init_args(char **args);
 int		ft_is_redir(char *str);
 void	prompt_signal(int signal);
+int		ft_is_double_redir_left(t_cmd *cmd);
 
 void	ft_init_minishell(t_minishell *minishell, char **envp);
 int		is_empty_list(t_env *env);

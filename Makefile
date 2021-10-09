@@ -30,6 +30,7 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/utils/utils.c \
 					./srcs/utils/signal.c \
 					./srcs/utils/utils_2.c \
+					./srcs/utils/utils_3.c \
 					./srcs/utils/array_utils.c \
 					./srcs/utils/exit.c \
 					./srcs/utils/delete_redir_in_args.c \
