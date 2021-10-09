@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/09 14:08:46 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 19:10:09 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	exec_with_pipe(t_cmd *cmd, t_minishell *minishell)
 	int		status;
 	int		redir_ret;
 
+	g_minishell.in_pipe = 1;
 	ret = FAILURE;
 	if (pipe(cmd->pipe))
 		return (ret);
@@ -72,7 +73,6 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 {
 	int			ret;
 	t_cmd		*cmd;
-	t_cmd		*cmd_copy;
 	int			status;
 	struct stat	sb;
 
@@ -80,6 +80,7 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 	cmd = ccmd;
 	while (cmd)
 	{
+		g_minishell.in_pipe = 0;
 		if (cmd->type == PIPED || (cmd->previous
 				&& cmd->previous->type == PIPED))
 		{

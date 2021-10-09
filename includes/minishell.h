@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/09 14:03:50 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 19:08:01 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_minishell
 	t_env	*env;
 	int		exit;
 	int		ret;
+	int		in_pipe;
 	int		stdout;
 	int		stdin;
 }				t_minishell;

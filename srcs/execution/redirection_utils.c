@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 14:49:42 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/07 15:06:57 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 18:59:58 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,28 @@
 void	ft_rl_input_eof(char *args, int fd_out)
 {
 	char	*line;
+	int		i;
 
 	line = NULL;
-	while (1)
+	i = 0;
+	while (i == 0)
 	{
 		line = readline("> ");
-		if (ft_strcmp(line, args) == 0)
+		if (line != NULL)
 		{
-			free(line);
-			return ;
+			if (ft_strcmp(line, args) == 0)
+			{
+				free(line);
+				return ;
+			}
+			else
+			{
+				ft_putstr_eol_fd(line, fd_out);
+				free(line);
+			}
 		}
 		else
-		{
-			ft_putstr_eol_fd(line, fd_out);
-			free(line);
-		}
+			i = ft_write_error("minishell: warning: wanted `eof'\n");
 	}
 }
 
