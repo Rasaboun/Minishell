@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 16:55:13 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/09 01:41:43 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 13:41:22 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	ft_ret_fork_status(int status)
 	if (WIFSIGNALED(status))
 	{
 		ret = WTERMSIG(status);
-		if (ret != 131)
+		if (ret != 131 && ret != 130)
 			ret += 128;
 	}
 	return (ret);

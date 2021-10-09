@@ -6,29 +6,17 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/09 00:36:55 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 13:41:11 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*void sig_handler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}*/
 
 int main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
 	char *cmd;
-	//t_minishell minishell;
 	t_cmd *ccmd;
 
 	ccmd = NULL;
@@ -56,6 +44,5 @@ int main(int ac, char **av, char **envp)
 			ft_exit(ccmd, &g_minishell);
 	}
 	ft_clean_all(&g_minishell);
-	//Faut tout free
 	return (g_minishell.ret);
 }
