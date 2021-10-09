@@ -596,9 +596,7 @@ int ft_delquotes(char **line, t_env *env)
 		}
 		line[i] = delquotes(line[i], env);
 
-		fprintf(stderr, "Line : %s\n", line[i]);
 		i++;
 	}
-	exit(0);
 	return (1);
 }
