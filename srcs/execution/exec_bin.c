@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:59:27 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/09 01:43:07 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/09 13:30:03 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	ft_write_error_bin(int ret)
 {
 	if (ret == 139)
 		ft_write_error("Segmentation fault: 11\n");
-	else if (ret == 138)
-		ft_write_error("Bus error: 10\n");
+	else if (ret == 135)
+		ft_write_error("Bus error: 7\n");
 	else if (ret == 134)
 		ft_write_error("Abort trap: 6\n");
 }
