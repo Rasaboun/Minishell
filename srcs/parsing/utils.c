@@ -502,6 +502,30 @@ char *delquotes(char *line, t_env *env)
 			}
 			quotesdl(&q, '\"');
 		}
+		if (q->c == '>')
+		{
+			tmp = q;
+			while (q->c == '>')
+			{
+				q = q->next;
+			}
+			first = ft_tabtolchar("'");
+			tmp = ft_lcharadd(tmp, first);
+			first = ft_tabtolchar("'");
+			q = ft_lcharadd(q, first);
+		}
+		if (q->c == '<')
+		{
+			tmp = q;
+			while (q->c == '<')
+			{
+				q = q->next;
+			}
+			first = ft_tabtolchar("'");
+			tmp = ft_lcharadd(tmp, first);
+			first = ft_tabtolchar("'");
+			q = ft_lcharadd(q, first);
+		}
 		if (q->next)
 			q = q->next;
 	}
@@ -564,13 +588,17 @@ int ft_delquotes(char **line, t_env *env)
 		return (0);
 	while (line[i])
 	{
+
 		if (line[i] && strsetcmp(line, i))
 		{
 			ft_werror("syntax error near unexpected token `", line[i], "'");
 			return (0);
 		}
 		line[i] = delquotes(line[i], env);
+
+		fprintf(stderr, "Line : %s\n", line[i]);
 		i++;
 	}
+	exit(0);
 	return (1);
 }
