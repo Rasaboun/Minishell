@@ -135,27 +135,8 @@ static	int	ft_countt(const char *line, char *strset)
 
 		if (ft_strchr(strset, line[i]))
 		{
-			m = line[i];
-			while (line[i] && (ft_strchr(strset, line[i]) || line[i] == ' '))
-			{
-				if (ft_strchr(strset, line[i]))
-					n++;
-				mm = line[i];
+			while (line[i] && ft_strchr(strset, line[i]))
 				i++;
-			}
-			fprintf(stderr,"n : %d",n);
-			if (!line[i] && (m != ';' || m != mm))
-			{
-				ft_write_error("Error 2");
-				return (0);
-			}
-			if (n > 2 && i > 0 && (line[i - 2] != '>' || line[i - 2] != '<'))
-			{
-				ft_write_error("Error");
-				return (0);
-			}
-			else
-				n = 0;
 			num++;
 		}
 	}
