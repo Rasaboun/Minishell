@@ -457,8 +457,9 @@ char *delquotes(char *line, t_env *env)
 			if (q->next->c != ' ' && q->next->c != '\"')
 			{
 				quotesdl(&q, '$');
-				if (q->c == '?' && (q->next->c == ' ' || q->next->c == '\"'))
+				if (q->c == '?' && (q->next->c == ' ' || q->next->c == '\"' || q->next->c == '\0'))
 				{
+					quotesdl(&q, '?');
 					str = ft_itoa(g_minishell.ret);
 				}
 				else
@@ -483,6 +484,7 @@ char *delquotes(char *line, t_env *env)
 						quotesdl(&q, '$');
 						if (q->c == '?' && (q->next->c == ' ' || q->next->c == '\"'))
 						{
+							quotesdl(&q, '?');
 							str = ft_itoa(g_minishell.ret);
 						}
 						else
