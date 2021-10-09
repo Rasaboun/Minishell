@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:32:31 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 15:33:20 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 00:54:56 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	parse_export(char *str)
 	int		i;
 
 	i = 0;
-	if (str[i] && ft_isalpha(str[i]) != 1 && str[i] != '_')
+	if ((str[i] && ft_isalpha(str[i]) != 1 && str[i] != '_') || str[i] == '\0')
 	{
 		ft_write_error(" export: `");
 		ft_write_error(str);

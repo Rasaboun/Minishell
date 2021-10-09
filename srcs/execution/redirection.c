@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:57:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/09 23:08:03 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 01:24:44 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ int	ft_redir_output_trunc(char **args, int i)
 {
 	int		fd_out;
 
+	if (args[i + 1][0] == '\0')
+	{
+		ft_write_error("minishell: ambiguous redirect\n");
+		return (2);
+	}
 	fd_out = open(args[i + 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	if (fd_out == -1)
 	{

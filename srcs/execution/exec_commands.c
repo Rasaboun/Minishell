@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 00:23:03 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 01:24:30 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	exec_without_pipe(t_cmd *cmd, t_minishell *minishell)
 		cmd->args = delete_redir_in_args(cmd->args);
 	if (cmd->args[0])
 	{
-		if (builtin_is_exist(cmd->args[0]) == 1)
+		if (builtin_is_exist(cmd->args[0]) == 1 && redir_ret != 2)
 			ret = exec_builtins(cmd, minishell);
 		else if (redir_ret != 2)
 			ret = bin_fonction(cmd->args, minishell->env);
