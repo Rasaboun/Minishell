@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 10:34:40 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 11:36:48 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ t_args	*ft_init_args(char **args);
 int		ft_is_redir(char *str);
 void	prompt_signal(int signal);
 int		ft_is_double_redir_left(t_cmd *cmd);
+int		space_in_env_name(char *str);
 
 void	ft_init_minishell(t_minishell *minishell, char **envp);
 int		is_empty_list(t_env *env);
