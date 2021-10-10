@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 11:10:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 13:29:47 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 21:32:45 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	go_to_home(t_env *env)
 
 	cur = ft_find_env("HOME", env);
 	if (cur == NULL)
-		return (ft_write_error(" cd: HOME not set"));
+		return (ft_write_error(" cd: HOME not set\n"));
 	str = cur->str;
 	i = 1;
 	while (str[i - 1] != '=')
@@ -81,7 +81,7 @@ int	ft_cd(t_cmd *ccmd, t_env *env)
 {
 	char	*directory;
 
-	if (ccmd->args[2])
+	if (ccmd->args[1] && ccmd->args[2])
 		return (ft_write_error("minishell: cd: too many arguments\n"));
 	directory = ccmd->args[1];
 	ft_save_oldpwd(env);
