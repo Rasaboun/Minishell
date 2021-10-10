@@ -522,7 +522,7 @@ char *delquotes(char *line, t_env *env)
 				}
 				if (first)
 					q = ft_lcharadd(q, first);
-				else
+				else if (!q->previous)
 				{
 					ft_freeq(q);
 					return (NULL);
@@ -559,7 +559,7 @@ char *delquotes(char *line, t_env *env)
 						}
 						if (first)
 							q = ft_lcharadd(q, first);
-						else
+						else if (!q->previous)
 						{
 							ft_freeq(q);
 							return (NULL);
