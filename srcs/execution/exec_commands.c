@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 10:42:22 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 15:05:02 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	exec_with_pipe(t_cmd *cmd, t_minishell *minishell)
 	int		ret;
 	pid_t	pid;
 	int		status;
-	int		redir_ret;
 
 	g_minishell.in_pipe = 1;
 	ret = FAILURE;
@@ -72,8 +71,6 @@ int	exec_with_pipe(t_cmd *cmd, t_minishell *minishell)
 int	exec_with_pipe_2(t_cmd *cmd, t_minishell *minishell)
 {
 	int		ret;
-	int		status;
-	int		redir_ret;
 
 	g_minishell.in_pipe = 1;
 	ret = FAILURE;
