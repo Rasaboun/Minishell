@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 19:12:21 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 19:15:38 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,15 @@ typedef struct s_delquo
 	t_lchar	*first;
 	char	*str;
 }				t_delquo;
+
+typedef struct s_addargs
+{
+	int		i;
+	int		n;
+	char	**strt;
+	t_cm	*newcut;
+	int		ii;
+}				t_addargs;
 
 t_minishell		g_minishell;
 
