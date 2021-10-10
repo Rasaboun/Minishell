@@ -561,7 +561,7 @@ char *delquotes(char *line, t_env *env)
 							q = ft_lcharadd(q, first);
 						else
 						{
-							free(q);
+							ft_freeq(q);
 							return (NULL);
 						}
 					}
