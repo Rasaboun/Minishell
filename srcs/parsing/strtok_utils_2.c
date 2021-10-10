@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 16:51:05 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 17:44:40 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 18:53:22 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	init_strok(const char *line, char *strset, t_tok *t)
 		g_minishell.ret = 1;
 		return (1);
 	}
-	while(i < t->num)
+	while (i < t->num)
 	{
 		t->str[i] = NULL;
 		i++;
