@@ -9,6 +9,7 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/parsing/ft_tcmdlast.c \
 					./srcs/parsing/ft_tcmdadd_back.c \
 					./srcs/parsing/ft_cutcmd.c \
+					./srcs/parsing/ft_cutcmd_utils.c \
 					./srcs/execution/exec_builtins.c \
 					./srcs/execution/exec_commands.c \
 					./srcs/execution/exec_commands_utils.c \
@@ -33,6 +34,7 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/parsing/parsing_utils_3.c \
 					./srcs/parsing/parsing_utils_4.c \
 					./srcs/parsing/parsing_utils_5.c \
+					./srcs/parsing/parsing_utils_6.c \
 					./srcs/utils/env_utils_2.c \
 					./srcs/utils/utils.c \
 					./srcs/utils/signal.c \

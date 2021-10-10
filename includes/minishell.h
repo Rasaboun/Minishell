@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 19:15:38 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 19:21:25 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,5 +303,10 @@ void	chartolchar(char *line, t_lchar **q);
 void	dollar_utils(t_delquo *d, t_env *env);
 int		dollarsget(t_delquo *d, t_env *env);
 void	ft_all_edit(t_lchar **q);
+
+//---------- CUTCMD UTILS ----------//
+
+char	*ft_cutequotes(char *line);
+void	addarg_utils(char **str, t_cm **cutcm, t_addargs *a);
 
 #endif
