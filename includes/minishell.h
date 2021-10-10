@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/09 22:59:10 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 11:02:14 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,16 @@ typedef struct s_minishell
 	int		stdout;
 	int		stdin;
 }				t_minishell;
+
+typedef struct s_count
+{
+	int i;
+	int num;
+	int min;
+	int n;
+	char m;
+	char mm;
+}				t_count;
 
 typedef struct s_cmd
 {
