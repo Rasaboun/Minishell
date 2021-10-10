@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:54:51 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 22:07:06 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 23:45:04 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_exec_unset(char *str, t_env *env)
 		if (ft_strncmp(str, cur->str, env_variable_len(cur->str)) == 0)
 		{
 			prec->next = cur->next;
-			if (env->new == 1)
+			if (cur->new == 1)
 				free(cur->str);
 			free(cur);
 			return ;
