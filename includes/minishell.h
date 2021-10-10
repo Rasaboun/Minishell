@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 12:00:23 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 14:58:45 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ typedef struct s_minishell
 
 typedef struct s_count
 {
-	int i;
-	int num;
-	int min;
-	int n;
-	char m;
-	char mm;
+	int		i;
+	int		num;
+	int		min;
+	int		n;
+	char	m;
+	char	mm;
 }				t_count;
 
 typedef struct s_cmd
@@ -182,6 +182,7 @@ int		exec_with_pipe_2(t_cmd *cmd, t_minishell *minishell);
 int		exec_with_pipe(t_cmd *cmd, t_minishell *minishell);
 void	ft_close_for_exec_with_pipe(t_cmd *cmd);
 int		exec_without_pipe(t_cmd *cmd, t_minishell *minishell);
+void	set_signals(void);
 
 void	ft_werror(char *s1, char *s2, char *s3);
 int		builtin_is_exist(char *str);

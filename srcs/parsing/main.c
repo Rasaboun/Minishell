@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/09 18:01:46 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 14:59:43 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int main(int ac, char **av, char **envp)
 	ft_init_minishell(&g_minishell, envp);
 	while (g_minishell.exit == 0)
 	{
-		signal(SIGINT, prompt_signal);
-		signal(SIGQUIT, SIG_IGN);
+		set_signals();
 		cmd = readline("\x1b[36m❯ \x1b[35m(Minishell)\x1b[37m ");
 		if (cmd != NULL)
 		{

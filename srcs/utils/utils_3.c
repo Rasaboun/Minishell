@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 19:35:49 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 11:42:40 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 13:29:18 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	space_in_env_name(char *str)
 		while (str[i] && i <= equal)
 		{
 			if (str[i] == ' ')
-				return(SUCCESS);
+				return (SUCCESS);
 			i++;
 		}
 	}
