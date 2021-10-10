@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/10/10 01:10:57 by dkoriaki         ###   ########.fr       */
-=======
-/*   Updated: 2021/10/10 01:24:30 by rasaboun         ###   ########.fr       */
->>>>>>> f2e25a452083b2e8de10d691dc204c6a434f613d
+/*   Updated: 2021/10/10 10:42:22 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +95,6 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 {
 	int			ret;
 	t_cmd		*cmd;
-	t_cmd		*cmd_2;
-	int			status;
-	//struct stat	sb;
 
 	ret = -1;
 	cmd = ccmd;
@@ -109,48 +102,9 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 	{
 		g_minishell.in_pipe = 0;
 		if (ft_is_double_redir_left(cmd) == SUCCESS)
-		{
 			ret = fd_exec_is_double_redir(&cmd, minishell);
-			/*if (cmd->type == PIPED || (cmd->previous
-				&& cmd->previous->type == PIPED))
-			{
-				if (g_minishell.ret != 130 && g_minishell.ret != 131)
-					ret = exec_with_pipe(cmd, minishell);
-			}
-			else
-				ret = exec_without_pipe(cmd, minishell);
-			cmd = cmd->next;
-			if (stat("./.heredoc", &sb) == 0)
-				unlink("./.heredoc");*/
-		}
 		else
-		{
-			if (cmd->type == PIPED || (cmd->previous
-				&& cmd->previous->type == PIPED))
-			{
-				cmd_2 = cmd;
-				while (cmd && (cmd->type == PIPED || (cmd->previous
-				&& cmd->previous->type == PIPED)))
-				{
-					if (g_minishell.ret != 130 && g_minishell.ret != 131)
-						ret = exec_with_pipe_2(cmd, minishell);
-					cmd = cmd->next;
-				}
-				while (cmd_2 && (cmd_2->type == PIPED || (cmd_2->previous
-				&& cmd_2->previous->type == PIPED)))
-				{
-					waitpid(cmd_2->pid, &status, 0);
-					if (WIFEXITED(status))
-						ret = WEXITSTATUS(status);
-					cmd_2 = cmd_2->next;
-				}
-			}
-			else
-			{
-				ret = exec_without_pipe(cmd, minishell);
-				cmd = cmd->next;
-			}
-		}
+			ret = fd_exec_is_not_double_redir(&cmd, minishell);
 	}
 	return (ret);
 }
