@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 17:00:15 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 17:21:54 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,15 @@ typedef struct s_args
 	struct s_args	*next;
 	struct s_args	*previous;
 }				t_args;
+
+typedef struct s_dollars
+{
+	t_lchar	*tmp;
+	t_lchar	*lchar;
+	t_lchar	*tmptwo;
+	int		i;
+	char	*line;
+}				t_dollars;
 
 t_minishell		g_minishell;
 

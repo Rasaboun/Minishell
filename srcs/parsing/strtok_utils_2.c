@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strtok_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 16:51:05 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 17:02:26 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 17:44:40 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ void	ft_freee(int n, char **s)
 
 int	init_strok(const char *line, char *strset, t_tok *t)
 {
+	int	i;
+
+	i = 0;
 	t->num = ft_countt(line, strset);
 	if (t->num < 1)
 		return (1);
@@ -68,6 +71,11 @@ int	init_strok(const char *line, char *strset, t_tok *t)
 		ft_write_error("Error");
 		g_minishell.ret = 1;
 		return (1);
+	}
+	while(i < t->num)
+	{
+		t->str[i] = NULL;
+		i++;
 	}
 	t->str[t->num] = NULL;
 	t->i = 0;

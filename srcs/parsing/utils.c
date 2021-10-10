@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/10 16:37:10 by rasaboun          #+#    #+#             */
+/*   Updated: 2021/10/10 17:45:24 by rasaboun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int ft_istrchr(const char *s, int c)
+int	ft_istrchr(const char *s, int c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (c == '\0')
@@ -16,9 +28,9 @@ int ft_istrchr(const char *s, int c)
 	return (i);
 }
 
-t_lchar *ft_lcharlast(t_lchar *lst)
+t_lchar	*ft_lcharlast(t_lchar *lst)
 {
-	t_lchar *lst2;
+	t_lchar	*lst2;
 
 	lst2 = lst;
 	if (!lst)
@@ -28,10 +40,10 @@ t_lchar *ft_lcharlast(t_lchar *lst)
 	return (lst2);
 }
 
-int ft_lcharlen(t_lchar *lst)
+int	ft_lcharlen(t_lchar *lst)
 {
-	t_lchar *lst2;
-	int i;
+	t_lchar	*lst2;
+	int		i;
 
 	i = 0;
 	lst2 = lst;
@@ -45,9 +57,9 @@ int ft_lcharlen(t_lchar *lst)
 	return (i);
 }
 
-void ft_lcharadd_back(t_lchar **alst, t_lchar *rnew)
+void	ft_lcharadd_back(t_lchar **alst, t_lchar *rnew)
 {
-	t_lchar *lst2;
+	t_lchar	*lst2;
 
 	if (*alst == NULL)
 		*alst = rnew;
@@ -60,11 +72,12 @@ void ft_lcharadd_back(t_lchar **alst, t_lchar *rnew)
 	}
 }
 
-t_lchar *ft_lcharnew(char st)
+t_lchar	*ft_lcharnew(char st)
 {
-	t_lchar *s;
+	t_lchar	*s;
 
-	if (!(s = (t_lchar *)malloc(sizeof(t_lchar))))
+	s = (t_lchar *)malloc(sizeof(t_lchar));
+	if (!s)
 		return (NULL);
 	s->c = st;
 	s->next = NULL;
@@ -72,9 +85,9 @@ t_lchar *ft_lcharnew(char st)
 	return (s);
 }
 
-t_cm *ft_cmlast(t_cm *lst)
+t_cm	*ft_cmlast(t_cm *lst)
 {
-	t_cm *lst2;
+	t_cm	*lst2;
 
 	lst2 = lst;
 	if (!lst)
@@ -84,9 +97,9 @@ t_cm *ft_cmlast(t_cm *lst)
 	return (lst2);
 }
 
-void ft_cmadd_back(t_cm **alst, t_cm *rnew)
+void	ft_cmadd_back(t_cm **alst, t_cm *rnew)
 {
-	t_cm *lst2;
+	t_cm	*lst2;
 
 	if (*alst == NULL)
 		*alst = rnew;
@@ -99,11 +112,12 @@ void ft_cmadd_back(t_cm **alst, t_cm *rnew)
 	}
 }
 
-t_cm *ft_cmnew(char **st)
+t_cm	*ft_cmnew(char **st)
 {
-	t_cm *s;
+	t_cm	*s;
 
-	if (!(s = (t_cm *)malloc(sizeof(t_cm))))
+	s = (t_cm *)malloc(sizeof(t_cm));
+	if (!s)
 		return (NULL);
 	s->str = st;
 	s->next = NULL;
@@ -111,10 +125,10 @@ t_cm *ft_cmnew(char **st)
 	return (s);
 }
 
-static int ft_whil(char *s3, const char *s1, int i)
+static	int	ft_whil(char *s3, const char *s1, int i)
 {
-	int p;
-	int y;
+	int	p;
+	int	y;
 
 	p = 0;
 	y = 0;
@@ -127,12 +141,12 @@ static int ft_whil(char *s3, const char *s1, int i)
 	return (p);
 }
 
-char *ft_strfjoin(char const *s1, char *s2)
+char	*ft_strfjoin(char const *s1, char *s2)
 {
-	int p;
-	char *s3;
-	int y;
-	int i;
+	int		p;
+	char	*s3;
+	int		y;
+	int		i;
 
 	if (!s2)
 		return (NULL);
@@ -141,7 +155,8 @@ char *ft_strfjoin(char const *s1, char *s2)
 	y = 0;
 	p = 0;
 	i = (int)ft_strlen(s1);
-	if (!(s3 = (char *)malloc(sizeof(char) * (i + ft_strlen(s2) + 1))))
+	s3 = (char *)malloc(sizeof(char) * (i + ft_strlen(s2) + 1));
+	if (!s3)
 		return (0);
 	p = ft_whil(s3, s1, i);
 	y = 0;
@@ -155,9 +170,9 @@ char *ft_strfjoin(char const *s1, char *s2)
 	return (s3);
 }
 
-t_redir *ft_redirlast(t_redir *lst)
+t_redir	*ft_redirlast(t_redir *lst)
 {
-	t_redir *lst2;
+	t_redir	*lst2;
 
 	lst2 = lst;
 	if (!lst)
@@ -167,9 +182,9 @@ t_redir *ft_redirlast(t_redir *lst)
 	return (lst2);
 }
 
-void ft_rediradd_back(t_redir **alst, t_redir *rnew)
+void	ft_rediradd_back(t_redir **alst, t_redir *rnew)
 {
-	t_redir *lst2;
+	t_redir	*lst2;
 
 	if (*alst == NULL)
 		*alst = rnew;
@@ -182,11 +197,12 @@ void ft_rediradd_back(t_redir **alst, t_redir *rnew)
 	}
 }
 
-t_redir *ft_redirnew(char *st)
+t_redir	*ft_redirnew(char *st)
 {
-	t_redir *s;
+	t_redir	*s;
 
-	if (!(s = (t_redir *)malloc(sizeof(t_redir))))
+	s = (t_redir *)malloc(sizeof(t_redir));
+	if (!s)
 		return (NULL);
 	s->str = st;
 	s->next = NULL;
@@ -194,34 +210,42 @@ t_redir *ft_redirnew(char *st)
 	return (s);
 }
 
-t_lchar *ft_lcharadd(t_lchar *alst, t_lchar *rnew)
+t_lchar	*lcharaddutil(t_lchar *alst, t_lchar *rnew)
 {
-	t_lchar *tmp;
-	t_lchar *lst;
+	t_lchar	*tmp;
 
-	lst = alst;
 	if (!rnew)
 	{
-		tmp = lst;
-		if (!lst->previous)
+		tmp = alst;
+		if (!alst->previous)
 		{
-
-			lst = lst->next;
-			if (lst)
-				lst->previous = NULL;
+			alst = alst->next;
+			if (alst)
+				alst->previous = NULL;
 		}
 		else
 		{
-			if (lst->c != '\"')
-				lst = lst->next;
-			if (lst)
+			if (alst->c != '\"')
+				alst = alst->next;
+			if (alst)
 			{
-				lst->previous = tmp->previous;
-				tmp->next = lst;
+				alst->previous = tmp->previous;
+				tmp->next = alst;
 			}
 		}
-		return (lst);
+		return (alst);
 	}
+	return (alst);
+}
+
+t_lchar	*ft_lcharadd(t_lchar *alst, t_lchar *rnew)
+{
+	t_lchar	*tmp;
+	t_lchar	*lst;
+
+	lst = alst;
+	if (!rnew)
+		return (lcharaddutil(alst, rnew));
 	if (lst->previous == NULL)
 	{
 		tmp = ft_lcharlast(rnew);
@@ -236,60 +260,59 @@ t_lchar *ft_lcharadd(t_lchar *alst, t_lchar *rnew)
 		lst->previous = tmp;
 		tmp->next = lst;
 	}
-
 	return (lst);
 }
 
-char *get_dollar(t_lchar **lst)
+void	get_dollars_utils(t_lchar **lst, t_dollars *d)
 {
-	t_lchar *tmp;
-	t_lchar *lchar;
-	t_lchar *tmptwo;
-	int i;
-	char *line;
-
-	line = NULL;
-	i = 0;
-	lchar = *lst;
-	tmp = *lst;
-	tmptwo = tmp->previous;
-
-	while (lchar->next && ft_isalnum(lchar->c))
+	while (d->lchar->next && ft_isalnum(d->lchar->c))
 	{
-		i++;
-		lchar = lchar->next;
+		d->i++;
+		d->lchar = d->lchar->next;
 	}
-	line = (char *)malloc(sizeof(char) * (i + 1));
-	lchar = *lst;
-	i = 0;
-	while (lchar->next && ft_isalnum(lchar->c))
+	d->line = (char *)malloc(sizeof(char) * (d->i + 1));
+	d->lchar = *lst;
+	d->i = 0;
+	while (d->lchar->next && ft_isalnum(d->lchar->c))
 	{
-		tmp = lchar->next;
-		line[i] = lchar->c;
-		free(lchar);
-		lchar = tmp;
-		i++;
+		d->tmp = d->lchar->next;
+		d->line[d->i] = d->lchar->c;
+		free(d->lchar);
+		d->lchar = d->tmp;
+		d->i++;
 	}
-	line[i] = '\0';
-	if (i > 0)
-	{
-		if (!tmptwo)
-			lchar->previous = NULL;
-		else
-		{
-			lchar->previous = tmptwo;
-			tmptwo->next = lchar;
-		}
-	}
-	*lst = lchar;
-	return (line);
+	d->line[d->i] = '\0';
 }
 
-t_lchar *ft_tabtolchar(char *line)
+char	*get_dollar(t_lchar **lst)
 {
-	int i;
-	t_lchar *tmp;
-	t_lchar *c;
+	t_dollars	d;
+
+	d.line = NULL;
+	d.i = 0;
+	d.lchar = *lst;
+	d.tmp = *lst;
+	d.tmptwo = d.tmp->previous;
+	get_dollars_utils(lst, &d);
+	if (d.i > 0)
+	{
+		if (!d.tmptwo)
+			d.lchar->previous = NULL;
+		else
+		{
+			d.lchar->previous = d.tmptwo;
+			d.tmptwo->next = d.lchar;
+		}
+	}
+	*lst = d.lchar;
+	return (d.line);
+}
+
+t_lchar	*ft_tabtolchar(char *line)
+{
+	int		i;
+	t_lchar	*tmp;
+	t_lchar	*c;
 
 	c = NULL;
 	tmp = NULL;
@@ -305,10 +328,10 @@ t_lchar *ft_tabtolchar(char *line)
 	return (c);
 }
 
-void quotesdl(t_lchar **q, char c)
+void	quotesdl(t_lchar **q, char c)
 {
-	t_lchar *cq;
-	t_lchar *tmp;
+	t_lchar	*cq;
+	t_lchar	*tmp;
 
 	tmp = NULL;
 	cq = *q;
@@ -334,11 +357,11 @@ void quotesdl(t_lchar **q, char c)
 	}
 }
 
-void ft_edit(t_lchar **q, char c)
+void	ft_edit(t_lchar **q, char c)
 {
-	t_lchar *tmp;
-	t_lchar *first;
-	t_lchar *qq;
+	t_lchar	*tmp;
+	t_lchar	*first;
+	t_lchar	*qq;
 
 	qq = *q;
 	tmp = NULL;
@@ -356,16 +379,14 @@ void ft_edit(t_lchar **q, char c)
 	}
 }
 
-
 void	ft_freeq(t_lchar *q)
 {
-	t_lchar *tmp;
+	t_lchar	*tmp;
 
 	tmp = NULL;
 	while (q->previous)
 		q = q->previous;
-
-	while(q)
+	while (q)
 	{
 		tmp = q;
 		q = q->next;
@@ -373,14 +394,14 @@ void	ft_freeq(t_lchar *q)
 	}
 }
 
-char *delquotes(char *line, t_env *env)
+char	*delquotes(char *line, t_env *env)
 {
-	int i;
-	t_lchar *q;
-	t_lchar *tmp;
-	char *final;
-	t_lchar *first;
-	char *str;
+	int		i;
+	t_lchar	*q;
+	t_lchar	*tmp;
+	char	*final;
+	t_lchar	*first;
+	char	*str;
 
 	str = NULL;
 	i = 0;
@@ -526,7 +547,7 @@ char *delquotes(char *line, t_env *env)
 	return (final);
 }
 
-int strsetcmp(char **line, int i)
+int	strsetcmp(char **line, int i)
 {
 	char *l;
 
@@ -550,7 +571,7 @@ int strsetcmp(char **line, int i)
 	return (0);
 }
 
-int ft_delquotes(char **line, t_env *env)
+int	ft_delquotes(char **line, t_env *env)
 {
 	int i;
 
