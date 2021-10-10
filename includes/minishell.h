@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 11:02:14 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 12:00:23 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,12 @@ int		parse_export(char *str);
 void	ft_rl_input_eof(char *args, int fd_out);
 void	ft_child_pid_exec_pipe(t_cmd *cmd, t_minishell *minishell);
 int		ft_ret_fork_status(int status);
+int		fd_exec_is_double_redir(t_cmd **cmd, t_minishell *minishell);
+int		fd_exec_is_not_double_redir(t_cmd **cmd, t_minishell *minishell);
+int		exec_with_pipe_2(t_cmd *cmd, t_minishell *minishell);
+int		exec_with_pipe(t_cmd *cmd, t_minishell *minishell);
+void	ft_close_for_exec_with_pipe(t_cmd *cmd);
+int		exec_without_pipe(t_cmd *cmd, t_minishell *minishell);
 
 void	ft_werror(char *s1, char *s2, char *s3);
 int		builtin_is_exist(char *str);
@@ -192,6 +198,7 @@ t_args	*ft_init_args(char **args);
 int		ft_is_redir(char *str);
 void	prompt_signal(int signal);
 int		ft_is_double_redir_left(t_cmd *cmd);
+int		space_in_env_name(char *str);
 
 void	ft_init_minishell(t_minishell *minishell, char **envp);
 int		is_empty_list(t_env *env);

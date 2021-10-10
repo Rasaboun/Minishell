@@ -11,6 +11,7 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/parsing/ft_cutcmd.c \
 					./srcs/execution/exec_builtins.c \
 					./srcs/execution/exec_commands.c \
+					./srcs/execution/exec_commands_utils.c \
 					./srcs/execution/exec_bin.c \
 					./srcs/execution/redirection.c \
 					./srcs/execution/redirection_utils.c \
