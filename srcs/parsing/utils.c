@@ -282,14 +282,20 @@ t_lchar *ft_lcharadd(t_lchar *alst, t_lchar *rnew)
 		tmp = lst;
 		if (!lst->previous)
 		{
+			
 			lst = lst->next;
-			lst->previous = NULL;
+			if (lst)
+				lst->previous = NULL;
 		}
 		else
 		{
-			fprintf(stderr, "HERE");
-			lst = lst->next;
-			lst->previous = tmp->previous;
+			if (lst->c != '\"')
+				lst = lst->next;
+			if (lst)
+			{
+				lst->previous = tmp->previous;
+				tmp->next = lst;
+			}
 		}
 		return (lst);
 	}
@@ -347,7 +353,10 @@ char *get_dollar(t_lchar **lst)
 		if (!tmptwo)
 			lchar->previous = NULL;
 		else
+		{
 			lchar->previous = tmptwo;
+			tmptwo->next = lchar;
+		}
 	}
 	*lst = lchar;
 	return (line);
@@ -380,7 +389,7 @@ void quotesdl(t_lchar **q, char c)
 
 	tmp = NULL;
 	cq = *q;
-	if (cq->c == c)
+	if (cq && cq->c == c)
 	{
 		if (!cq->previous)
 		{
@@ -399,6 +408,29 @@ void quotesdl(t_lchar **q, char c)
 			free(tmp);
 			*q = cq;
 		}
+	}
+}
+
+void ft_edit(t_lchar **q, char c)
+{
+	t_lchar *tmp;
+	char *final;
+	t_lchar *first;
+	t_lchar *qq;
+
+	qq = *q;
+	tmp = NULL;
+	if (qq && qq->c == c)
+	{
+		tmp = qq;
+		while (qq->c == c)
+		{
+			qq = qq->next;
+		}
+		first = ft_tabtolchar("{'");
+		tmp = ft_lcharadd(tmp, first);
+		first = ft_tabtolchar("'}");
+		*q = ft_lcharadd(qq, first);
 	}
 }
 
@@ -427,6 +459,7 @@ char *delquotes(char *line, t_env *env)
 	ft_lcharadd_back(&q, tmp);
 	i = 0;
 	free(line);
+	line = NULL;
 
 	while (q && q->next)
 	{
@@ -452,7 +485,7 @@ char *delquotes(char *line, t_env *env)
 			if (q->next)
 				q = q->next;
 		}
-		if (q->c == '$')
+		while (q && q->c == '$')
 		{
 			if (q->next->c != ' ' && q->next->c != '\0')
 			{
@@ -466,8 +499,15 @@ char *delquotes(char *line, t_env *env)
 				{
 					final = get_dollar(&q);
 					str = ft_env_value(final, env);
+					free(final);
+					final = NULL;
 				}
 				first = ft_tabtolchar(str);
+				if (str)
+				{
+					free(str);
+					str = NULL;
+				}
 				if (first)
 					q = ft_lcharadd(q, first);
 			}
@@ -477,12 +517,12 @@ char *delquotes(char *line, t_env *env)
 			quotesdl(&q, '\"');
 			while (q && q->next && q->c != '\"' && q->c != '\0')
 			{
-				if (q->c == '$')
+				while (q->c == '$')
 				{
 					if (q->next->c != ' ' && q->next->c != '\"')
 					{
 						quotesdl(&q, '$');
-						if (q->c == '?' && (q->next->c == ' ' || q->next->c == '\"'))
+						if (q->c == '?' && (q->next->c == ' ' || q->next->c == '\"' || q->next->c == '\0'))
 						{
 							quotesdl(&q, '?');
 							str = ft_itoa(g_minishell.ret);
@@ -491,8 +531,15 @@ char *delquotes(char *line, t_env *env)
 						{
 							final = get_dollar(&q);
 							str = ft_env_value(final, env);
+							free(final);
+							final = NULL;
 						}
 						first = ft_tabtolchar(str);
+						if (str)
+						{
+							free(str);
+							str = NULL;
+						}
 						if (first)
 							q = ft_lcharadd(q, first);
 					}
@@ -502,35 +549,15 @@ char *delquotes(char *line, t_env *env)
 			}
 			quotesdl(&q, '\"');
 		}
-		if (q->c == '>')
-		{
-			tmp = q;
-			while (q->c == '>')
-			{
-				q = q->next;
-			}
-			first = ft_tabtolchar("'");
-			tmp = ft_lcharadd(tmp, first);
-			first = ft_tabtolchar("'");
-			q = ft_lcharadd(q, first);
-		}
-		if (q->c == '<')
-		{
-			tmp = q;
-			while (q->c == '<')
-			{
-				q = q->next;
-			}
-			first = ft_tabtolchar("'");
-			tmp = ft_lcharadd(tmp, first);
-			first = ft_tabtolchar("'");
-			q = ft_lcharadd(q, first);
-		}
-		if (q->next)
+		ft_edit(&q, '|');
+		ft_edit(&q, ';');
+		ft_edit(&q, '>');
+		ft_edit(&q, '<');
+		if (q && q->next)
 			q = q->next;
 	}
 	if (!q)
-		fprintf(stderr, "error");
+		return (NULL);
 
 	while (q->previous)
 		q = q->previous;
@@ -544,6 +571,7 @@ char *delquotes(char *line, t_env *env)
 		final[i] = q->c;
 		q = q->next;
 		free(tmp);
+		tmp = NULL;
 		i++;
 	}
 	return (final);
@@ -557,7 +585,9 @@ int strsetcmp(char **line, int i)
 	if (!line[i])
 		return (0);
 	if (ft_strchr(";|><", line[i][0]))
-	{	
+	{
+		if (i == 0 && (ft_strcmp(line[i], "{';'}") || ft_strcmp(line[i], "{'|'}")))
+			return (1);
 		if (i > 0 && (line[i][0] == ';' || line[i][0] == '|' || line[i][0] == '>' || line[i][0] == '<') && ft_strchr(";|><", line[i - 1][0]))
 			return (1);
 		if (line[i][0] != ';' && !line[i + 1])
@@ -589,6 +619,7 @@ int ft_delquotes(char **line, t_env *env)
 
 	while (line[i])
 	{
+
 		if (line[i] && strsetcmp(line, i))
 		{
 			ft_werror("syntax error near unexpected token `", line[i], "'");
@@ -597,10 +628,9 @@ int ft_delquotes(char **line, t_env *env)
 		}
 		i++;
 	}
-	i  = 0;
+	i = 0;
 	while (line[i])
 	{
-
 		if (line[i] && strsetcmp(line, i))
 		{
 			ft_werror("syntax error near unexpected token `", line[i], "'");
@@ -608,7 +638,6 @@ int ft_delquotes(char **line, t_env *env)
 			return (0);
 		}
 		line[i] = delquotes(line[i], env);
-
 		i++;
 	}
 	return (1);

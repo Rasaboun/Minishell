@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 18:14:09 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 12:41:43 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 14:51:00 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_addarg(char **str, t_cm **cutcm)
 	{
 		
 		n = 0;
-		while (str[i] && ft_strcmp(str[i], "|") != 0 && ft_strcmp(str[i], ";") != 0)
+		while (str[i] && ft_strcmp(str[i], "{'|'}") != 0 && ft_strcmp(str[i], "{';'}") != 0)
 		{
 			n++;
 			i++;
@@ -78,6 +78,7 @@ void	ft_addarg(char **str, t_cm **cutcm)
 		}	
 	}
 	free(str);
+	str = NULL;
 }
 void	ft_freedarg(char **str)
 {
@@ -90,6 +91,7 @@ void	ft_freedarg(char **str)
 		i++;
 	}
 	free(str);
+	str = NULL;
 }
 
 void	ft_addcmd(t_cm *cutcm, t_cmd **cmd)
