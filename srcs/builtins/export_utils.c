@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:32:31 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 11:42:13 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 13:29:36 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	parse_export(char *str)
 
 	i = 0;
 	if ((str[i] && ft_isalpha(str[i]) != 1 && str[i] != '_') || str[i] == '\0'
-			|| space_in_env_name(str) == SUCCESS)
+		|| space_in_env_name(str) == SUCCESS)
 	{
 		ft_write_error("minishell: export: `");
 		ft_write_error(str);
