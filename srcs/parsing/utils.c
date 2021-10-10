@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 16:37:10 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 17:45:24 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 18:52:17 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,175 +394,163 @@ void	ft_freeq(t_lchar *q)
 	}
 }
 
-char	*delquotes(char *line, t_env *env)
+void	chartolchar(char *line, t_lchar **q)
 {
 	int		i;
-	t_lchar	*q;
 	t_lchar	*tmp;
-	char	*final;
-	t_lchar	*first;
-	char	*str;
 
-	str = NULL;
 	i = 0;
-	q = NULL;
-	tmp = NULL;
-	if (!line)
-		return (NULL);
 	while (line[i])
 	{
 		tmp = ft_lcharnew(line[i]);
-		ft_lcharadd_back(&q, tmp);
+		ft_lcharadd_back(q, tmp);
 		i++;
 	}
 	tmp = ft_lcharnew(line[i]);
-	ft_lcharadd_back(&q, tmp);
-	i = 0;
+	ft_lcharadd_back(q, tmp);
 	free(line);
 	line = NULL;
+}
 
-	while (q && q->next)
+void	dollar_utils(t_delquo *d, t_env *env)
+{
+	if (d->q->c == '?' && (d->q->next->c == ' ' \
+		|| d->q->next->c == '\"' || d->q->next->c == '\0'))
 	{
-		while (q && q->c == '\'')
-		{
-			if (!q->previous && q->next && q->c == '\'')
-			{
-				q->next->previous = NULL;
-				q = q->next;
-			}
-			while (q->next && q->c != '\'' && q->c != '\0')
-				q = q->next;
-			if (q && q->previous && q->c == '\'')
-			{
-				q->previous->next = q->next;
-				q->next->previous = q->previous;
-			}
-			if (q->c == '\'' && q->next->c == '\0' && !q->previous)
-			{
-				q->next->previous = NULL;
-				q = q->next;
-			}
-			if (q->next)
-				q = q->next;
-		}
-		while (q && q->c == '$')
-		{
-			if (q->next->c != ' ' && q->next->c != '\0')
-			{
-				quotesdl(&q, '$');
-				if (q->c == '?' && (q->next->c == ' ' || q->next->c == '\"' || q->next->c == '\0'))
-				{
-					quotesdl(&q, '?');
-					str = ft_itoa(g_minishell.ret);
-				}
-				else
-				{
-					final = get_dollar(&q);
-					str = ft_env_value(final, env);
-					free(final);
-					final = NULL;
-				}
-				first = ft_tabtolchar(str);
-				if (str)
-				{
-					free(str);
-					str = NULL;
-				}
-				if (first)
-					q = ft_lcharadd(q, first);
-				else if (!q->previous)
-				{
-					ft_freeq(q);
-					return (NULL);
-				}
-			}
-		}
-		while (q && q->c == '\"')
-		{
-			quotesdl(&q, '\"');
-			while (q && q->next && q->c != '\"' && q->c != '\0')
-			{
-				while (q->c == '$')
-				{
-					if (q->next->c != ' ' && q->next->c != '\"')
-					{
-						quotesdl(&q, '$');
-						if (q->c == '?' && (q->next->c == ' ' || q->next->c == '\"' || q->next->c == '\0'))
-						{
-							quotesdl(&q, '?');
-							str = ft_itoa(g_minishell.ret);
-						}
-						else
-						{
-							final = get_dollar(&q);
-							str = ft_env_value(final, env);
-							free(final);
-							final = NULL;
-						}
-						first = ft_tabtolchar(str);
-						if (str)
-						{
-							free(str);
-							str = NULL;
-						}
-						if (first)
-							q = ft_lcharadd(q, first);
-						else if (!q->previous)
-						{
-							ft_freeq(q);
-							return (NULL);
-						}
-					}
-				}
-				if (q->c != '\"')
-					q = q->next;
-			}
-			quotesdl(&q, '\"');
-		}
-		ft_edit(&q, '|');
-		ft_edit(&q, ';');
-		ft_edit(&q, '>');
-		ft_edit(&q, '<');
-		if (q && q->next)
-			q = q->next;
+		quotesdl(&d->q, '?');
+		d->str = ft_itoa(g_minishell.ret);
 	}
-	if (!q)
-		return (NULL);
+	else
+	{
+		d->final = get_dollar(&d->q);
+		d->str = ft_env_value(d->final, env);
+		free(d->final);
+		d->final = NULL;
+	}
+}
 
-	while (q->previous)
-		q = q->previous;
+int	dollarsget(t_delquo *d, t_env *env)
+{
+	while (d->q && d->q->c == '$')
+	{
+		if (d->q->next->c != ' ' && d->q->next->c != \
+			'\0' && d->q->next->c != '\"')
+		{
+			quotesdl(&d->q, '$');
+			dollar_utils(d, env);
+			d->first = ft_tabtolchar(d->str);
+			if (d->str)
+				free(d->str);
+			if (d->first)
+				d->q = ft_lcharadd(d->q, d->first);
+			else if (!d->q->previous)
+			{
+				ft_freeq(d->q);
+				return (0);
+			}
+		}
+		if (d->q && d->q->c == '$' && d->q->next)
+			d->q = d->q->next;
+	}
+	return (1);
+}
 
-	i = ft_lcharlen(q);
-	final = (char *)malloc(sizeof(char) * (i + 1));
+void	ft_all_edit(t_lchar **q)
+{
+	ft_edit(q, '|');
+	ft_edit(q, ';');
+	ft_edit(q, '>');
+	ft_edit(q, '<');
+}
+
+int	while_quotesutils(t_delquo *dq, char c, t_env *env)
+{
+	while (dq->q && dq->q->c == '\'')
+	{
+		quotesdl(&dq->q, '\'');
+		while (dq->q && dq->q->next && dq->q->c != '\'' && dq->q->c != '\0')
+		{
+			if (c == '\"')
+			{
+				if (dollarsget(dq, env) == 0)
+					return (0);
+			}
+			if (dq->q->c != c)
+				dq->q = dq->q->next;
+		}
+		quotesdl(&dq->q, '\'');
+	}
+	return (1);
+}
+
+void	delquotes_util(t_delquo *dq)
+{
+	int	i;
+
 	i = 0;
-	while (q)
+	while (dq->q->previous)
+		dq->q = dq->q->previous;
+	i = ft_lcharlen(dq->q);
+	dq->final = (char *)malloc(sizeof(char) * (i + 1));
+	i = 0;
+	while (dq->q)
 	{
-		tmp = q;
-		final[i] = q->c;
-		q = q->next;
-		free(tmp);
-		tmp = NULL;
+		dq->tmp = dq->q;
+		dq->final[i] = dq->q->c;
+		dq->q = dq->q->next;
+		free(dq->tmp);
+		dq->tmp = NULL;
 		i++;
+	}	
+}
+
+char	*delquotes(char *line, t_env *env)
+{
+	t_delquo	dq;
+
+	dq.str = NULL;
+	dq.q = NULL;
+	dq.tmp = NULL;
+	if (!line)
+		return (NULL);
+	chartolchar(line, &dq.q);
+	while (dq.q && dq.q->next)
+	{
+		while_quotesutils(&dq, '\'', env);
+		if (dq.q && dq.q->c == '$')
+			if (dollarsget(&dq, env) == 0)
+				return (NULL);
+		if (while_quotesutils(&dq, '\"', env) == 0)
+			return (NULL);
+		ft_all_edit(&dq.q);
+		if (dq.q && dq.q->next)
+			dq.q = dq.q->next;
 	}
-	return (final);
+	if (!dq.q)
+		return (NULL);
+	delquotes_util(&dq);
+	return (dq.final);
 }
 
 int	strsetcmp(char **line, int i)
 {
-	char *l;
+	char	*l;
 
 	l = line[i];
 	if (!line[i])
 		return (0);
 	if (ft_strchr(";|><", line[i][0]))
 	{
-		if (i == 0 && (ft_strcmp(line[i], "{';'}") || ft_strcmp(line[i], "{'|'}")))
+		if (i == 0 && (ft_strcmp(line[i], "{';'}") || \
+			ft_strcmp(line[i], "{'|'}")))
 			return (1);
-		if (i > 0 && (line[i][0] == ';' || line[i][0] == '|' || line[i][0] == '>' || line[i][0] == '<') && ft_strchr(";|><", line[i - 1][0]))
+		if (i > 0 && (line[i][0] == ';' || line[i][0] == '|' \
+			|| line[i][0] == '>' || line[i][0] == '<') && \
+				ft_strchr(";|><", line[i - 1][0]))
 			return (1);
 		if (line[i][0] != ';' && !line[i + 1])
 			return (1);
-		if (ft_strcmp(l, ">") && ft_strcmp(l, "<") && ft_strcmp(l, ";") &&
+		if (ft_strcmp(l, ">") && ft_strcmp(l, "<") && ft_strcmp(l, ";") && \
 			ft_strcmp(l, "|") && ft_strcmp(l, "<<") && ft_strcmp(l, ">>"))
 			return (1);
 		else
@@ -573,15 +561,13 @@ int	strsetcmp(char **line, int i)
 
 int	ft_delquotes(char **line, t_env *env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!line)
 		return (0);
-
 	while (line[i])
 	{
-
 		if (line[i] && strsetcmp(line, i))
 		{
 			ft_werror("syntax error near unexpected token `", line[i], "'");

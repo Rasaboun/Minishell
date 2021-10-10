@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 17:21:54 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 17:57:35 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,15 @@ typedef struct s_dollars
 	int		i;
 	char	*line;
 }				t_dollars;
+
+typedef struct s_delquo
+{
+	t_lchar	*q;
+	t_lchar	*tmp;
+	char	*final;
+	t_lchar	*first;
+	char	*str;
+}				t_delquo;
 
 t_minishell		g_minishell;
 
