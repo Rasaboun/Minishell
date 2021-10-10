@@ -194,79 +194,6 @@ t_redir *ft_redirnew(char *st)
 	return (s);
 }
 
-char **rediredit(char **tabs)
-{
-	int i;
-	char **final;
-	t_redir *lst;
-	t_redir *tmp;
-	t_redir *lnew;
-
-	final = NULL;
-	i = 0;
-	lst = NULL;
-	tmp = NULL;
-	lnew = NULL;
-	while (tabs[i])
-	{
-		lnew = ft_redirnew(tabs[i]);
-		ft_rediradd_back(&lst, lnew);
-		i++;
-	}
-	tmp = lst;
-	while (lst->next)
-	{
-		if (strcmp(lst->str, ">") == 0)
-		{
-			if (lst && lst->previous && strcmp(lst->previous->str, ">"))
-			{
-				if (lst->next)
-				{
-					lst->previous->next = lst->next->next;
-					if (lst->next->next)
-						lst->next->next->previous = lst->previous;
-					/*tmp = lst;
-                    lst = lst->previous;
-                    free(tmp);
-                    free(tmp->next);*/
-				}
-				else
-				{
-					write(1, "Error END REDIR", 15);
-					exit(0);
-				}
-			}
-			else
-			{
-				write(1, "Error END REDIR", 15);
-				exit(0);
-			}
-		}
-		lst = lst->next;
-	}
-	while (lst->previous)
-	{
-		lst = lst->previous;
-	}
-	tmp = lst;
-	i = 0;
-	while (tmp->next)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-
-	final = (char **)malloc(sizeof(char *) * (i));
-	i = 0;
-	while (lst->next)
-	{
-		final[i] = lst->str;
-		lst = lst->next;
-		i++;
-	}
-	return (final);
-}
-
 t_lchar *ft_lcharadd(t_lchar *alst, t_lchar *rnew)
 {
 	t_lchar *tmp;
@@ -645,12 +572,6 @@ int ft_delquotes(char **line, t_env *env)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] && strsetcmp(line, i))
-		{
-			ft_werror("syntax error near unexpected token `", line[i], "'");
-			g_minishell.ret = 2;
-			return (0);
-		}
 		line[i] = delquotes(line[i], env);
 		i++;
 	}

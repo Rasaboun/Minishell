@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 15:28:50 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 16:22:48 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ int		ft_delquotes(char **line, t_env *env);
 t_redir	*ft_redirlast(t_redir *lst);
 void	ft_rediradd_back(t_redir **alst, t_redir *rnew);
 t_redir	*ft_redirnew(char *st);
-char	**rediredit(char **tabs);
 char	**ft_strtok(char *line, char	*strset);
 int		ft_write_error(char *str);
 int		ft_isnum(char *str);
@@ -231,5 +230,8 @@ void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env);
 void	ft_free_array(char **array);
 void	ft_clean_all(t_minishell *minishell);
 void	ft_freecmd(t_cmd *cmd);
+
+
+//---------- STRTOK ----------//
 
 #endif

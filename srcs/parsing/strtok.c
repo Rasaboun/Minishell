@@ -29,7 +29,7 @@ static int whilequote_count(const char *line, t_count *ct, char c)
 {
 	if (line[ct->i] == c)
 	{
-		while (line[ct->i] == c) //QUOTE
+		while (line[ct->i] == c)
 		{
 			ct->i++;
 			while (line[ct->i] && line[ct->i] != c)
@@ -39,6 +39,7 @@ static int whilequote_count(const char *line, t_count *ct, char c)
 			else
 			{
 				write(2, "Not closed quote\n", 17);
+				g_minishell.ret = 1;
 				return (0);
 			}
 		}
@@ -64,6 +65,7 @@ static int whilequotealpha(const char *line, t_count *ct, char c)
 		else
 		{
 			write(2, "Not closed quote\n", 17);
+			g_minishell.ret = 1;
 			return (0);
 		}
 	}
@@ -141,12 +143,13 @@ int init_strok(const char *line, char *strset, t_tok *t)
 {
 	t->num = ft_countt(line, strset);
 	if (t->num < 1)
-		return (EXIT_FAILURE);
+		return (1);
 	t->str = malloc(sizeof(char *) * (t->num + 1));
 	if (t->str == NULL)
 	{
 		ft_write_error("Error");
-		return (EXIT_FAILURE);
+		g_minishell.ret = 1;
+		return (1);
 	}
 	t->str[t->num] = NULL;
 	t->i = 0;
@@ -222,7 +225,7 @@ char **ft_strtok(char *line, char *strset)
 
 	if (!line)
 		return (NULL);
-	if (init_strok(line, strset, &t))
+	if (init_strok(line, strset, &t) == 1)
 		return (NULL);
 	while (line[t.i] != '\0')
 	{
