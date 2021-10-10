@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 17:57:35 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 19:12:21 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,5 +262,37 @@ int		ft_countt(const char *line, char *strset);
 void	ft_freee(int n, char **s);
 int		init_strok(const char *line, char *strset, t_tok *t);
 void	while_quotes(const char *line, t_tok *t, char c, int w);
+
+//---------- PARSING UTILS ----------//
+
+int		ft_istrchr(const char *s, int c);
+t_lchar	*ft_lcharlast(t_lchar *lst);
+int		ft_lcharlen(t_lchar *lst);
+void	ft_lcharadd_back(t_lchar **alst, t_lchar *rnew);
+t_lchar	*ft_lcharnew(char st);
+
+t_cm	*ft_cmlast(t_cm *lst);
+void	ft_cmadd_back(t_cm **alst, t_cm *rnew);
+t_cm	*ft_cmnew(char **st);
+int		ft_whil(char *s3, const char *s1, int i);
+char	*ft_strfjoin(char const *s1, char *s2);
+
+t_redir	*ft_redirlast(t_redir *lst);
+void	ft_rediradd_back(t_redir **alst, t_redir *rnew);
+t_redir	*ft_redirnew(char *st);
+t_lchar	*lcharaddutil(t_lchar *alst, t_lchar *rnew);
+t_lchar	*ft_lcharadd(t_lchar *alst, t_lchar *rnew);
+
+void	get_dollars_utils(t_lchar **lst, t_dollars *d);
+char	*get_dollar(t_lchar **lst);
+t_lchar	*ft_tabtolchar(char *line);
+void	quotesdl(t_lchar **q, char c);
+void	ft_edit(t_lchar **q, char c);
+
+void	ft_freeq(t_lchar *q);
+void	chartolchar(char *line, t_lchar **q);
+void	dollar_utils(t_delquo *d, t_env *env);
+int		dollarsget(t_delquo *d, t_env *env);
+void	ft_all_edit(t_lchar **q);
 
 #endif
