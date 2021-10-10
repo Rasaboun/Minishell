@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 16:37:10 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 19:29:54 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 22:53:13 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,7 @@ int	strsetcmp(char **line, int i)
 		return (0);
 	if (ft_strchr(";|><", line[i][0]))
 	{
-		if (i == 0 && (ft_strcmp(line[i], "{';'}") || \
-			ft_strcmp(line[i], "{'|'}")))
+		if (i == 0 && (ft_strcmp(l, "|") == 0 || ft_strcmp(l, ";") == 0))
 			return (1);
 		if (i > 0 && (line[i][0] == ';' || line[i][0] == '|' \
 			|| line[i][0] == '>' || line[i][0] == '<') && \

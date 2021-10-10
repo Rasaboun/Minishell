@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:47:10 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 22:01:00 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 22:47:28 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ char	*ft_change_env(t_env *env, char *str, char *value)
 {
 	char	*out;
 
-	free(env->str);
+	if (env->new == 1)
+		free(env->str);
 	env->str = NULL;
 	out = ft_strjoin_env(str, value);
 	env->new = 1;
