@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 11:10:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 21:32:45 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 23:09:59 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,38 +42,26 @@ int	go_to_home(t_env *env)
 int	ft_save_pwd(t_env *env)
 {
 	char	path[PATH_MAX];
-	char	*tmp;
 	t_env	*cur;
 
 	getcwd(path, sizeof(path));
-	tmp = NULL;
 	cur = ft_find_env("PWD", env);
 	if (cur == NULL)
 		return (FAILURE);
-	if (cur->new == 1)
-		tmp = cur->str;
 	cur->str = ft_change_env(cur, "PWD", path);
-	if (tmp)
-		free(tmp);
 	return (SUCCESS);
 }
 
 int	ft_save_oldpwd(t_env *env)
 {
 	char	oldpath[PATH_MAX];
-	char	*tmp;
 	t_env	*cur;
 
 	getcwd(oldpath, sizeof(oldpath));
-	tmp = NULL;
 	cur = ft_find_env("OLDPWD", env);
 	if (cur == NULL)
 		return (FAILURE);
-	if (cur->new == 1)
-		tmp = cur->str;
 	cur->str = ft_change_env(cur, "OLDPWD", oldpath);
-	if (tmp)
-		free(tmp);
 	return (SUCCESS);
 }
 
