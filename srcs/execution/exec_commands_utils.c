@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 00:07:52 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 10:50:59 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 11:00:44 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	fd_exec_is_double_redir(t_cmd **cmd, t_minishell *minishell)
 {
-	int	ret;
+	int			ret;
 	struct stat	sb;
 
 	if ((*cmd)->type == PIPED || ((*cmd)->previous
@@ -53,7 +53,7 @@ int	fd_exec_is_not_double_redir(t_cmd **cmd, t_minishell *minishell)
 	t_cmd	*cmd_2;
 
 	if ((*cmd)->type == PIPED || ((*cmd)->previous
-				&& (*cmd)->previous->type == PIPED))
+			&& (*cmd)->previous->type == PIPED))
 	{
 		cmd_2 = (*cmd);
 		while ((*cmd) && ((*cmd)->type == PIPED || ((*cmd)->previous
