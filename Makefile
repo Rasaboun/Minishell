@@ -45,7 +45,7 @@ CC			=	gcc #-g3 -fsanitize=address
 
 HEAD		=	-I./$(INCLUDES) -I./$(LIBFT_DIR)
 
-CCFLAGS 	=	-Wall -Wextra -Werror -lreadline
+CFLAGS 		=	-Wall -Wextra -Werror -lreadline
 
 LFLAGS		=	-lreadline -L ./$(LIBFT_DIR) -lft	
 
