@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:18:37 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 16:06:38 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 17:05:19 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_start_exec(t_cmd *ccmd, char *cmd)
+void	ft_start_exec(t_cmd *ccmd, char *cmd)
 {
 	if (cmd && cmd[0] != '\0')
 		add_history(cmd);
@@ -26,13 +26,13 @@ void ft_start_exec(t_cmd *ccmd, char *cmd)
 	}
 }
 
-int main(int ac, char **av, char **envp)
-{
+int	main(int ac, char **av, char **envp)
+{	
+	char	*cmd;
+	t_cmd	*ccmd;
+
 	(void)ac;
 	(void)av;
-	char *cmd;
-	t_cmd *ccmd;
-
 	ccmd = NULL;
 	cmd = NULL;
 	ft_init_minishell(&g_minishell, envp);

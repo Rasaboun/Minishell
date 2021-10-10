@@ -1,11 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   strtok.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/10 17:01:08 by dkoriaki          #+#    #+#             */
+/*   Updated: 2021/10/10 17:01:46 by dkoriaki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void alphanum_strtok(t_tok *t, char *line, char *strset)
+void	alphanum_strtok(t_tok *t, char *line, char *strset)
 {
 	if (line[t->i] && ft_is(line[t->i]) && !ft_strchr(strset, line[t->i]))
 	{
 		t->min = t->i;
-		while (line[t->i] && ft_is(line[t->i]) && !ft_strchr(strset, line[t->i]))
+		while (line[t->i] && ft_is(line[t->i])
+			&& !ft_strchr(strset, line[t->i]))
 			t->i++;
 		if (line[t->i] == '\'')
 			while_quotes(line, t, '\'', 1);
@@ -21,7 +34,7 @@ void alphanum_strtok(t_tok *t, char *line, char *strset)
 	}
 }
 
-void strset_strtok(t_tok *t, char *line, char *strset)
+void	strset_strtok(t_tok *t, char *line, char *strset)
 {
 	if (line[t->i] && ft_strchr(strset, line[t->i]))
 	{
@@ -35,9 +48,9 @@ void strset_strtok(t_tok *t, char *line, char *strset)
 	}
 }
 
-char **ft_strtok(char *line, char *strset)
+char	**ft_strtok(char *line, char *strset)
 {
-	t_tok t;
+	t_tok	t;
 
 	if (!line)
 		return (NULL);

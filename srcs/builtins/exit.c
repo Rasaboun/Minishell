@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:42:40 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 15:09:17 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 17:00:36 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_exit_1(t_cmd *ccmd, t_minishell *minishell)
 
 int	ft_exit(t_cmd *cmd, t_minishell *minishell)
 {
-	int ret;
+	int	ret;
 
 	if (g_minishell.in_pipe == 1)
 		ret = ft_exit_2(cmd, minishell);

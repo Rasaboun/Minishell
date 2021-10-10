@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 17:38:30 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 20:02:15 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 17:07:51 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	exec_builtins(t_cmd *ccmd, t_minishell *minishell)
 	int		ret;
 	t_env	*env;
 
+	ret = 0;
 	env = minishell->env;
 	if (ft_strcmp(ccmd->args[0], "echo") == 0)
 		ret = ft_echo(ccmd);

@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 16:51:05 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 16:55:36 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 17:02:26 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	whilecount(const char *line, char *strset, t_count *ct)
 {
 	if (whilequote_count(line, ct, '\'') == 0)
-			return (0);
+		return (0);
 	if (whilequote_count(line, ct, '\"') == 0)
 		return (0);
 	if (whilealpha_count(line, strset, ct) == 0)
@@ -25,7 +25,7 @@ int	whilecount(const char *line, char *strset, t_count *ct)
 
 int	ft_countt(const char *line, char *strset)
 {
-	t_count ct;
+	t_count	ct;
 
 	ct.m = 0;
 	ct.n = 0;

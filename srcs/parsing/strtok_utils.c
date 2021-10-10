@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 16:45:24 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 16:50:45 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 17:03:50 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ int	ft_is(int c)
 
 char	*ft_substrs(const char *s, int min, int max)
 {
-	int i;
-	char *s2;
+	int		i;
+	char	*s2;
 
-	if (!(s2 = malloc(sizeof(char) * (max - min + 1))))
+	s2 = malloc(sizeof(char) * (max - min + 1));
+	if (!s2)
 		return (NULL);
 	i = 0;
 	while (min < max)
@@ -60,7 +61,6 @@ int	whilequote_count(const char *line, t_count *ct, char c)
 	return (1);
 }
 
-
 int	whilequotealpha(const char *line, t_count *ct, char c)
 {
 	if (line[ct->i] == c)
@@ -85,11 +85,12 @@ int	whilequotealpha(const char *line, t_count *ct, char c)
 	return (1);
 }
 
-int whilealpha_count(const char *line, char *strset, t_count *ct)
+int	whilealpha_count(const char *line, char *strset, t_count *ct)
 {
-	if (line[ct->i] && ft_is(line[ct->i]) && !ft_strchr(strset, line[ct->i])) //ALPHANUM
+	if (line[ct->i] && ft_is(line[ct->i]) && !ft_strchr(strset, line[ct->i]))
 	{
-		while (line[ct->i] && ft_is(line[ct->i]) && !ft_strchr(strset, line[ct->i]))
+		while (line[ct->i] && ft_is(line[ct->i])
+			&& !ft_strchr(strset, line[ct->i]))
 			ct->i++;
 		if (line[ct->i] == '\"')
 		{
