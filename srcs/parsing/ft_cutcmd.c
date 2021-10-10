@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 18:14:09 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 11:26:06 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 12:41:43 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	ft_addarg(char **str, t_cm **cutcm)
 	char **strt;
 	t_cm *newcut;
 	int ii;
-
 
 	ii = 0;
 	n = 0;
@@ -78,35 +77,62 @@ void	ft_addarg(char **str, t_cm **cutcm)
 			i++;
 		}	
 	}
+	free(str);
+}
+void	ft_freedarg(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
 }
 
 void	ft_addcmd(t_cm *cutcm, t_cmd **cmd)
 {
 	t_cmd	*tmp;
+	t_cm	*tmmp;
 
+	tmmp = NULL;
 	tmp = NULL;
 	while (cutcm)
 	{
 		if (cutcm->next && ft_strcmp(cutcm->next->str[0], "|") == 0)
 		{
 			tmp = ft_tcmdnew(cutcm->str);
+			tmmp = cutcm;
 			tmp->type = PIPED;
 			ft_tcmdadd_back(cmd, tmp);
 			cutcm = cutcm->next->next;
+			ft_freedarg(tmmp->next->str);
+			free(tmmp->next);
+			free(tmmp);
+			
 		}
 		else if (cutcm->next && ft_strcmp(cutcm->next->str[0], ";") == 0)
 		{
 			tmp = ft_tcmdnew(cutcm->str);
+			tmmp = cutcm;
 			tmp->type = BREAK;
 			ft_tcmdadd_back(cmd, tmp);
 			cutcm = cutcm->next->next;
+			ft_freedarg(tmmp->next->str);
+			free(tmmp->next);
+			free(tmmp);
+			
 		}
 		else
 		{
 			tmp = ft_tcmdnew(cutcm->str);
+			tmmp = cutcm;
 			tmp->type = END;
 			ft_tcmdadd_back(cmd, tmp);
 			cutcm = cutcm->next;
+			free(tmmp);
 		}
 	}
 }
@@ -115,10 +141,13 @@ void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
 {
 	char **str;
 	t_cm *cutcm;
+	int i;
 
+	i = 0;
 
 	cutcm = NULL;
 	str = ft_strtok(line, "|;><");
+	
 	/*for(int x = 0;str[x];x++)
 		fprintf(stderr, "str : %s\n",str[x]);
 	exit(0);*/

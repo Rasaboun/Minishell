@@ -92,6 +92,17 @@ static int whilealpha_count(const char *line, char *strset, t_count *ct)
 	return (1);
 }
 
+static	int	whilecount(const char *line, char *strset, t_count *ct)
+{
+	if (whilequote_count(line, strset, ct, '\'') == 0)
+			return (0);
+	if (whilequote_count(line, strset, ct, '\"') == 0)
+		return (0);
+	if (whilealpha_count(line , strset, ct) == 0)
+		return (0);
+	return (1);
+}
+
 static int ft_countt(const char *line, char *strset)
 {
 	t_count ct;
@@ -105,18 +116,8 @@ static int ft_countt(const char *line, char *strset)
 	{
 		while (line[ct.i] && line[ct.i] == ' ')
 			ct.i++;
-		if (whilequote_count(line, strset, &ct, '\'') == 0)
-		{
+		if (whilecount(line, strset, &ct) == 0)
 			return (0);
-		}
-		if (whilequote_count(line, strset, &ct, '\"') == 0)
-		{
-			return (0);
-		}
-		if (whilealpha_count(line , strset, &ct) == 0)
-		{
-			return (0);
-		}
 		if (ft_strchr(strset, line[ct.i]))
 		{
 			while (line[ct.i] && ft_strchr(strset, line[ct.i]))
@@ -145,16 +146,12 @@ int init_strok(const char *line, char *strset, t_tok *t)
 	if (t->num < 1)
 		return (EXIT_FAILURE);
 	t->str = malloc(sizeof(char *) * (t->num + 1));
-	while (i < t->num + 1)
-	{
-		t->str[i] = NULL;
-		i++;
-	}
 	if (t->str == NULL)
 	{
 		ft_write_error("Error");
 		return (EXIT_FAILURE);
 	}
+	t->str[t->num] = NULL;
 	t->i = 0;
 	t->min = 0;
 	t->num = 0;
@@ -163,7 +160,7 @@ int init_strok(const char *line, char *strset, t_tok *t)
 
 void while_quotes(const char *line, char *strset, t_tok *t, char c, int w)
 {
-	if (line[t->i] == c) //QUOTE
+	if (line[t->i] == c)
 	{
 		if (w == 0)
 			t->min = t->i;

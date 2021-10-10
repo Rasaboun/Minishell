@@ -540,8 +540,10 @@ char *delquotes(char *line, t_env *env)
 	i = 0;
 	while (q)
 	{
+		tmp = q;
 		final[i] = q->c;
 		q = q->next;
+		free(tmp);
 		i++;
 	}
 	return (final);
