@@ -26,6 +26,8 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/utils/env_init.c \
 					./srcs/utils/env_utils.c \
 					./srcs/parsing/strtok.c \
+					./srcs/parsing/strtok_utils.c \
+					./srcs/parsing/strtok_utils_2.c \
 					./srcs/parsing/utils.c \
 					./srcs/utils/env_utils_2.c \
 					./srcs/utils/utils.c \

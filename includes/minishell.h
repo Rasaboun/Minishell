@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 16:22:48 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 16:55:03 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,5 +233,17 @@ void	ft_freecmd(t_cmd *cmd);
 
 
 //---------- STRTOK ----------//
+
+int 	ft_is(int c);
+char	*ft_substrs(const char *s, int min, int max);
+int		whilequote_count(const char *line, t_count *ct, char c);
+int		whilequotealpha(const char *line, t_count *ct, char c);
+int 	whilealpha_count(const char *line, char *strset, t_count *ct);
+
+int		whilecount(const char *line, char *strset, t_count *ct);
+int		ft_countt(const char *line, char *strset);
+void	ft_freee(int n, char **s);
+int		init_strok(const char *line, char *strset, t_tok *t);
+void	while_quotes(const char *line, t_tok *t, char c, int w);
 
 #endif
