@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 00:07:52 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 11:00:44 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 15:40:26 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	fd_exec_is_double_redir(t_cmd **cmd, t_minishell *minishell)
 {
 	int			ret;
-	struct stat	sb;
 
 	if ((*cmd)->type == PIPED || ((*cmd)->previous
 			&& (*cmd)->previous->type == PIPED))
@@ -26,8 +25,6 @@ int	fd_exec_is_double_redir(t_cmd **cmd, t_minishell *minishell)
 	else
 		ret = exec_without_pipe((*cmd), minishell);
 	(*cmd) = (*cmd)->next;
-	if (stat("./.heredoc", &sb) == 0)
-		unlink("./.heredoc");
 	return (ret);
 }
 

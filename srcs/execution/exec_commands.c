@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:35:20 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 10:42:22 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 15:30:15 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 {
 	int			ret;
 	t_cmd		*cmd;
+	struct stat	sb;
 
 	ret = -1;
 	cmd = ccmd;
@@ -105,6 +106,8 @@ int	exec_cmds(t_cmd *ccmd, t_minishell *minishell)
 			ret = fd_exec_is_double_redir(&cmd, minishell);
 		else
 			ret = fd_exec_is_not_double_redir(&cmd, minishell);
+		if (stat("./.heredoc", &sb) == 0)
+			unlink("./.heredoc");
 	}
 	return (ret);
 }
