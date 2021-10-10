@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 18:14:09 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 22:39:27 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 22:56:58 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,11 @@ void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
 		*cmd = NULL;
 		return ;
 	}
-	if (!str)
+	if (!str || str[0] == NULL)
 	{	
+		if (str)
+			ft_freedarg(str);
+		free(line);
 		*cmd = NULL;
 		return ;
 	}
