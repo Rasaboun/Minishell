@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:38:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 11:22:57 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 15:06:54 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_print_export(t_env *env)
 	return (SUCCESS);
 }
 
-void	ft_exec_export(char *str, t_exp *exp, t_env *env)
+void	ft_exec_export(t_exp *exp, t_env *env)
 {
 	t_env	*cur;
 	char	*tmp;
@@ -72,7 +72,7 @@ int	ft_export(t_cmd *ccmd, t_env *env)
 		if (ccmd->args[i][0] != '\0' && ret == 0)
 		{
 			exp = ft_export_split(ccmd->args[i]);
-			ft_exec_export(ccmd->args[i], &exp, env);
+			ft_exec_export(&exp, env);
 			ft_exp_free(&exp);
 		}
 		else if (ret != 0)

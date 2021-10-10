@@ -25,7 +25,7 @@ char *ft_substrs(const char *s, int min, int max)
 	return (s2);
 }
 
-static int whilequote_count(const char *line, char *strset, t_count *ct, char c)
+static int whilequote_count(const char *line, t_count *ct, char c)
 {
 	if (line[ct->i] == c)
 	{
@@ -47,14 +47,14 @@ static int whilequote_count(const char *line, char *strset, t_count *ct, char c)
 	return (1);
 }
 
-static int whilequotealpha(const char *line, char *strset, t_count *ct, char c)
+static int whilequotealpha(const char *line, t_count *ct, char c)
 {
-	if (line[ct->i] == '\'')
+	if (line[ct->i] == c)
 	{
 		ct->i++;
-		while (line[ct->i] && line[ct->i] != '\'')
+		while (line[ct->i] && line[ct->i] != c)
 			ct->i++;
-		if (line[ct->i] && line[ct->i] == '\'')
+		if (line[ct->i] && line[ct->i] == c)
 		{
 			ct->i++;
 			while (line[ct->i] && ft_is(line[ct->i]))
@@ -78,12 +78,12 @@ static int whilealpha_count(const char *line, char *strset, t_count *ct)
 			ct->i++;
 		if (line[ct->i] == '\"')
 		{
-			if (whilequotealpha(line, strset, ct, '\"') == 0)
+			if (whilequotealpha(line, ct, '\"') == 0)
 				return (0);
 		}
 		if (line[ct->i] == '\'')
 		{
-			if (whilequotealpha(line, strset, ct, '\'') == 0)
+			if (whilequotealpha(line, ct, '\'') == 0)
 				return (0);
 		}
 		else if (ct->min < ct->i)
@@ -94,11 +94,11 @@ static int whilealpha_count(const char *line, char *strset, t_count *ct)
 
 static	int	whilecount(const char *line, char *strset, t_count *ct)
 {
-	if (whilequote_count(line, strset, ct, '\'') == 0)
+	if (whilequote_count(line, ct, '\'') == 0)
 			return (0);
-	if (whilequote_count(line, strset, ct, '\"') == 0)
+	if (whilequote_count(line, ct, '\"') == 0)
 		return (0);
-	if (whilealpha_count(line , strset, ct) == 0)
+	if (whilealpha_count(line, strset, ct) == 0)
 		return (0);
 	return (1);
 }
@@ -139,9 +139,6 @@ static void ft_freee(int n, char **s)
 
 int init_strok(const char *line, char *strset, t_tok *t)
 {
-	int i;
-
-	i = 0;
 	t->num = ft_countt(line, strset);
 	if (t->num < 1)
 		return (EXIT_FAILURE);
@@ -158,7 +155,7 @@ int init_strok(const char *line, char *strset, t_tok *t)
 	return (0);
 }
 
-void while_quotes(const char *line, char *strset, t_tok *t, char c, int w)
+void while_quotes(const char *line, t_tok *t, char c, int w)
 {
 	if (line[t->i] == c)
 	{
@@ -192,9 +189,9 @@ void alphanum_strtok(t_tok *t, char *line, char *strset)
 		while (line[t->i] && ft_is(line[t->i]) && !ft_strchr(strset, line[t->i]))
 			t->i++;
 		if (line[t->i] == '\'')
-			while_quotes(line, strset, t, '\'', 1);
+			while_quotes(line, t, '\'', 1);
 		else if (line[t->i] == '\"')
-			while_quotes(line, strset, t, '\"', 1);
+			while_quotes(line, t, '\"', 1);
 		else if (t->min < t->i)
 		{
 			t->str[t->num] = ft_substrs(line, t->min, t->i);
@@ -231,8 +228,8 @@ char **ft_strtok(char *line, char *strset)
 	{
 		while (line[t.i] && line[t.i] == ' ')
 			t.i++;
-		while_quotes(line, strset, &t, '\'', 0);
-		while_quotes(line, strset, &t, '\"', 0);
+		while_quotes(line, &t, '\'', 0);
+		while_quotes(line, &t, '\"', 0);
 		alphanum_strtok(&t, line, strset);
 		strset_strtok(&t, line, strset);
 		if (line[t.i] == ' ')

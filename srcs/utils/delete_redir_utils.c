@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_redir_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 15:13:34 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/06 15:28:53 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 15:15:10 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_args	*ft_delete_cell_args(t_args *args)
 	t_args	*cur;
 	t_args	*prev;
 
+	prev = NULL;
 	cur = args;
 	if (ft_is_redir(args->str) == SUCCESS)
 	{

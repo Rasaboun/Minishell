@@ -198,14 +198,10 @@ char **rediredit(char **tabs)
 {
 	int i;
 	char **final;
-	int n;
 	t_redir *lst;
 	t_redir *tmp;
 	t_redir *lnew;
-	int redir;
 
-	redir = 0;
-	n = 0;
 	final = NULL;
 	i = 0;
 	lst = NULL;
@@ -282,7 +278,7 @@ t_lchar *ft_lcharadd(t_lchar *alst, t_lchar *rnew)
 		tmp = lst;
 		if (!lst->previous)
 		{
-			
+
 			lst = lst->next;
 			if (lst)
 				lst->previous = NULL;
@@ -414,7 +410,6 @@ void quotesdl(t_lchar **q, char c)
 void ft_edit(t_lchar **q, char c)
 {
 	t_lchar *tmp;
-	char *final;
 	t_lchar *first;
 	t_lchar *qq;
 
@@ -431,6 +426,23 @@ void ft_edit(t_lchar **q, char c)
 		tmp = ft_lcharadd(tmp, first);
 		first = ft_tabtolchar("'}");
 		*q = ft_lcharadd(qq, first);
+	}
+}
+
+
+void	ft_freeq(t_lchar *q)
+{
+	t_lchar *tmp;
+
+	tmp = NULL;
+	while (q->previous)
+		q = q->previous;
+
+	while(q)
+	{
+		tmp = q;
+		q = q->next;
+		free(tmp);
 	}
 }
 
@@ -510,6 +522,11 @@ char *delquotes(char *line, t_env *env)
 				}
 				if (first)
 					q = ft_lcharadd(q, first);
+				else
+				{
+					ft_freeq(q);
+					return (NULL);
+				}
 			}
 		}
 		while (q && q->c == '\"')
@@ -542,6 +559,11 @@ char *delquotes(char *line, t_env *env)
 						}
 						if (first)
 							q = ft_lcharadd(q, first);
+						else
+						{
+							ft_freeq(q);
+							return (NULL);
+						}
 					}
 				}
 				if (q->c != '\"')
@@ -603,16 +625,8 @@ int strsetcmp(char **line, int i)
 
 int ft_delquotes(char **line, t_env *env)
 {
-	char **sp;
-	char *final;
 	int i;
-	int n;
-	int ii;
 
-	ii = 0;
-	n = 0;
-	sp = NULL;
-	final = NULL;
 	i = 0;
 	if (!line)
 		return (0);

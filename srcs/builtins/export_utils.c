@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:32:31 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 13:29:36 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 15:07:39 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,8 @@ char	*ft_set_value_export(int i, char *str, int value_len)
 void	ft_set_variable_and_value(char *str, t_exp *exp)
 {
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	exp->var = NULL;
 	exp->value = NULL;
 	if (exp->len_var > 0)
@@ -102,9 +100,7 @@ void	ft_set_variable_and_value(char *str, t_exp *exp)
 t_exp	ft_export_split(char *str)
 {
 	t_exp	exp;
-	int		i;
 
-	i = 0;
 	ft_len_variable_and_value(str, &exp);
 	ft_set_variable_and_value(str, &exp);
 	return (exp);
