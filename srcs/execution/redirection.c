@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:57:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 17:08:53 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 19:53:46 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_redir_output_trunc(char **args, int i)
 {
 	int		fd_out;
 
-	if (args[i + 1][0] == '\0')
+	if (!args[i + 1] || args[i + 1][0] == '\0')
 	{
 		ft_write_error("minishell: ambiguous redirect\n");
 		return (2);
@@ -38,7 +38,7 @@ int	ft_redir_output_append(char **args, int i)
 {
 	int		fd_out;
 
-	if (args[i + 1][0] == '\0')
+	if (!args[i + 1] || args[i + 1][0] == '\0')
 	{
 		ft_write_error("minishell: ambiguous redirect\n");
 		return (2);
@@ -61,7 +61,7 @@ int	ft_redir_input(char **args, int i)
 {
 	int		fd_in;
 
-	if (args[i + 1][0] == '\0')
+	if (!args[i + 1] || args[i + 1][0] == '\0')
 	{
 		ft_write_error("minishell: ambiguous redirect\n");
 		return (2);
