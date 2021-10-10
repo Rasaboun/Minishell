@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 16:37:10 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/10 19:12:33 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 19:29:54 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	while_quotesutils(t_delquo *dq, char c, t_env *env)
 {
-	while (dq->q && dq->q->c == '\'')
+	while (dq->q && dq->q->c == c)
 	{
-		quotesdl(&dq->q, '\'');
-		while (dq->q && dq->q->next && dq->q->c != '\'' && dq->q->c != '\0')
+		quotesdl(&dq->q, c);
+		while (dq->q && dq->q->next && dq->q->c != c && dq->q->c != '\0')
 		{
 			if (c == '\"')
 			{
@@ -27,7 +27,7 @@ int	while_quotesutils(t_delquo *dq, char c, t_env *env)
 			if (dq->q->c != c)
 				dq->q = dq->q->next;
 		}
-		quotesdl(&dq->q, '\'');
+		quotesdl(&dq->q, c);
 	}
 	return (1);
 }
