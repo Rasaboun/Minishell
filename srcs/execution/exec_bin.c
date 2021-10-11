@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_bin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:59:27 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 11:00:11 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 12:25:19 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	bin_is_exist(char *path, char **cmd, char **env_cpy)
 
 	ret = -1;
 	if (strcmp(cmd[0], ".") != 0 && strcmp(cmd[0], "..") != 0
-		&& strcmp(cmd[0], "") != 0)
+		&& strcmp(cmd[0], "") != 0 && strcmp(cmd[0], "/") != 0)
 	{
 		tmp = ft_strjoin(path, "/");
 		path = ft_strjoin(tmp, cmd[0]);

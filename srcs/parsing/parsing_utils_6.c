@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 19:10:41 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 22:52:19 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/11 12:58:11 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void	chartolchar(char *line, t_lchar **q)
 
 void	dollar_utils(t_delquo *d, t_env *env)
 {
-	if (d->q->c == '?' && (d->q->next->c == ' ' \
-		|| d->q->next->c == '\"' || d->q->next->c == '\0'))
+	if (d->q->c == '?')
 	{
 		quotesdl(&d->q, '?');
 		d->str = ft_itoa(g_minishell.ret);
@@ -67,7 +66,7 @@ int	dollarsget(t_delquo *d, t_env *env)
 	while (d->q && d->q->c == '$')
 	{
 		if (d->q->next->c != ' ' && d->q->next->c != \
-			'\0' && d->q->next->c != '\"')
+			'\0' && d->q->next->c != '\"' && d->q->next->c != '=')
 		{
 			quotesdl(&d->q, '$');
 			dollar_utils(d, env);
@@ -82,7 +81,7 @@ int	dollarsget(t_delquo *d, t_env *env)
 				return (0);
 			}
 		}
-		if (d->q && d->q->c == '$' && d->q->next && ft_is(d->q->next->c) == 0)
+		if (d->q && d->q->c == '$' && d->q->next)
 			d->q = d->q->next;
 	}
 	return (1);

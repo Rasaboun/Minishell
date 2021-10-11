@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:19:07 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/11 11:43:41 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 12:17:59 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_echo(t_cmd *ccmd)
 	new_line = 0;
 	i = 1;
 	multiple_n = 0;
-	if (ccmd->args[1] && ft_strncmp(ccmd->args[1], "-n\0", 3) == 0)
+	if (ccmd->args[1] && ft_strncmp(ccmd->args[1], "-n", 2) == 0)
 	{
 		new_line = 1;
 		i++;
