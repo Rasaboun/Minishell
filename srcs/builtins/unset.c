@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:54:51 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/11 10:28:57 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 10:32:47 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	ft_exec_unset(char *str, t_env *env)
 	if (ft_strncmp(str, env->str, env_variable_len(env->str)) == 0)
 	{
 		g_minishell.env = env->next;
-		free_env_cell(cur, 1);
-		return ;
+		return (free_env_cell(cur, 1));
 	}
 	while (cur)
 	{
