@@ -49,7 +49,7 @@ OBJS		=	$(SRCS:.c=.o)
 
 INCLUDES	=	./includes
 
-CC			=	gcc -g3 -fsanitize=address
+CC			=	gcc
 
 HEAD		=	-I./$(INCLUDES) -I./$(LIBFT_DIR)
 
