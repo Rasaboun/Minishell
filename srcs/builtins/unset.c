@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:54:51 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/11 13:09:38 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/11 13:19:53 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	parse_unset(char *str)
 		return (1);
 	}
 	i = 1;
-	while (str[i] && str[i] != '=')
+	while (str[i])
 	{
 		if ((str[i] && ft_isalnum(str[i]) != 1 && str[i] != '_')
 			|| str[i] == '\0' || space_in_env_name(str) == SUCCESS)
