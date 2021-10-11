@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 16:37:10 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/11 12:33:56 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/11 13:50:47 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	while_quotesutils(t_delquo *dq, char c, t_env *env)
 			{
 				if (dollarsget(dq, env) == 0)
 					return (0);
+				
 			}
 			if (dq->q->c != c)
 				dq->q = dq->q->next;
@@ -72,7 +73,7 @@ char	*delquotes(char *line, t_env *env)
 		if (while_quotesutils(&dq, '\"', env) == 0)
 			return (NULL);
 		ft_all_edit(&dq.q);
-		if (dq.q && dq.q->next)
+		if (dq.q && dq.q->next && dq.q->c != '\'')
 			dq.q = dq.q->next;
 	}
 	if (!dq.q)
