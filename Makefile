@@ -55,7 +55,7 @@ HEAD		=	-I./$(INCLUDES) -I./$(LIBFT_DIR)
 
 CFLAGS 		=	-Wall -Wextra -Werror
 
-LFLAGS		=	-lreadline -L ./$(LIBFT_DIR) -lft	
+LFLAGS		=	-lreadline -L ./$(LIBFT_DIR) -lft
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:19:07 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/08 21:38:06 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 11:29:08 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,19 @@ int	ft_check_is_n(char *str)
 	int		i;
 
 	i = 0;
-	if (str[0] != '-')
-		return (FAILURE);
-	if (str[0] == '-')
+	if (str)
 	{
-		i = 1;
-		while (str[i])
+		if (str[0] != '-')
+			return (FAILURE);
+		if (str[0] == '-')
 		{
-			if (str[i] != 'n')
-				return (FAILURE);
-			i++;
+			i = 1;
+			while (str[i])
+			{
+				if (str[i] != 'n')
+					return (FAILURE);
+				i++;
+			}
 		}
 	}
 	return (SUCCESS);

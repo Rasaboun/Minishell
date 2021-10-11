@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:38:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 22:01:33 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 11:34:15 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_exec_export(t_exp *exp, t_env *env)
 	cur = ft_find_env(exp->var, env);
 	if (cur != NULL)
 	{
-		if (!exp->value)
+		if (exp->equal == 0)
 			return ;
 		cur->str = ft_change_env(cur, exp->var, exp->value);
 		return ;
