@@ -53,7 +53,7 @@ CC			=	gcc
 
 HEAD		=	-I./$(INCLUDES) -I./$(LIBFT_DIR)
 
-CFLAGS 		=	#-Wall -Wextra -Werror
+CFLAGS 		=	-Wall -Wextra -Werror
 
 LFLAGS		=	-lreadline -L ./$(LIBFT_DIR) -lft
 

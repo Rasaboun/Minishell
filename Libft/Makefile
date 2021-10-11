@@ -6,13 +6,13 @@
 #    By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/17 15:37:01 by rasaboun          #+#    #+#              #
-#    Updated: 2021/10/06 23:22:26 by dkoriaki         ###   ########.fr        #
+#    Updated: 2021/10/11 21:06:35 by dkoriaki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 CC = gcc
-CCFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = ft_isdigit.c ft_split.c ft_toupper.c \
 ft_atoi.c ft_isprint.c ft_memset.c ft_strchr.c  ft_strncmp.c \

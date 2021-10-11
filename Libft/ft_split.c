@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:51:59 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/07 13:52:33 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 21:03:28 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,9 @@ char	**ft_split(char const *s, char c)
 {
 	int		i;
 	char	**s2;
-	int		n;
 
 	if (!s)
 		return (NULL);
-	n = 0;
 	s2 = malloc(sizeof(char *) * (ft_count(s, c) + 1));
 	if (!s2)
 		return (0);
