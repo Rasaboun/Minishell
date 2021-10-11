@@ -6,7 +6,7 @@
 /*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 19:10:41 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/11 13:49:19 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/11 14:52:26 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	dollarsget(t_delquo *d, t_env *env)
 				return (0);
 			}
 		}
-		if (d->q && d->q->c == '$' && d->q->next)
+		if (d->q && d->q->c == '$' && d->q->next && ft_is(d->q->next->c) == 0)
 			d->q = d->q->next;
 	}
 	return (1);

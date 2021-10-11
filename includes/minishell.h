@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/11 10:23:59 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 14:43:50 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,7 +303,8 @@ void	chartolchar(char *line, t_lchar **q);
 void	dollar_utils(t_delquo *d, t_env *env);
 int		dollarsget(t_delquo *d, t_env *env);
 void	ft_all_edit(t_lchar **q);
-
+int		whilequote(t_delquo *dq, t_env *env);
+int		while_quotesutils(t_delquo *dq, char c, t_env *env);
 //---------- CUTCMD UTILS ----------//
 
 char	*ft_cutequotes(char *line);

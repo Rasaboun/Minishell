@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cutcmd_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 19:18:35 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/10 19:21:18 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 14:42:43 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	whilequote(t_delquo *dq, t_env *env)
+{
+	if (while_quotesutils(dq, '\'', env) == 0)
+		return (0);
+	if (while_quotesutils(dq, '\"', env) == 0)
+		return (0);
+	return (1);
+}
 
 char	*ft_cutequotes(char *line)
 {
