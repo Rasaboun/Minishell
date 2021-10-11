@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:32:31 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/11 13:01:26 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 13:05:12 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ int	parse_export(char *str)
 		ft_write_error("': not a valid identifier\n");
 		return (1);
 	}
+	i = 1;
 	while (str[i] && str[i] != '=')
 	{
-		if ((str[i] && ft_isalpha(str[i]) != 1 && str[i] != '_')
+		if ((str[i] && ft_isalnum(str[i]) != 1 && str[i] != '_')
 			|| str[i] == '\0' || space_in_env_name(str) == SUCCESS)
 		{
 			ft_write_error("minishell: export: `");

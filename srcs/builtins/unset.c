@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:54:51 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/11 10:32:47 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 13:09:38 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,26 @@ int	parse_unset(char *str)
 	int		i;
 
 	i = 0;
-	if ((str[i] && ft_isalpha(str[i]) != 1 && str[i] != '_') || str[i] == '\0')
+	if ((str[i] && ft_isalpha(str[i]) != 1 && str[i] != '_') || str[i] == '\0'
+		|| space_in_env_name(str) == SUCCESS)
 	{
-		ft_write_error(" unset: `");
+		ft_write_error("minishell: unset: `");
 		ft_write_error(str);
 		ft_write_error("': not a valid identifier\n");
 		return (1);
+	}
+	i = 1;
+	while (str[i] && str[i] != '=')
+	{
+		if ((str[i] && ft_isalnum(str[i]) != 1 && str[i] != '_')
+			|| str[i] == '\0' || space_in_env_name(str) == SUCCESS)
+		{
+			ft_write_error("minishell: unset: `");
+			ft_write_error(str);
+			ft_write_error("': not a valid identifier\n");
+			return (1);
+		}
+		i++;
 	}
 	return (0);
 }
