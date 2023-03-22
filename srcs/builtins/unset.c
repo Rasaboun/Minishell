@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:54:51 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 15:46:06 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 13:19:53 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,26 @@ int	parse_unset(char *str)
 	int		i;
 
 	i = 0;
-	if (str[i] && ft_isalpha(str[i]) != 1 && str[i] != '_')
+	if ((str[i] && ft_isalpha(str[i]) != 1 && str[i] != '_') || str[i] == '\0'
+		|| space_in_env_name(str) == SUCCESS)
 	{
-		ft_write_error(" unset: `");
+		ft_write_error("minishell: unset: `");
 		ft_write_error(str);
 		ft_write_error("': not a valid identifier\n");
 		return (1);
+	}
+	i = 1;
+	while (str[i])
+	{
+		if ((str[i] && ft_isalnum(str[i]) != 1 && str[i] != '_')
+			|| str[i] == '\0' || space_in_env_name(str) == SUCCESS)
+		{
+			ft_write_error("minishell: unset: `");
+			ft_write_error(str);
+			ft_write_error("': not a valid identifier\n");
+			return (1);
+		}
+		i++;
 	}
 	return (0);
 }
@@ -50,8 +64,8 @@ void	ft_exec_unset(char *str, t_env *env)
 		return ;
 	if (ft_strncmp(str, env->str, env_variable_len(env->str)) == 0)
 	{
-		env = env->next;
-		free_env_cell(cur, 2);
+		g_minishell.env = env->next;
+		return (free_env_cell(cur, 1));
 	}
 	while (cur)
 	{
@@ -60,7 +74,7 @@ void	ft_exec_unset(char *str, t_env *env)
 		if (ft_strncmp(str, cur->str, env_variable_len(cur->str)) == 0)
 		{
 			prec->next = cur->next;
-			if (env->new == 1)
+			if (cur->new == 1)
 				free(cur->str);
 			free(cur);
 			return ;
@@ -74,7 +88,7 @@ int	ft_unset(t_cmd *ccmd, t_env *env)
 	int		ret;
 	int		ret2;
 
-	i = 0;
+	i = 1;
 	ret = 0;
 	ret2 = 0;
 	while (ccmd->args[i])

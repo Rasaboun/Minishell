@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_bin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:59:27 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/07 13:57:37 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 12:25:19 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	ft_write_error_bin(int ret)
 {
 	if (ret == 139)
 		ft_write_error("Segmentation fault: 11\n");
-	else if (ret == 138)
-		ft_write_error("Bus error: 10\n");
+	else if (ret == 135)
+		ft_write_error("Bus error: 7\n");
 	else if (ret == 134)
 		ft_write_error("Abort trap: 6\n");
 }
@@ -86,12 +86,16 @@ int	bin_is_exist(char *path, char **cmd, char **env_cpy)
 	int			ret;
 
 	ret = -1;
-	tmp = ft_strjoin(path, "/");
-	path = ft_strjoin(tmp, cmd[0]);
-	free(tmp);
-	if (stat(path, &sb) == 0)
-		ret = exec_bin(path, cmd, env_cpy);
-	free(path);
+	if (strcmp(cmd[0], ".") != 0 && strcmp(cmd[0], "..") != 0
+		&& strcmp(cmd[0], "") != 0 && strcmp(cmd[0], "/") != 0)
+	{
+		tmp = ft_strjoin(path, "/");
+		path = ft_strjoin(tmp, cmd[0]);
+		free(tmp);
+		if (stat(path, &sb) == 0)
+			ret = exec_bin(path, cmd, env_cpy);
+		free(path);
+	}
 	return (ret);
 }
 
@@ -105,6 +109,8 @@ int	exec_bin(char *path, char **cmd, char **env_cpy)
 	if (strchr(path, '/') == NULL || access(path, R_OK) != 0)
 		return (ft_check_bin_error(path));
 	pid = fork();
+	signal(SIGINT, stop_bin_process);
+	signal(SIGQUIT, quit_bin_process);
 	if (pid == 0)
 	{
 		if (strchr(path, '/') != NULL)
@@ -115,10 +121,7 @@ int	exec_bin(char *path, char **cmd, char **env_cpy)
 	else
 	{
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			ret = WEXITSTATUS(status);
-		if (WIFSIGNALED(status))
-			ret = WTERMSIG(status) + 128;
+		ret = ft_ret_fork_status(status);
 		ft_write_error_bin(ret);
 	}
 	return (ret);

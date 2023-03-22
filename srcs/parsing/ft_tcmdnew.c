@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tcmdnew.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 12:08:43 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/08/19 16:03:24 by rasaboun         ###   ########.fr       */
+/*   Updated: 2021/10/10 17:04:49 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 t_cmd	*ft_tcmdnew(char **args)
 {
-	t_cmd *s;
+	t_cmd	*s;
 
-	if (!(s = malloc(sizeof(t_cmd))))
+	s = malloc(sizeof(t_cmd));
+	if (!s)
 		return (NULL);
 	s->args = args;
 	s->next = NULL;

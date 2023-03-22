@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 17:08:08 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 17:28:27 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 23:12:06 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,23 @@ void	ft_freecmd(t_cmd *cmd)
 	t_cmd	*tmp;
 
 	i = 0;
-	while (cmd)
+	if (cmd)
 	{
-		i = 0;
-		while (cmd->args && cmd->args[i])
+		while (cmd)
 		{
-			free(cmd->args[i]);
-			i++;
+			i = 0;
+			while (cmd->args && cmd->args[i])
+			{
+				if (cmd->args[i])
+					free(cmd->args[i]);
+				i++;
+			}
+			if (cmd->args)
+				free(cmd->args);
+			tmp = cmd;
+			cmd = cmd->next;
+			if (tmp)
+				free(tmp);
 		}
-		free(cmd->args);
-		tmp = cmd;
-		cmd = cmd->next;
-		free(tmp);
 	}
 }

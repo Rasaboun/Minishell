@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 12:43:50 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/06 15:14:44 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 13:33:19 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ t_args	*ft_init_args(char **args)
 
 int	ft_is_redir(char *str)
 {
-	if (ft_strcmp(str, ">") == 0)
+	if (ft_strcmp(str, "{'>'}") == 0)
 		return (SUCCESS);
-	if (ft_strcmp(str, ">>") == 0)
+	if (ft_strcmp(str, "{'>>'}") == 0)
 		return (SUCCESS);
-	if (ft_strcmp(str, "<") == 0)
+	if (ft_strcmp(str, "{'<'}") == 0)
 		return (SUCCESS);
-	if (ft_strcmp(str, "<<") == 0)
+	if (ft_strcmp(str, "{'<<'}") == 0)
 		return (SUCCESS);
 	return (FAILURE);
 }

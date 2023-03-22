@@ -3,109 +3,121 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cutcmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 18:14:09 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 18:14:10 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 22:56:58 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "minishell.h"
 
-int	ft_quotes(t_cmd **cmd, char *line, int i)
+void	ft_addarg(char **str, t_cm **cutcm)
 {
-	int n;
-	char *l;
+	t_addargs	a;
 
-	l = NULL;
-
-
-	n = 0;
-	if (line[i] == '"')
+	a.ii = 0;
+	a.n = 0;
+	a.newcut = NULL;
+	a.i = 0;
+	while (str[a.i])
 	{
-		while(line[i] != '"' && line[i] != '\0')
-			i++;
-		if (line[i] == '\0')
-			return (-1);
-		else
+		a.n = 0;
+		while (str[a.i] && ft_strcmp(str[a.i], "{'|'}") \
+			!= 0 && ft_strcmp(str[a.i], "{';'}") != 0)
 		{
-
-			return (i);	
+			a.n++;
+			a.i++;
 		}
-			
+		if (a.n > 0)
+		{
+			addarg_utils(str, cutcm, &a);
+		}	
 	}
-
+	free(str);
+	str = NULL;
 }
 
-
-void	ft_cutcmd(t_cmd **cmd, char *line)
+void	ft_freedarg(char **str)
 {
 	int	i;
-	char *l;
-	int n;
-	t_cmd *tmp;
-	char **split;
-	int q;
 
-	q = 0;
-	split = NULL;
-	n = 0;
-	l = NULL;
 	i = 0;
-
-	while (line[i] != '\0')
+	while (str[i])
 	{
-		if (line[i] == '\'')// 39 = '
-		{
-			q++;
-			i++;
-		while(line[i] != '\'' && line[i] != '\0')
-			i++;
-		if (line[i] == '\0')
-		{
-			write(2,"Error argument",15);
-			//free
-			exit(0);
-		}
-		}
-		if (line[i] == '|' || line[i] == ';')
-		{
-			q = 0;
-			if (line[i+1] == '|' || line[i+1] == ';')
-			{
-				write(2,"Error argument",15);
-				//free
-				exit(0);
-			}
-			l = ft_substr(line,n,i-n);
-			split = ft_split(l,' ');
-			free(l);
-			tmp = ft_tcmdnew(split);
-			if (line[i] == '|')
-				tmp->type = PIPED;
-			if (line[i] == ';')
-				tmp->type = BREAK;
-			ft_tcmdadd_back(cmd,tmp);
-			i++;
-			n = i;
-		}
+		free(str[i]);
 		i++;
 	}
-		l = ft_substr(line,n,i-n);
-		if (q == 0)
-		{
-		split = ft_split(l,' ');
-		free(l);
-		tmp = ft_tcmdnew(split);
-		}
+	free(str);
+	str = NULL;
+}
+
+t_cm	*addcmd_utils(t_cm *cutcm, t_cmd **cmd, int type)
+{
+	t_cmd	*tmp;
+	t_cm	*tmmp;
+
+	tmmp = NULL;
+	tmp = NULL;
+	tmp = ft_tcmdnew(cutcm->str);
+	tmmp = cutcm;
+	tmp->type = type;
+	ft_tcmdadd_back(cmd, tmp);
+	cutcm = cutcm->next->next;
+	ft_freedarg(tmmp->next->str);
+	free(tmmp->next);
+	free(tmmp);
+	return (cutcm);
+}
+
+void	ft_addcmd(t_cm *cutcm, t_cmd **cmd)
+{
+	t_cmd	*tmp;
+	t_cm	*tmmp;
+
+	tmmp = NULL;
+	tmp = NULL;
+	while (cutcm)
+	{
+		if (cutcm->next && ft_strcmp(cutcm->next->str[0], "{'|'}") == 0)
+			cutcm = addcmd_utils(cutcm, cmd, PIPED);
+		else if (cutcm->next && ft_strcmp(cutcm->next->str[0], "{';'}") == 0)
+			cutcm = addcmd_utils(cutcm, cmd, BREAK);
 		else
 		{
-			split = ft_split(l,-1);
-			free(l);
-			tmp = ft_tcmdnew(split);
+			tmp = ft_tcmdnew(cutcm->str);
+			tmmp = cutcm;
+			tmp->type = END;
+			ft_tcmdadd_back(cmd, tmp);
+			cutcm = cutcm->next;
+			free(tmmp);
 		}
-		tmp->type = END;
-		ft_tcmdadd_back(cmd,tmp);
+	}
+}
+
+void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env)
+{
+	char	**str;
+	t_cm	*cutcm;
+
+	cutcm = NULL;
+	str = ft_strtok(line, "|;><");
+	if (!ft_delquotes(str, env))
+	{
+		if (str)
+			ft_freedarg(str);
+		free(line);
+		*cmd = NULL;
+		return ;
+	}
+	if (!str || str[0] == NULL)
+	{	
+		if (str)
+			ft_freedarg(str);
+		free(line);
+		*cmd = NULL;
+		return ;
+	}
+	ft_addarg(str, &cutcm);
+	ft_addcmd(cutcm, cmd);
 }

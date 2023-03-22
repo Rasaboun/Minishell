@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 11:10:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/04 15:56:07 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 23:09:59 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	go_to_home(t_env *env)
 
 	cur = ft_find_env("HOME", env);
 	if (cur == NULL)
-		return (ft_write_error(" cd: HOME not set"));
+		return (ft_write_error(" cd: HOME not set\n"));
 	str = cur->str;
 	i = 1;
 	while (str[i - 1] != '=')
@@ -42,38 +42,26 @@ int	go_to_home(t_env *env)
 int	ft_save_pwd(t_env *env)
 {
 	char	path[PATH_MAX];
-	char	*tmp;
 	t_env	*cur;
 
 	getcwd(path, sizeof(path));
-	tmp = NULL;
 	cur = ft_find_env("PWD", env);
 	if (cur == NULL)
 		return (FAILURE);
-	if (cur->new == 1)
-		tmp = cur->str;
 	cur->str = ft_change_env(cur, "PWD", path);
-	if (tmp)
-		free(tmp);
 	return (SUCCESS);
 }
 
 int	ft_save_oldpwd(t_env *env)
 {
 	char	oldpath[PATH_MAX];
-	char	*tmp;
 	t_env	*cur;
 
 	getcwd(oldpath, sizeof(oldpath));
-	tmp = NULL;
 	cur = ft_find_env("OLDPWD", env);
 	if (cur == NULL)
 		return (FAILURE);
-	if (cur->new == 1)
-		tmp = cur->str;
 	cur->str = ft_change_env(cur, "OLDPWD", oldpath);
-	if (tmp)
-		free(tmp);
 	return (SUCCESS);
 }
 
@@ -81,6 +69,8 @@ int	ft_cd(t_cmd *ccmd, t_env *env)
 {
 	char	*directory;
 
+	if (ccmd->args[1] && ccmd->args[2])
+		return (ft_write_error("minishell: cd: too many arguments\n"));
 	directory = ccmd->args[1];
 	ft_save_oldpwd(env);
 	if (!directory)
@@ -92,7 +82,7 @@ int	ft_cd(t_cmd *ccmd, t_env *env)
 	}
 	else
 	{
-		ft_write_error(" cd: ");
+		ft_write_error("minishell: cd: ");
 		ft_write_error(directory);
 		ft_write_error(": No such file or directory\n");
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 17:31:46 by rasaboun          #+#    #+#             */
-/*   Updated: 2021/10/08 20:13:02 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 23:26:52 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,58 @@ typedef struct s_minishell
 	t_env	*env;
 	int		exit;
 	int		ret;
+	int		in_pipe;
 	int		stdout;
 	int		stdin;
 }				t_minishell;
+
+typedef struct s_count
+{
+	int		i;
+	int		num;
+	int		min;
+	int		n;
+	char	m;
+	char	mm;
+}				t_count;
 
 typedef struct s_cmd
 {
 	char			**args;
 	int				pipe[2];
 	int				type;
+	pid_t			pid;
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
 }				t_cmd;
+
+typedef struct s_tok{
+	int		i;
+	int		min;
+	char	**str;
+	int		num;
+}				t_tok;
+
+typedef struct s_cm
+{
+	char		**str;
+	struct s_cm	*next;
+	struct s_cm	*previous;
+}				t_cm;
+
+typedef struct s_lchar
+{
+	char			c;
+	struct s_lchar	*next;
+	struct s_lchar	*previous;
+}				t_lchar;
+
+typedef struct s_redir
+{
+	char			*str;
+	struct s_redir	*next;
+	struct s_redir	*previous;
+}				t_redir;
 
 typedef struct s_args
 {
@@ -78,6 +118,35 @@ typedef struct s_args
 	struct s_args	*next;
 	struct s_args	*previous;
 }				t_args;
+
+typedef struct s_dollars
+{
+	t_lchar	*tmp;
+	t_lchar	*lchar;
+	t_lchar	*tmptwo;
+	int		i;
+	char	*line;
+}				t_dollars;
+
+typedef struct s_delquo
+{
+	t_lchar	*q;
+	t_lchar	*tmp;
+	char	*final;
+	t_lchar	*first;
+	char	*str;
+}				t_delquo;
+
+typedef struct s_addargs
+{
+	int		i;
+	int		n;
+	char	**strt;
+	t_cm	*newcut;
+	int		ii;
+}				t_addargs;
+
+t_minishell		g_minishell;
 
 //------- binary functions -------//
 
@@ -109,6 +178,13 @@ void	print_lst(t_env *env);
 t_env	*ft_init_env(char **envp);
 t_env	*lst_add_back(t_env *env, char *str, int new);
 void	ft_putstr(char *str);
+
+int		ft_istrchr(const char *s, int c);
+int		ft_delquotes(char **line, t_env *env);
+t_redir	*ft_redirlast(t_redir *lst);
+void	ft_rediradd_back(t_redir **alst, t_redir *rnew);
+t_redir	*ft_redirnew(char *st);
+char	**ft_strtok(char *line, char	*strset);
 int		ft_write_error(char *str);
 int		ft_isnum(char *str);
 int		ft_charchr(char *str, char c);
@@ -116,6 +192,8 @@ int		ft_charchr(char *str, char c);
 char	**split_path(t_env *env);
 char	**ft_list_to_array(t_env *env);
 void	print_env_array(char **array);
+void	stop_bin_process(int signum);
+void	quit_bin_process(int signum);
 
 t_exp	ft_export_split(char *str);
 void	ft_set_variable_and_value(char *str, t_exp *exp);
@@ -123,7 +201,16 @@ void	ft_len_variable_and_value(char *str, t_exp *exp);
 int		parse_export(char *str);
 void	ft_rl_input_eof(char *args, int fd_out);
 void	ft_child_pid_exec_pipe(t_cmd *cmd, t_minishell *minishell);
+int		ft_ret_fork_status(int status);
+int		fd_exec_is_double_redir(t_cmd **cmd, t_minishell *minishell);
+int		fd_exec_is_not_double_redir(t_cmd **cmd, t_minishell *minishell);
+int		exec_with_pipe_2(t_cmd *cmd, t_minishell *minishell);
+int		exec_with_pipe(t_cmd *cmd, t_minishell *minishell);
+void	ft_close_for_exec_with_pipe(t_cmd *cmd);
+int		exec_without_pipe(t_cmd *cmd, t_minishell *minishell);
+void	set_signals(void);
 
+void	ft_werror(char *s1, char *s2, char *s3);
 int		builtin_is_exist(char *str);
 int		ft_check_redir(char **args, t_minishell *minishell);
 void	ft_close(int fd);
@@ -136,6 +223,9 @@ t_args	*ft_delete_cell_args(t_args *args);
 void	ft_delete_cell_args_next(t_args *args, t_args *cur, t_args *prev);
 t_args	*ft_init_args(char **args);
 int		ft_is_redir(char *str);
+void	prompt_signal(int signal);
+int		ft_is_double_redir_left(t_cmd *cmd);
+int		space_in_env_name(char *str);
 
 void	ft_init_minishell(t_minishell *minishell, char **envp);
 int		is_empty_list(t_env *env);
@@ -151,16 +241,79 @@ char	**ft_sort_env(char **envp);
 void	print_env_array(char **array);
 void	free_env_cell(t_env *env, int how);
 
+int		ft_is(int c);
+char	*ft_substrs(const char *s, int min, int max);
+t_cm	*ft_cmlast(t_cm *lst);
+void	ft_cmadd_back(t_cm **alst, t_cm *rnew);
+t_cm	*ft_cmnew(char **st);
 void	ft_tcmdadd_back(t_cmd **alst, t_cmd *new);
 t_cmd	*ft_tcmdlast(t_cmd *lst);
 int		ft_tcmdsize(t_cmd *lst);
 t_cmd	*ft_tcmdnew(char **args);
-void	ft_cutcmd(t_cmd **cmd, char *line);
+void	ft_cutcmd(t_cmd **cmd, char *line, t_env *env);
 
 //---------- FREE ----------//
 
 void	ft_free_array(char **array);
 void	ft_clean_all(t_minishell *minishell);
 void	ft_freecmd(t_cmd *cmd);
+
+//---------- STRTOK ----------//
+
+int		ft_is(int c);
+char	*ft_substrs(const char *s, int min, int max);
+int		whilequote_count(const char *line, t_count *ct, char c);
+int		whilequotealpha(const char *line, t_count *ct, char c);
+int		whilealpha_count(const char *line, char *strset, t_count *ct);
+
+int		whilecount(const char *line, char *strset, t_count *ct);
+int		ft_countt(const char *line, char *strset);
+void	ft_freee(int n, char **s);
+int		init_strok(const char *line, char *strset, t_tok *t);
+void	while_quotes(const char *line, t_tok *t, char c, int w);
+
+//---------- PARSING UTILS ----------//
+
+int		ft_istrchr(const char *s, int c);
+t_lchar	*ft_lcharlast(t_lchar *lst);
+int		ft_lcharlen(t_lchar *lst);
+void	ft_lcharadd_back(t_lchar **alst, t_lchar *rnew);
+t_lchar	*ft_lcharnew(char st);
+
+t_cm	*ft_cmlast(t_cm *lst);
+void	ft_cmadd_back(t_cm **alst, t_cm *rnew);
+t_cm	*ft_cmnew(char **st);
+int		ft_whil(char *s3, const char *s1, int i);
+char	*ft_strfjoin(char const *s1, char *s2);
+
+t_redir	*ft_redirlast(t_redir *lst);
+void	ft_rediradd_back(t_redir **alst, t_redir *rnew);
+t_redir	*ft_redirnew(char *st);
+t_lchar	*lcharaddutil(t_lchar *alst, t_lchar *rnew);
+t_lchar	*ft_lcharadd(t_lchar *alst, t_lchar *rnew);
+
+void	get_dollars_utils(t_lchar **lst, t_dollars *d);
+char	*get_dollar(t_lchar **lst);
+t_lchar	*ft_tabtolchar(char *line);
+void	quotesdl(t_lchar **q, char c);
+void	ft_edit(t_lchar **q, char c);
+
+void	ft_freeq(t_lchar *q);
+void	chartolchar(char *line, t_lchar **q);
+void	dollar_utils(t_delquo *d, t_env *env);
+int		dollarsget(t_delquo *d, t_env *env);
+void	ft_all_edit(t_lchar **q);
+int		whilequote(t_delquo *dq, t_env *env);
+void	tkt(char **line, t_env *env);
+int		while_quotesutils(t_delquo *dq, char c, t_env *env);
+void	get_dollars_util(t_lchar **lst, t_dollars *d);
+void	strdl(t_redir **q, char *c);
+void	lstrto_str(t_redir *l, char **line);
+char	*delquotes(char *line, t_env *env);
+
+//---------- CUTCMD UTILS ----------//
+
+char	*ft_cutequotes(char *line);
+void	addarg_utils(char **str, t_cm **cutcm, t_addargs *a);
 
 #endif

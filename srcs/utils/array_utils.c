@@ -6,7 +6,7 @@
 /*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 16:56:16 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/05 19:31:37 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/10 11:59:59 by dkoriaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,11 @@ void	print_env_array(char **array)
 	{
 		x = 0;
 		equal = 0;
-		write(STDOUT_FILENO, "declare -x ", 11);
+		write(STDOUT_FILENO, "export ", 7);
 		while (array[y][x])
 		{
 			write(STDOUT_FILENO, &array[y][x], 1);
-			if (array[y][x] == '=')
+			if (array[y][x] == '=' && equal == 0)
 			{
 				write(STDOUT_FILENO, "\"", 1);
 				equal = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 11:19:07 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/08 21:38:06 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2021/10/11 12:59:39 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,19 @@ int	ft_check_is_n(char *str)
 	int		i;
 
 	i = 0;
-	if (str[0] != '-')
-		return (FAILURE);
-	if (str[0] == '-')
+	if (str)
 	{
-		i = 1;
-		while (str[i])
+		if (str[0] != '-')
+			return (FAILURE);
+		if (str[0] == '-')
 		{
-			if (str[i] != 'n')
-				return (FAILURE);
-			i++;
+			i = 1;
+			while (str[i])
+			{
+				if (str[i] != 'n')
+					return (FAILURE);
+				i++;
+			}
 		}
 	}
 	return (SUCCESS);
@@ -58,6 +61,22 @@ void	ft_print_echo(char **str, int new_line, int multiple_n, int i)
 	}
 }
 
+int	ft_check_args1_echo(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (str[0] != '-')
+		return (FAILURE);
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (FAILURE);
+		i++;
+	}
+	return (SUCCESS);
+}
+
 int	ft_echo(t_cmd *ccmd)
 {
 	int		new_line;
@@ -67,7 +86,7 @@ int	ft_echo(t_cmd *ccmd)
 	new_line = 0;
 	i = 1;
 	multiple_n = 0;
-	if (ccmd->args[1] && ft_strncmp(ccmd->args[1], "-n", 2) == 0)
+	if (ccmd->args[1] && ft_check_args1_echo(ccmd->args[1]) == SUCCESS)
 	{
 		new_line = 1;
 		i++;

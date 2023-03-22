@@ -9,8 +9,10 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/parsing/ft_tcmdlast.c \
 					./srcs/parsing/ft_tcmdadd_back.c \
 					./srcs/parsing/ft_cutcmd.c \
+					./srcs/parsing/ft_cutcmd_utils.c \
 					./srcs/execution/exec_builtins.c \
 					./srcs/execution/exec_commands.c \
+					./srcs/execution/exec_commands_utils.c \
 					./srcs/execution/exec_bin.c \
 					./srcs/execution/redirection.c \
 					./srcs/execution/redirection_utils.c \
@@ -24,25 +26,37 @@ SRCS		=	./srcs/parsing/main.c \
 					./srcs/builtins/exit.c \
 					./srcs/utils/env_init.c \
 					./srcs/utils/env_utils.c \
+					./srcs/parsing/strtok.c \
+					./srcs/parsing/strtok_utils.c \
+					./srcs/parsing/strtok_utils_2.c \
+					./srcs/parsing/utils.c \
+					./srcs/parsing/parsing_utils_2.c \
+					./srcs/parsing/parsing_utils_3.c \
+					./srcs/parsing/parsing_utils_4.c \
+					./srcs/parsing/parsing_utils_5.c \
+					./srcs/parsing/parsing_utils_6.c \
 					./srcs/utils/env_utils_2.c \
 					./srcs/utils/utils.c \
+					./srcs/utils/signal.c \
 					./srcs/utils/utils_2.c \
+					./srcs/utils/utils_3.c \
 					./srcs/utils/array_utils.c \
 					./srcs/utils/exit.c \
 					./srcs/utils/delete_redir_in_args.c \
-					./srcs/utils/delete_redir_utils.c
+					./srcs/utils/delete_redir_utils.c \
+					./srcs/parsing/utils_two.c
 					
 OBJS		=	$(SRCS:.c=.o)
 
 INCLUDES	=	./includes
 
-CC			=	gcc -g3 -fsanitize=address
+CC			=	gcc
 
 HEAD		=	-I./$(INCLUDES) -I./$(LIBFT_DIR)
 
-CCFLAGS 	=	-Wall -Wextra -Werror -lreadline
+CFLAGS 		=	-Wall -Wextra -Werror
 
-LFLAGS		=	-lreadline -L ./$(LIBFT_DIR) -lft	
+LFLAGS		=	-lreadline -L ./$(LIBFT_DIR) -lft
 
 all: $(NAME)
 

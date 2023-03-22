@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkoriaki <dkoriaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rasaboun <rasaboun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:57:59 by dkoriaki          #+#    #+#             */
-/*   Updated: 2021/10/08 21:28:57 by dkoriaki         ###   ########.fr       */
+/*   Updated: 2023/03/22 22:40:59 by rasaboun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,18 @@ int	ft_redir_output_trunc(char **args, int i)
 {
 	int		fd_out;
 
+	if (!args[i + 1] || args[i + 1][0] == '\0')
+	{
+		ft_write_error("minishell: ambiguous redirect\n");
+		return (2);
+	}
 	fd_out = open(args[i + 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	if (fd_out == -1)
 	{
 		ft_write_error("minishell: ");
 		ft_write_error(args[i + 1]);
 		ft_write_error(": No such file or directory\n");
-		return (FAILURE);
+		return (2);
 	}
 	dup2(fd_out, STDOUT_FILENO);
 	ft_close(fd_out);
@@ -33,6 +38,11 @@ int	ft_redir_output_append(char **args, int i)
 {
 	int		fd_out;
 
+	if (!args[i + 1] || args[i + 1][0] == '\0')
+	{
+		ft_write_error("minishell: ambiguous redirect\n");
+		return (2);
+	}
 	fd_out = open(args[i + 1], O_WRONLY
 			| O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
 	if (fd_out == -1)
@@ -40,7 +50,7 @@ int	ft_redir_output_append(char **args, int i)
 		ft_write_error("minishell: ");
 		ft_write_error(args[i + 1]);
 		ft_write_error(": No such file or directory\n");
-		return (FAILURE);
+		return (2);
 	}
 	dup2(fd_out, STDOUT_FILENO);
 	ft_close(fd_out);
@@ -51,6 +61,11 @@ int	ft_redir_input(char **args, int i)
 {
 	int		fd_in;
 
+	if (!args[i + 1] || args[i + 1][0] == '\0')
+	{
+		ft_write_error("minishell: ambiguous redirect\n");
+		return (2);
+	}
 	fd_in = open(args[i + 1], O_RDONLY, S_IRUSR);
 	if (fd_in == -1)
 	{
@@ -70,6 +85,7 @@ int	ft_redir_input_eof(char **args, int i, t_minishell *minishell)
 	int		fd_out;
 	int		fd_out_copy;
 
+	fd_out_copy = -1;
 	if (minishell->stdin != STDIN_FILENO)
 		dup2(minishell->stdin, STDIN_FILENO);
 	if (minishell->stdout != STDOUT_FILENO)
@@ -97,13 +113,13 @@ int	ft_check_redir(char **args, t_minishell *minishell)
 	i = 0;
 	while (args[i])
 	{
-		if (strcmp(args[i], ">") == 0)
+		if (strcmp(args[i], "{'>'}") == 0)
 			ret = ft_redir_output_trunc(args, i);
-		else if (strcmp(args[i], ">>") == 0)
+		else if (strcmp(args[i], "{'>>'}") == 0)
 			ret = ft_redir_output_append(args, i);
-		else if (strcmp(args[i], "<") == 0)
+		else if (strcmp(args[i], "{'<'}") == 0)
 			ret = ft_redir_input(args, i);
-		else if (strcmp(args[i], "<<") == 0)
+		else if (strcmp(args[i], "{'<<'}") == 0)
 			ret = ft_redir_input_eof(args, i, minishell);
 		i++;
 	}
