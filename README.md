@@ -14,7 +14,7 @@
 	<span> · </span>
 	<a href="#projetstructure"> Project Structure </a>
 	<span> · </span>
-	<a href="#setting">Setting</a>
+	<a href="#features">Features</a>
 	<span> · </span>
 	<a href="#usage">Usage</a>
 </h3>
@@ -65,7 +65,7 @@ Project Structure
 * [**📂 execution:**](src/execution/) execution functions
 * [**📂 utils:**](src/utils/) utils functions
 
-<h2 id="setting">
+<h2 id="features">
 📖 Features
 </h2>
 
